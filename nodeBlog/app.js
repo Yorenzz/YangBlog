@@ -1,67 +1,57 @@
-const handleBlogRouter=require('./src/router/blog')
-const handleUserRouter=require('./src/router/user')
-const querystring=require('querystring')
+const Koa = require('koa')
+const app = new Koa()
+const views = require('koa-views')
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+const bodyparser = require('koa-bodyparser')
+const logger = require('koa-logger')
+const cors = require('koa2-cors');
+const jwtKoa=require('koa-jwt')
+const SECRET='yangEzzz'
+const index = require('./routes/index')
+const users = require('./routes/users')
+const {verify} = require("jsonwebtoken")
 
-const getPostData=(req)=>{
-    return new Promise((resolve, reject) => {
-        if (req.method !== 'POST') {
-            resolve({})
-            return
-        }
-        if (req.headers['content-type'] !== 'application/x-www-form-urlencoded') {
-            resolve({})
-            return
-        }
-        let postData = ''
-        req.on('data', chunk => {
-            postData += chunk.toString()
-        })
-        req.on('end', () => {
-            if (!postData) {
-                resolve({})
-                return
-            }
-            resolve(
-                JSON.parse(postData)
-            )
-        })
-    })
-}
+// error handler
+onerror(app)
 
-const serverHandle=(req,res)=> {
-    //设置返回格式为json
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
-    res.setHeader('Content-Type', 'application/json')
-    res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers','Content-Type');
-    const url=req.url
-    req.path=url.split('?')[0]
-    console.log(req.body)
-    req.query=querystring.parse(url.split('?')[1])
+app.use(cors())
+// middlewares
 
-    getPostData(req).then((postData)=>{
-        req.body=postData
-        const blogData=handleBlogRouter(req,res)
-        if(blogData){
-            res.end(
-                JSON.stringify(blogData)
-            )
-            return
-        }
-        const userData=handleUserRouter(req,res)
-        if(userData){
-            res.end(
-                JSON.stringify(userData)
-            )
-            return
-        }
-        res.writeHead(404,{"Content-type": "text/plain"})
-        res.write("404 Not Found\n")
-        res.end()
-    })
+app.use(jwtKoa({
+  // 密匙
+  secret: SECRET
+}).unless({
+  // 自定义忽略jwt验证的目录
+  path: [/^\/users\/login/]
+}))
 
+app.use(bodyparser({
+  enableTypes:['json', 'form', 'text']
+}))
+app.use(json())
+app.use(logger())
+app.use(require('koa-static')(__dirname + '/public'))
 
+app.use(views(__dirname + '/views', {
+  extension: 'pug'
+}))
 
-}
-module.exports=serverHandle
+// logger
+app.use(async (ctx, next) => {
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+})
 
+// routes
+app.use(index.routes(), index.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+
+// error-handling
+app.on('error', (err, ctx) => {
+  console.error('server error', err, ctx)
+});
+
+module.exports = app

@@ -30,9 +30,9 @@ export const Article=()=> {
                         value={editorState}
                         controls={controls}
                         onChange={(e)=>{setEditorState(e);test(e)}}
-                        contentStyle={{height: 508, boxShadow: 'grey 0px 0px 5px 2px inset'}}
+                        contentStyle={{height: 507, boxShadow: 'grey 0px 0px 5px 2px inset'}}
                     />
-                    <Card id='htmlCard' style={{height: '100%',width: '50%',padding: '10px'}}>
+                    <Card id='htmlCard' style={{height: '100%',width: '50%',padding: '10px', boxShadow: 'grey 0px 0px 5px 2px inset'}}>
                     </Card>
                 </div>
                 <div>

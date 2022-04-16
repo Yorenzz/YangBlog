@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button, Menu, PageHeader} from "antd";
 import {Navigate, Outlet, useLocation} from "react-router-dom";
 import {getToken, logout} from "../../utils/routeValidate";
 import {useNavigate} from "react-router";
-import Layout, {Content, Header} from "antd/es/layout/layout";
+import Layout, {Content, Footer, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 const { SubMenu } = Menu;
 import {
+    DesktopOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined, PieChartOutlined,
     UploadOutlined,
@@ -14,80 +15,72 @@ import {
     VideoCameraOutlined
 } from "@ant-design/icons";
 import './admin.css'
+// import {fakeAuthProvider as auth} from "../../context/fakeAuth";
 
 
 function Admin() {
-    const location=useLocation()
     const navigateTo=useNavigate()
+    const urlParams = new URL(window.location.href);
+    const pathname = urlParams?.pathname;
+    let openKeys= ['/' + pathname.split('/')[1]]
+    console.log("pathname:", pathname,openKeys);
     const [collapsed,setCollapsed]=useState(false)
     function test(){
-        logout().then(location.state=null)
-        console.log('clearSuc')
-        console.log(location.state)
+        logout()
+        auth.signout(() => {
+            navigateTo('/')
+        })
     }
     const toggle = () => {
         setCollapsed(!collapsed)
     }
     const test2=()=>{
-        navigateTo('/admin/article',{state:getToken()})
+        navigateTo('/admin/article')
     }
     const test3=()=>{
-        navigateTo('/admin',{state:getToken()})
+        navigateTo('/admin/home')
     }
-    if(location.state&&getToken())
+    const test4=()=>{
+        navigateTo('/admin/dynamic')
+    }
     return (
-        <div style={{height:'100%'}}>
-            <Layout>
-                <Sider trigger={null} collapsible collapsed={collapsed}>
+        <>
+            <Layout style={{ minHeight: '100vh' }}>
+                <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1" icon={<PieChartOutlined />} onClick={test3}>
+                    <Menu theme="dark" mode="inline" selectedKeys={[pathname]} defaultOpenKeys={['1','2']}>
+                        <Menu.Item key="/admin/home" icon={<PieChartOutlined />} onClick={()=>{navigateTo('/admin/home')}}>
                             首页
                         </Menu.Item>
-                        <SubMenu key="sub1" icon={<UserOutlined />} title="博客编辑">
-                            <Menu.Item key="index1" icon={<UserOutlined />} onClick={test2}>
+                        <SubMenu key="1" icon={<UserOutlined />} title="博客编辑">
+                            <Menu.Item key="/admin/article" icon={<UserOutlined />} onClick={()=>{navigateTo('/admin/article')}}>
                                 写文章
                             </Menu.Item>
-                            <Menu.Item key="index2" icon={<VideoCameraOutlined />}>
+                            <Menu.Item key="/admin/dynamic" icon={<VideoCameraOutlined />} onClick={()=>{navigateTo('/admin/dynamic')}}>
                                 写动态
                             </Menu.Item>
                         </SubMenu>
-                        <SubMenu key="sub2" icon={<UserOutlined />} title="博客管理">
-                            <Menu.Item key="index3" icon={<UserOutlined />}>
+                        <SubMenu key="2" icon={<UserOutlined />} title="博客管理">
+                            <Menu.Item key="/admin/articleEdit" icon={<UserOutlined />} onClick={()=>{navigateTo('/admin/articleEdit')}}>
                                 文章管理
                             </Menu.Item>
-                            <Menu.Item key="index4" icon={<VideoCameraOutlined />}>
+                            <Menu.Item key="/admin/dynamicEdit" icon={<VideoCameraOutlined />} onClick={()=>{navigateTo('/admin/dynamicEdit')}}>
                                 动态管理
                             </Menu.Item>
                         </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
-                    <Header className="site-layout-background" style={{ padding: 0 }}>
-                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: "trigger",
-                            onClick: toggle,
-                        })}
-                        <Button onClick={test}>Logout</Button>
-                    </Header>
-                    <Content
-                        className="site-layout-background"
-                        style={{
-                            margin: '16px 16px',
-                            //padding: 24,
-                            height: '100%'
-                        }}
-                    >
-                        <Outlet/>
+                    <Content style={{ margin: '16px 16px' }}>
+                        <div className="site-layout-background" style={{ padding: 24 }}>
+                            <Outlet/>
+                        </div>
                     </Content>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
             </Layout>
-        </div>
-    )
-    else
-        return(
-            <Navigate to='/'/>
-        )
-}
+        </>
 
+    )
+}
 export default Admin

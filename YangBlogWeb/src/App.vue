@@ -11,5 +11,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  @apply bg-gray-50
 }
 </style>

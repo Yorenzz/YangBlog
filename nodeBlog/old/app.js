@@ -8,7 +8,7 @@ const getPostData=(req)=>{
             resolve({})
             return
         }
-        if (req.headers['content-type'] !== 'application/x-www-form-urlencoded') {
+        if (req.headers['content-type'] !== 'application/x-www.js-form-urlencoded') {
             resolve({})
             return
         }

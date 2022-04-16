@@ -1,9 +1,13 @@
-.buttonContainer {
+.buttonContainer{
+    height: 40px;
     margin-top: 20px;
+    left: 91%;
+}
+.mdEditor {
+    height: 500px;
     margin-bottom: 20px;
-    margin-right: 20px;
-    float: right;
 }
-.braft {
-    margin-right: 5px;
+.inputContainer{
+    margin-bottom: 20px;
 }
+

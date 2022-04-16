@@ -1,28 +1,41 @@
-import {Button,Input,Image} from "antd";
+import {Button,Input,Image,message} from "antd";
 import {UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone} from '@ant-design/icons';
 import login from './index.module.css'
 import {useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {loginIn, testaaa} from "../../api";
+import {useLocation} from "react-router";
+import {useAuth} from "../../context/TokenContext";
 import {getToken} from "../../utils/routeValidate";
-
-//import Admin from "../admin";
-
 function Index() {
-    const navigateTo = useNavigate()
-    const [username,setUsername]=useState('')
-    const [password,setPassword]=useState('')
-
-    function handleSubmit(){
+    let auth = useAuth()
+    let location = useLocation()
+    const navigate = useNavigate()
+    let localToken=getToken()
+    useEffect(()=>{
+        if ((auth.token===localToken)&&localToken!==null&&auth.token!==null){
+            //已登录
+            navigate('/admin/home')
+        }
+    },[])
+    const [username,setUsername]=useState('yang')
+    const [password,setPassword]=useState('123456')
+    let from = location.state?.from?.pathname || '/admin/home'
+    const errorTest = () => {
+        message.error('登录失败，请检查用户名与密码！')
+    };
+    const handleSubmit=()=>{
         let message={username,password}
-        // message=JSON.stringify(message)
         loginIn(message).then(response=>{
-            const token=getToken()
             console.log('loginSuccess',response.data)
-            console.log({token})
-            navigateTo('/admin', {state:{token}})
-        }).catch(err=>{
-            console.log(err)
+            if(response.data['errno']===-1)
+                errorTest()
+            else
+                auth.signin(response.data['jwt'], () => {
+                    navigate(from, { replace: true })
+                })
+        }).catch(reason=>{
+            console.log(reason)
         })
     }
 
@@ -56,7 +69,4 @@ function Index() {
 
     )
 }
-
-
-
 export default Index

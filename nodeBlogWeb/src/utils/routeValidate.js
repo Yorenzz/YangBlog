@@ -8,6 +8,6 @@ export const handleUserResponse=(token)=>{
     localStorage.setItem(localStorageKey,token)
 }
 
-export const logout= async ()=>{
+export const logout=()=>{
     localStorage.removeItem(localStorageKey)
 }

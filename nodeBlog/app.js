@@ -10,13 +10,26 @@ const jwtKoa=require('koa-jwt')
 const SECRET='yangEzzz'
 const index = require('./routes/index')
 const users = require('./routes/users')
-const {verify} = require("jsonwebtoken")
+const article = require("./routes/article");
+// const {verify} = require("jsonwebtoken")
 
 // error handler
 onerror(app)
 
 app.use(cors())
 // middlewares
+/* 当token验证异常时候的处理，如token过期、token错误 */
+app.use((ctx, next) => {
+  return next().catch((err) => {
+    //console.log('eee',err.status)
+    if (err.status === 401) {
+      ctx.status = 401;
+      ctx.body='UnAuth'
+    } else {
+      throw err;
+    }
+  });
+});
 
 app.use(jwtKoa({
   // 密匙
@@ -38,17 +51,36 @@ app.use(views(__dirname + '/views', {
 }))
 
 // logger
+
 app.use(async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
-
+// app.use(async (ctx,next)=>{
+//   const token = ctx.header.authorization
+//   console.log(token)
+//   try{
+//     // 解密token
+//     const payload = await verify(token.split(' ')[1], SECRET)
+//     console.log(payload)
+//     ctx.body = {
+//       errno: 0,
+//       userInfo: payload
+//     }
+//   }catch(e){
+//     console.error(e)
+//     ctx.body = {
+//       errno: -1,
+//       msg: 'Verify token failed.'
+//     }
+//   }
+// })
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-
+app.use(article.routes(), users.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

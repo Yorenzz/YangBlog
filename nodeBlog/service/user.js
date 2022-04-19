@@ -1,4 +1,5 @@
 const {conn,dbName}= require("../db");
+const {SuccessModel, ErrorModel} = require("../model/resModel");
 
 async function dataOperate(username,password) {
     try {
@@ -18,14 +19,20 @@ async function dataOperate(username,password) {
     }
 }
 
-async function userCheck(userMessage){
+async function userCheck(username,password){
     try {
         const test = (await conn).db(dbName).collection("user");
-        let userResult = await test.find({"uname":"yang"}).toArray()
-        console.log(userResult)
-        return userResult[0]
-    } catch {
-        console.log("错误：" + err.message);
+        let userResult = await test.find({"uname":username}).toArray()
+        //console.log('null',userResult[0].password,password,typeof userResult[0].password,typeof password)
+        if(userResult[0]===undefined)
+            return new ErrorModel('找不到该用户')
+        else if(userResult[0].password===parseInt(password))
+            return new SuccessModel(userResult[0])
+        else
+            return new ErrorModel('密码错误')
+    } catch (e){
+        //console.log("错误：" + e);
+        return new ErrorModel(e)
     }
 }
 

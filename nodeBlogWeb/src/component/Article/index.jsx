@@ -1,4 +1,4 @@
-import {Button, Card, Col, Form, message, Row, Modal} from "antd";
+import {Button, Col, Form, Row, Modal, Select, message} from "antd";
 import {useEffect, useRef, useState} from "react"
 import './article.css'
 import { Input } from 'antd';
@@ -6,8 +6,7 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import {sendArticle} from "../../api";
-import {useNavigate} from "react-router-dom";
-import {logout} from "../../utils/routeValidate";
+import moment from 'moment'
 export const Article=()=>{
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const mdEditor = useRef(null);
@@ -15,30 +14,43 @@ export const Article=()=>{
     const [img,setImg]=useState('')
     const [num,setNum]=useState(200)
     const [category,setCategory]=useState('study')
-    const [label,setLabel]=useState({
-        1:'react',
-        2:'blog'
-    })
-    function handleEditorChange({ html, text }) {
-        console.log('handleEditorChange', html, text);
+    const [label,setLabel]=useState({})
+    let children = [];
+    let labelObj={
+        0:'react',
+        1:'blog'
     }
-    const navigate = useNavigate()
+    const { Option } = Select;
+
+    for (let i = 0; i < 2; i++) {
+        children.push(<Option key={labelObj[i]}>{labelObj[i]}</Option>);
+    }
+    function handleChange(value) {
+        let obj = (Object.assign({}, value))
+        console.log(value,obj,labelObj)
+        setLabel(obj)
+
+    }
     const submit=()=>{
-        // mdEditor.current.insertText('sss')
+        const date=moment(new Date()).utcOffset(8).format('YYYY MMMM D dddd, H:mm:ss')
+        console.log('date',typeof date)
         const mes={
             text:mdEditor.current.getHtmlValue(),
             title,
-            time:new Date(),
+            time:date,
             img,
             num,
             category,
             label
         }
-       console.log(mes)
+       //console.log(mes)
         sendArticle(mes).then(response=>{
             console.log('res',response)
+            message.success('上传成功')
+        }).catch(reason=>{
+            console.log('res',reason.message)
+            message.error('111'+reason.message)
         })
-        console.log('editor',mdEditor.current.getHtmlValue())
     }
     const onFinish=()=>{
 
@@ -99,10 +111,10 @@ export const Article=()=>{
                             'logger',
                             'mode-toggle',
                             'full-screen',
-                            'tab-insert'
+                            'tab-insert',
+                            'block-wrap'
                         ]}
                         renderHTML={text => mdParser.render(text)}
-                        onChange={handleEditorChange}
                     />
                 </Form.Item>
                 <Row gutter={24}>
@@ -119,7 +131,10 @@ export const Article=()=>{
                         <Form.Item
                             label="标签"
                             name="label"
-                        ><Input onChange={e=>setLabel(e.target.value)}/>
+                        >
+                            <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={handleChange}>
+                                {children}
+                            </Select>
                         </Form.Item>
                     </Col>
                 </Row>

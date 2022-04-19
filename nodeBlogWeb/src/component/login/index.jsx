@@ -21,21 +21,21 @@ function Index() {
     const [username,setUsername]=useState('yang')
     const [password,setPassword]=useState('123456')
     let from = location.state?.from?.pathname || '/admin/home'
-    const errorTest = () => {
-        message.error('登录失败，请检查用户名与密码！')
+    const errorTest = (reason) => {
+        message.error('登录失败，'+reason)
     };
     const handleSubmit=()=>{
         let message={username,password}
         loginIn(message).then(response=>{
             console.log('loginSuccess',response.data)
-            if(response.data['errno']===-1)
-                errorTest()
+            if(response.data.errno===-1)
+                errorTest(response.data.msg)
             else
                 auth.signin(response.data['jwt'], () => {
                     navigate(from, { replace: true })
                 })
         }).catch(reason=>{
-            console.log(reason)
+            errorTest(reason)
         })
     }
 

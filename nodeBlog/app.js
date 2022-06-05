@@ -11,6 +11,7 @@ const SECRET='yangEzzz'
 const index = require('./routes/index')
 const users = require('./routes/users')
 const article = require("./routes/article");
+const publictext = require("./routes/publictext");
 // const {verify} = require("jsonwebtoken")
 
 // error handler
@@ -36,7 +37,7 @@ app.use(jwtKoa({
   secret: SECRET
 }).unless({
   // 自定义忽略jwt验证的目录
-  path: [/^\/users\/login/]
+  path: [/^\/users\/login/,/^\/publictext\/*/]
 }))
 
 app.use(bodyparser({
@@ -81,6 +82,8 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(article.routes(), users.allowedMethods())
+app.use(publictext.routes(), users.allowedMethods())
+
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

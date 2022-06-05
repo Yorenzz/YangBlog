@@ -9,7 +9,8 @@ import {sendArticle} from "../../api";
 import moment from 'moment'
 export const Article=()=>{
     const mdParser = new MarkdownIt(/* Markdown-it options */);
-    const mdEditor = useRef(null);
+    const mdEditorDescribe = useRef(null);
+    const mdEditorText = useRef(null);
     const [title,setTitle]=useState('')
     const [img,setImg]=useState('')
     const [num,setNum]=useState(200)
@@ -35,7 +36,8 @@ export const Article=()=>{
         const date=moment(new Date()).utcOffset(8).format('YYYY MMMM D dddd, H:mm:ss')
         console.log('date',typeof date)
         const mes={
-            text:mdEditor.current.getHtmlValue(),
+            text:mdEditorText.current.getHtmlValue(),
+            describe:mdEditorDescribe.current.getHtmlValue(),
             title,
             time:date,
             img,
@@ -89,16 +91,43 @@ export const Article=()=>{
                     </Col>
                 </Row>
                 <Form.Item
-                    label="文章编辑"
+                    label="文章描述"
                 >
                     <MdEditor
                         className='mdEditor'
-                        ref={mdEditor}
+                        ref={mdEditorDescribe}
                         plugins={[
                             'header',
                             'font-bold',
                             'font-italic',
-                            'font-underline',
+                            'font-strikethrough',
+                            'list-unordered',
+                            'list-ordered',
+                            'block-quote',
+                            'block-code-inline',
+                            'block-code-block',
+                            'table',
+                            'image',
+                            'link',
+                            'logger',
+                            'mode-toggle',
+                            'full-screen',
+                            'tab-insert',
+                            'block-wrap'
+                        ]}
+                        renderHTML={text => mdParser.render(text)}
+                    />
+                </Form.Item>
+                <Form.Item
+                    label="文章正文"
+                >
+                    <MdEditor
+                        className='mdEditor'
+                        ref={mdEditorText}
+                        plugins={[
+                            'header',
+                            'font-bold',
+                            'font-italic',
                             'font-strikethrough',
                             'list-unordered',
                             'list-ordered',

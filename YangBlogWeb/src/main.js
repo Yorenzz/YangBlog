@@ -2,5 +2,5 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './index.css'
 import router from "./router";
-
-createApp(App).use(router).mount('#app')
+import Prism from "../public/prism";
+createApp(App).use(Prism).use(router).mount('#app')

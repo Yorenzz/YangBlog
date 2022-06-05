@@ -14,6 +14,18 @@ async function insertArticle(text){
     }
 }
 
+async function getText(msg){
+    try{
+        const dbCollection = (await conn).db(dbName).collection("article")
+        let res=await dbCollection.find().toArray()
+        console.log('get',res)
+        return new SuccessModel(res)
+    }catch (e){
+        return new ErrorModel(e)
+    }
+}
+
 module.exports={
-    insertArticle
+    insertArticle,
+    getText
 }

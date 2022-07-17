@@ -1,24 +1,4 @@
 <template>
-<!--  <el-carousel-->
-<!--      class="hidden lg:block absolute w-full h-full"-->
-<!--      :height='bannerHeight'-->
-<!--      arrow="never"-->
-<!--      trigger="click"-->
-<!--      :pause-on-hover='false'-->
-<!--  >-->
-<!--    <el-carousel-item>-->
-<!--    <el-image src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/4d629ad68f516e680ce3e0e4538195eb3e692aa3.png"/>-->
-<!--  </el-carousel-item>-->
-<!--    <el-carousel-item>-->
-<!--      <el-image src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/05fe8a1f3808a53d93dbbc020d2200163c7b1b36.jpg"/>-->
-<!--    </el-carousel-item>-->
-<!--    <el-carousel-item>-->
-<!--      <el-image src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/c76807747ab0b12f685229817a22c22634a98f27.jpg"/>-->
-<!--    </el-carousel-item>-->
-<!--    <el-carousel-item>-->
-<!--      <el-image src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/%E5%A7%90%E5%A7%90.jpg"/>-->
-<!--    </el-carousel-item>-->
-<!--  </el-carousel>-->
   <div class="hidden lg:block w-full" id="topBg">
     <div class="img1"></div>
     <div class="img2"></div>
@@ -87,7 +67,13 @@
         <div class="flex justify-center mt-8 mb-4"><el-button>阅读全文</el-button></div>
       </div>
       <div class="flex justify-center">
-        <el-pagination background layout="prev, pager, next" :total="50" />
+        <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="50"
+            :current-page="currentPage"
+            @update:current-page="pageChange"
+        />
       </div>
     </div>
 <!--    右侧部分-->
@@ -139,6 +125,12 @@ const container=ref('transparent')
 const bannerHeight=ref('500px')
 const textArray=ref([])
 const text=ref()
+let currentPage=ref(1)
+let pageSize=ref(5)
+const pageChange=(page)=>{
+  currentPage.value=page
+  console.log(page)
+}
 const handleScroll=()=>{
   let style = window.getComputedStyle(document.getElementById('topDown'));
   if(document.documentElement.scrollTop>455||style.display==='none') {

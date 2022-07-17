@@ -82,7 +82,7 @@
     </div>
   </div>
 <!--<hr/>-->
-<footer class="h-[260px] bg-[#383838]">
+  <footer class="h-[260px] bg-[#383838]">
   <div class="text-gray-400">sssss</div>
   <hr class="w-[1200px] m-auto border-none bg-gray-500 h-[1px] mb-4 mt-4">
   <span class="text-gray-400">Copyright © 2022 - ~ Yang'S BLOG</span>
@@ -182,7 +182,7 @@ onMounted(()=>{
 
 <style scoped>
 .wave{
-  background: repeat-x url("./public/svg.png");
+  background: repeat-x url("../../../YangWebBlog/public/svg.png");
   background-size: 30%;
   height: 590px;
   width: 100%;

@@ -1,12 +1,12 @@
 <script setup>
 </script>
-
 <template>
   <div class="top-picture">
     <div class="top-picture-first"></div>
     <div class="top-picture-second"></div>
     <div class="top-picture-wave"></div>
   </div>
+  <div class="title-all"><div class="title" data-text="Yang's Blog">Yang's Blog</div></div>
 </template>
 
 <style scoped lang="scss">
@@ -55,5 +55,22 @@
     background: url(https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/c76807747ab0b12f685229817a22c22634a98f27.jpg) no-repeat left top;
     background-size: cover;
   }
+}
+.title {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 8rem;
+  color: white;
+  text-shadow: 5px 5px 5px #16efd6;
+  z-index: 1;
+  position: relative;
+}
+.title-all {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-20%);
+  border-radius: 20px;
+  width: 720px;
+  height: 200px;
 }
 </style>

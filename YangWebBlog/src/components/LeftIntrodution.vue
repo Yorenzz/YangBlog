@@ -1,9 +1,8 @@
 <script setup>
-import TopPicture from "../components/TopPicture.vue";
 </script>
 
 <template>
-  <TopPicture/>
+  111
 </template>
 
 <style scoped>

@@ -20,8 +20,7 @@
     </div>
   </el-backtop>
   <div class="topContainer mb-16">
-    <div class="topContainerAfter1"><div class="topContainerAfter" data-text="Yang's Blog">Yang's Blog</div></div>
-
+    <div class="topContainerAfter1"><div class="topContainerAfter" data-text="Yorenz's Blog">Yorenz's Blog</div></div>
     <div id="topDown" class="topDown hidden lg:block" @click="down"></div>
       <el-menu
           default-active="1"
@@ -256,7 +255,7 @@ onMounted(()=>{
   /*background: rgb(255,255,255,0.6);*/
   border-radius: 20px;
   /*backdrop-filter:blur(4px);*/
-  width: 720px;
+  width: 900px;
   height: 200px;
 }
 .topContainerAfter {
@@ -274,14 +273,12 @@ onMounted(()=>{
 }
 .topContainerAfter::before {
   content: attr(data-text);
-  /*background: rgb(255,255,255,0.6);*/
   position: absolute;
   font-size: 8rem;
   top: 50%;
   left: 49.5%;white-space: nowrap;
   transform: translate(-50%,-50%);
   text-shadow: 4px 0 red;
-  /*left: -2px;*/
   clip-path: inset(0 0 0 0);
   animation: ani2 1s infinite linear alternate-reverse;
 }
@@ -396,17 +393,4 @@ onMounted(()=>{
 .topDown{
   pointer-events: none
 }
-/*::v-deep(.n-menu>div:first-child){*/
-/*  font-size: 1.5rem;*/
-/*  color: #0ef0f0;*/
-/*}*/
-/*::v-deep(.n-menu>div:first-child>div:first-child>div:first-child){*/
-/*  color: #0ef0f0;*/
-/*}
-/*#menu{*/
-/*  !*border-bottom: none;*!*/
-/*  @apply h-[57px] duration-500 text-blue-500 w-full fixed top-0 z-10;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*}*/
 </style>

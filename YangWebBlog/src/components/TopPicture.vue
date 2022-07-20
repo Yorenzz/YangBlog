@@ -1,28 +1,89 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+const props=defineProps({
+  offsetHeight: Number
+})
+const container=ref('transparent')
 const down=()=>{
   window.scrollTo({
-    top: 750.6666870117188,
+    top: props.offsetHeight,
     behavior: "smooth"
   })
 }
+const handleScroll=()=>{
+  let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
+  if(document.documentElement.scrollTop>props.offsetHeight-58||style.display==='none') {
+    container.value = '#353638'
+  }
+  else{
+    container.value='transparent'
+  }
+}
+onMounted(()=>{
+  let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
+  if(style.display==='none')
+    container.value = '#424349'
+  window.scrollTop=0
+  window.addEventListener("scroll", handleScroll)
+  window.onresize=handleScroll
+})
 </script>
 <template>
-  <div class="top-picture">
-    <div class="top-picture-first"></div>
-    <div class="top-picture-second"></div>
-    <div class="top-picture-wave"></div>
-    <div class="title-all">
-      <div class="title" data-text="Yorenz's Blog">
-        Yorenz's Blog
-      </div>
+<div class="menu">
+  <el-menu
+          default-active="1"
+          mode="horizontal"
+          :background-color="container"
+          active-text-color="#ffd04b"
+          text-color="#fff"
+      >
+        <el-menu-item index="0" disabled class="menu-title">
+          Yang's Blog
+        </el-menu-item>
+        <el-menu-item index="1" class="tab">
+          首页
+        </el-menu-item>
+        <el-menu-item index="2" class="tab">
+          分类
+        </el-menu-item>
+        <el-menu-item index="3" class="tab">
+          关于我
+        </el-menu-item>
+  </el-menu>
+</div>
+  
+<div class="top-picture">
+  <div class="top-picture-first"></div>
+  <div class="top-picture-second"></div>
+  <div class="top-picture-wave"></div>
+  <div class="title-all">
+    <div class="title" data-text="Yorenz's Blog">
+      Yorenz's Blog
     </div>
-    <div class="down" @click="down"><el-icon :size="50"><Bottom /></el-icon></div>
   </div>
+  <div class="down" @click="down"><el-icon :size="50"><Bottom /></el-icon></div>
+</div>
 
 </template>
 
 <style scoped lang="scss">
 @import '../scss/vue';
+.menu {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100vw;
+  ::v-deep(.menu-title) {
+    color: deepskyblue !important;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    opacity: 1;
+  }
+  ::v-deep(.el-menu){
+    border-bottom: none;
+  }
+}
 .top-picture {
   position: relative;
   height: 100vh;
@@ -30,13 +91,13 @@ const down=()=>{
 
   &-wave{
     background: repeat-x url("./public/svg.png");
-    background-size: 30%;
-    height: 40vh;
+    background-size: 20%;
+    height: 14vh;
     width: 100vw;
     opacity: 60%;
     position: absolute;
     left: 0;
-    transform: translateY(200%);
+    transform: translateY(86vh);
   }
 
   &-first {

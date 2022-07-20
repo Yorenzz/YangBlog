@@ -149,12 +149,6 @@ const down=()=>{
     behavior: "smooth"
   })
 }
-const toTop=()=>{
-  window.scrollTo({
-    top:0,
-    behavior: 'smooth'
-  })
-}
 onMounted(()=>{
   let style = window.getComputedStyle(document.getElementById('topDown'));
   if(style.display==='none')

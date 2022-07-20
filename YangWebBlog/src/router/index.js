@@ -3,7 +3,7 @@ const routes = [
     {
         path:'/',
         name:'首页',
-        component:()=>import('../pages/Home.vue')
+        component:()=>import('../components/MiddleArticle.vue')
     }
 ]
 

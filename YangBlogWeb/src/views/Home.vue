@@ -2,7 +2,7 @@
   <div class="hidden lg:block w-full" id="topBg">
     <div class="img1"></div>
     <div class="img2"></div>
-    <div class="wave"></div>
+<!--    <div class="wave"></div>-->
   </div>
   <el-backtop :bottom="50" :visibility-height="300">
     <div
@@ -44,9 +44,9 @@
       </el-menu>
 <!--    <div id="menu"><n-menu mode="horizontal" :options="options" /></div>-->
 
-  </div>
+  </div><!--    左侧部分-->
   <div class="flex mb-8 items-start">
-<!--    左侧部分-->
+
     <div class="hidden h-auto sm:block transition-all duration-300 hover:shadow-sml w-1/6 bg-white border rounded-sm border-solid border-gray-300 ml-4 mr-2">
       <el-avatar
           shape="square"

@@ -27,7 +27,7 @@ const heightContent=ref()
 .top-picture {
   margin-bottom: 32px;
 }
-.left-introdution {
+.left-introduction {
   flex: 1;
 }
 .right-detail {
@@ -40,7 +40,7 @@ const heightContent=ref()
 }
 .content {
   background: $theme-color;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: flex-start;

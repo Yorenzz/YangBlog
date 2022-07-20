@@ -38,7 +38,7 @@ onMounted(()=>{
           text-color="#fff"
       >
         <el-menu-item index="0" disabled class="menu-title">
-          Yang's Blog
+          Yorenz's Blog
         </el-menu-item>
         <el-menu-item index="1" class="tab">
           首页
@@ -82,6 +82,7 @@ onMounted(()=>{
   }
   ::v-deep(.el-menu){
     border-bottom: none;
+    transition-duration: 500ms;
   }
 }
 .top-picture {
@@ -92,12 +93,14 @@ onMounted(()=>{
   &-wave{
     background: repeat-x url("./public/svg.png");
     background-size: 20%;
-    height: 14vh;
+    height: 13vh;
     width: 100vw;
     opacity: 60%;
     position: absolute;
     left: 0;
-    transform: translateY(86vh);
+    z-index: 1;
+    //transform: translateY(calc(86vh + 6px));
+    bottom: 0;
   }
 
   &-first {

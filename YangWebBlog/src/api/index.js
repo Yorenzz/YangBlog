@@ -1,7 +1,7 @@
-import config from "../config"
+import request from "../request"
 
 export function getText(message){
-    return config({
+    return request({
         url: '/publictext/getText',
         method: 'POST',
         data: message

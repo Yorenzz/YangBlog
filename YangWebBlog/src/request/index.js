@@ -1,6 +1,6 @@
 import axios from 'axios'
-const config=axios.create({
+const request=axios.create({
     baseURL: 'http://localhost:8080/',
     timeout:30000
 })
-export default config
+export default request

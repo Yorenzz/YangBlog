@@ -31,12 +31,12 @@ const down=()=>{
   &-wave{
     background: repeat-x url("./public/svg.png");
     background-size: 30%;
-    height: 100vh;
+    height: 40vh;
     width: 100vw;
     opacity: 60%;
     position: absolute;
     left: 0;
-    transform: translateY(80%);
+    transform: translateY(200%);
   }
 
   &-first {

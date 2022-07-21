@@ -1,0 +1,9 @@
+{
+    "eslint.codeActionsOnSave.rules": null,
+    "eslint.enable": false,
+    "stylelint.enable": false,
+    "eslint.codeAction.disableRuleComment": {
+        "enable": false
+    },
+    "eslint.alwaysShowStatus": false
+}

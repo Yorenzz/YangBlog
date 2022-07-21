@@ -89,7 +89,9 @@ onMounted(()=>{
   position: relative;
   height: 100vh;
   width: 100vw;
-
+    @media only screen and (max-width:1228px) {
+    display: none;
+  }
   &-wave{
     background: repeat-x url("./public/svg.png");
     background-size: 20%;
@@ -120,7 +122,9 @@ onMounted(()=>{
     left: 0;
     top: 0;
     -webkit-mask: url(public/AYJuRke.png);
+    mask: url(public/AYJuRke.png);
     -webkit-mask-size: 3000% 100%;
+    mask-size: 3000% 100%;
     animation: maskMove 2s steps(29) infinite alternate;
 
   }

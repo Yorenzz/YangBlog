@@ -36,7 +36,6 @@ import moment from 'moment'
   </div>    
 </div>
 </template>
-17675686787
 <style scoped lang="scss">
 @import '../scss/vue.scss';
 .footer {

@@ -3,13 +3,16 @@
 
 <template>
   <div class="left-introduction">
+    <div class="avator-box">
       <el-avatar
           class="avator"
           shape="square"
           src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/ba07afa100ed743f068fe35a75353b06.png"
       />
+    </div>
+      
       <hr/>
-      <div class="mb-4 text-4xl text-blue-500 font-bold font-mySan">
+      <div>
         Yorenz
       </div>
       <span>前端开发，后端玩玩nodejs</span>
@@ -21,7 +24,16 @@
 .left-introduction {
   .avator {
     width: 100%;
-    height: 256px;
+    height: 100%;
+    position: absolute;
+      top:0;
+      left:0
+  }
+  .avator-box {
+      width:100%;
+      height:0;
+      padding-bottom:100%;
+      position: relative;
   }
   &:hover {
     box-shadow: -1px 2px 5px 3px rgba(0, 0, 0, 0.3);

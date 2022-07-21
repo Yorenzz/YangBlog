@@ -26,15 +26,23 @@ const heightContent=ref()
 @import '../scss/vue.scss';
 .top-picture {
   margin-bottom: 32px;
+
 }
 .left-introduction {
   flex: 1;
+  @media only screen and (max-width:900px) {
+    display: none;
+  }
 }
 .right-detail {
   flex: 1;
+  @media only screen and (max-width:1024px) {
+    display: none;
+  }
 }
 .middle {
   flex:4;
+  min-width: 60vw;
   margin-left: 16px;
   margin-right: 16px;
 }
@@ -45,5 +53,8 @@ const heightContent=ref()
   justify-content: center;
   align-items: flex-start;
   padding: 32px;
+  @media only screen and (max-width:1228px) {
+    margin-top: 58px;
+  }
 }
 </style>

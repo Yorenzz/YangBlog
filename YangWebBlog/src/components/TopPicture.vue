@@ -19,6 +19,13 @@ const handleScroll=()=>{
     container.value='transparent'
   }
 }
+const menuData=[
+  {title:'首页',route:'/home'},
+  {title: '分类',route:'/blog'},
+  {title: '时间轴'},
+  {title: '动态'},
+  {title: '关于我'}
+]
 onMounted(()=>{
   let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
   if(style.display==='none')
@@ -31,23 +38,22 @@ onMounted(()=>{
 <template>
 <div class="menu">
   <el-menu
-          default-active="1"
+          :default-active="0"
           mode="horizontal"
           :background-color="container"
           active-text-color="#ffd04b"
           text-color="#fff"
+          router
       >
-        <el-menu-item index="0" disabled class="menu-title">
+        <el-menu-item disabled class="menu-title">
           Yorenz's Blog
         </el-menu-item>
-        <el-menu-item index="1" class="tab">
-          首页
-        </el-menu-item>
-        <el-menu-item index="2" class="tab">
-          分类
-        </el-menu-item>
-        <el-menu-item index="3" class="tab">
-          关于我
+        <el-menu-item
+            v-for="(item,index) in menuData"
+            :index="index"
+            :route="item.route"
+        >
+          {{item.title}}
         </el-menu-item>
   </el-menu>
 </div>

@@ -8,8 +8,16 @@ const pageChange=(page)=>{
   currentPage.value=page
   console.log(page)
 }
-getText({category:'生活随笔'}).then((res)=>{
+const sizeChange=(size)=>{
+  pageSize.value=size
+  console.log(size)
+}
+const blogDetail=(ID)=>{
+  console.log('id', ID)
+}
+getText({category:'生活随笔',pageSize:pageSize.value,currentPage:currentPage.value}).then((res)=>{
     console.log(res.data)
+    //后端传回总文章数
     textArray.value=res.data.map((item) => {
       item.text = item.text.replaceAll('<pre>', '<pre class="language-js line-numbers">')
       item.describe=item.describe.replaceAll('<pre>', '<pre class="language-js line-numbers">')
@@ -17,24 +25,28 @@ getText({category:'生活随笔'}).then((res)=>{
     })
     nextTick(()=>{Prism.highlightAll()})
 })
-onMounted(()=>{
-  Prism.highlightAll()
-  nextTick(()=>{Prism.highlightAll()})
-})
 </script>
 
 <template>
   <div class="middle">
     <div class="middle-article"  v-for="(item,index) in textArray">
       <div v-html="item.describe"></div>
+      <div class="article-button">
+        <el-button type="primary" @click="blogDetail(item['_id'])">
+          阅读全文
+        </el-button>
+      </div>
     </div>
     <div class="middle-pagination">
       <el-pagination
             background
-            layout="prev, pager, next"
+            layout="prev, pager, next, sizes"
             :total="50"
-            :current-page="currentPage"
-            @update:current-page="pageChange"
+            :page-sizes="[5, 10, 15, 20]"
+            v-model:currentPage="currentPage"
+            v-model:page-size="pageSize"
+            @current-change="pageChange"
+            @size-change="sizeChange"
       />
     </div>
     
@@ -56,11 +68,11 @@ onMounted(()=>{
     border-width: 1px;
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 16px;
-    padding: 16px 32px;
-  }
-  &-article p {
-      margin: 0;
+    padding: 0 32px 16px;
+    .article-button {
+      margin-top: 16px;
     }
+  }
   &-pagination{
     display: flex;
     justify-content: center;

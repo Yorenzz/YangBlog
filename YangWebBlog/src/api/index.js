@@ -7,3 +7,11 @@ export function getText(message){
         data: message
     })
 }
+
+export function getArticleById(ID){
+    return request({
+        url: '/publictext/getArticleById',
+        method: 'GET',
+        params: {ID}
+    })
+}

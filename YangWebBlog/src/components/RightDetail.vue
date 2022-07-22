@@ -13,9 +13,7 @@
   }
   border-radius: 0.125rem;
   background: white;
-  border-style: solid;
-  border-color: #cbc6c6;
-  border-width: 1px;
+  border: 1px #cbc6c6 solid;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

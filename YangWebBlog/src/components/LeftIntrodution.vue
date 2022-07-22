@@ -7,7 +7,8 @@
       <el-avatar
           class="avatar"
           shape="square"
-          src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/ba07afa100ed743f068fe35a75353b06.png"
+          src="/public/empty.png"
+          alt="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/ba07afa100ed743f068fe35a75353b06.png"
       />
     </div>
       
@@ -15,7 +16,7 @@
       <div class="name">
         Yorenz
       </div>
-      <span>前端开发，后端玩玩nodejs</span>
+      <span>占位占位占位</span>
 
   </div>
 </template>
@@ -25,9 +26,7 @@
   height: 80vh;
   border-radius: 0.125rem;
   background: white;
-  border-style: solid;
-  border-color: #cbc6c6;
-  border-width: 1px;
+  border: 1px #cbc6c6 solid;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   .avatar {
     width: 100%;

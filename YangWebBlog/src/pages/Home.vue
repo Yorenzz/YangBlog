@@ -3,20 +3,18 @@ import TopPicture from "../components/TopPicture.vue";
 import LeftIntrodution from "../components/LeftIntrodution.vue";
 import RightDetail from "../components/RightDetail.vue";
 import Footer from "../components/Footer.vue";
-import { onMounted, ref } from 'vue';
-onMounted(()=>{
-  heightContent.value=document.getElementsByClassName('content')[0].offsetTop-58
-})
-const heightContent=ref()
+// import { onMounted, ref, nextTick } from 'vue';
+import { useRoute } from "vue-router";
+const route =useRoute()
 </script>
 
 <template>
-  <TopPicture
-    :offsetHeight="heightContent"
-  />
-  <div class="content">
+  <TopPicture/>
+  <div :class="[route.path==='/home'?'':'visible-pic', 'content']">
     <LeftIntrodution />
-    <router-view class="middle" />
+    <div class="middle">
+      <router-view />
+    </div>
     <RightDetail />
   </div>
   <Footer />
@@ -42,9 +40,12 @@ const heightContent=ref()
 }
 .middle {
   flex:4;
-  min-width: 60vw;
+  min-width: 928px;
   margin-left: 16px;
   margin-right: 16px;
+}
+.visible-pic {
+  margin-top: 90px !important;
 }
 .content {
   background: $theme-color;
@@ -52,7 +53,8 @@ const heightContent=ref()
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 32px;
+  margin-top: 32px;
+  padding: 0 32px;
   @media only screen and (max-width:1228px) {
     margin-top: 58px;
   }

@@ -1,21 +1,26 @@
 <script setup>
 import {nextTick, onMounted, ref} from 'vue'
 import {getText} from "../api";
+import { useRoute, useRouter } from 'vue-router'
+const router = useRouter()
 const textArray=ref([])
 let currentPage=ref(1)
 let pageSize=ref(5)
 const pageChange=(page)=>{
   currentPage.value=page
-  console.log(page)
+  getArticle()
 }
 const sizeChange=(size)=>{
   pageSize.value=size
-  console.log(size)
+  currentPage.value=1
+  getArticle()
 }
 const blogDetail=(ID)=>{
   console.log('id', ID)
+  router.push({path: '/blog', query: {ID:ID}})
 }
-getText({category:'生活随笔',pageSize:pageSize.value,currentPage:currentPage.value}).then((res)=>{
+const getArticle=()=>{
+  getText({category:'生活随笔',pageSize:pageSize.value,currentPage:currentPage.value}).then((res)=>{
     console.log(res.data)
     //后端传回总文章数
     textArray.value=res.data.map((item) => {
@@ -25,6 +30,8 @@ getText({category:'生活随笔',pageSize:pageSize.value,currentPage:currentPage
     })
     nextTick(()=>{Prism.highlightAll()})
 })
+}
+getArticle()
 </script>
 
 <template>
@@ -63,9 +70,7 @@ getText({category:'生活随笔',pageSize:pageSize.value,currentPage:currentPage
      
     border-radius: 0.125rem;
     background: white;
-    border-style: solid;
-    border-color: #cbc6c6;
-    border-width: 1px;
+    border: 1px #cbc6c6 solid;
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 16px;
     padding: 0 32px 16px;

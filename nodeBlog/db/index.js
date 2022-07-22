@@ -1,12 +1,15 @@
 const {MongoClient} = require('mongodb')
+const {ObjectId}=require('mongodb')
 const url='mongodb://localhost:27017'
 const dbName='testBlog'
 
-conn= MongoClient.connect(url)
+const conn= MongoClient.connect(url)
+
 
 module.exports = {
     conn,
-    dbName
+    dbName,
+    ObjectId
 }
 // MongoClient.connect(url, function (err, db) {
 //     if (err) throw err;

@@ -1,18 +1,22 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-const props=defineProps({
-  offsetHeight: Number
-})
+import { onMounted, ref, computed, watch } from 'vue';
+import { useRoute } from 'vue-router';
+const route=useRoute()
+
 const container=ref('transparent')
+const activeMenu = computed(() => {
+  return route.path
+})
 const down=()=>{
   window.scrollTo({
-    top: props.offsetHeight,
+    top: window.innerHeight-58,
     behavior: "smooth"
   })
 }
+
 const handleScroll=()=>{
   let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
-  if(document.documentElement.scrollTop>props.offsetHeight-58||style.display==='none') {
+  if(document.documentElement.scrollTop>window.innerHeight-59||style.display==='none') {
     container.value = '#353638'
   }
   else{
@@ -20,17 +24,28 @@ const handleScroll=()=>{
   }
 }
 const menuData=[
-  {title:'首页',route:'/home'},
-  {title: '分类',route:'/blog'},
-  {title: '时间轴'},
-  {title: '动态'},
-  {title: '关于我'}
+  {title:'首页', index:'/home'},
+  {
+    title: '分类',
+    index:'/category',
+    children:[
+      {title:'学习笔记', index:'/category/study'},
+      {title:'个人项目', index:'/category/project'},
+      {title:'技术杂烩', index:'/category/technology'},
+      {title:'心情随写', index:'/category/notes'},
+    ]},
+  {title: '时间轴', index: '/timeaxis'},
+  {title: '动态', index: '/dynamic'},
+  {title: '关于我', index: '/about'}
 ]
+watch(() => route.path, (current, prevState) => {
+    if(current==='/home')
+      container.value='transparent'
+}, { deep: true, immediate: true })
 onMounted(()=>{
   let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
   if(style.display==='none')
-    container.value = '#424349'
-  window.scrollTop=0
+    container.value = '#353638'
   window.addEventListener("scroll", handleScroll)
   window.onresize=handleScroll
 })
@@ -38,7 +53,7 @@ onMounted(()=>{
 <template>
 <div class="menu">
   <el-menu
-          :default-active="0"
+          :default-active='activeMenu'
           mode="horizontal"
           :background-color="container"
           active-text-color="#ffd04b"
@@ -48,17 +63,37 @@ onMounted(()=>{
         <el-menu-item disabled class="menu-title">
           Yorenz's Blog
         </el-menu-item>
-        <el-menu-item
-            v-for="(item,index) in menuData"
-            :index="index"
-            :route="item.route"
+        <template
+          v-for="item in menuData"
+          :key="item.index"
         >
-          {{item.title}}
-        </el-menu-item>
+          <el-sub-menu
+            v-if="item.children&&item.children.length"
+            :index="item.index"
+          >
+            <template #title>
+              <span>{{item.title}}</span>
+            </template>
+            <el-menu-item
+              v-for="itemChild in item.children"
+              :key="itemChild.index"
+              :index="itemChild.index"
+            >
+              <span>{{itemChild.title}}</span>
+            </el-menu-item>
+          </el-sub-menu>
+          <el-menu-item
+            v-else
+            :index="item.index"
+          >
+            {{item.title}}
+          </el-menu-item>
+          
+        </template>
   </el-menu>
 </div>
   
-<div class="top-picture">
+<div class="top-picture" v-show="route.path==='/home'">
   <div class="top-picture-first"></div>
   <div class="top-picture-second"></div>
   <div class="top-picture-wave"></div>

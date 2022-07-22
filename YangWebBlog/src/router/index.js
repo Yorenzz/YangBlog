@@ -13,6 +13,30 @@ const routes = [
         path:'/blog',
         name:'博客正文',
         component:()=>import('../components/BlogDetail.vue')
+    },
+    {
+        path:'/timeaxis',
+        name:'时间轴',
+        component:()=>import('../components/TimeAxis.vue')
+    },
+    {
+        path:'/dynamic',
+        name:'动态',
+        component:()=>import('../components/Dynamic.vue')
+    },
+    {
+        path:'/about',
+        name:'关于我',
+        component:()=>import('../components/About.vue')
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: ()=>import('../components/404.vue')
+    },
+    {
+        path: '/:pathMatch(.*)',
+        redirect: '/404'
     }
 ]
 

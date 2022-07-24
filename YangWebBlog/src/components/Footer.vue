@@ -1,4 +1,4 @@
-<script setup>
+ <script setup>
 import moment from 'moment'
 </script>
 
@@ -39,22 +39,25 @@ import moment from 'moment'
 <style scoped lang="scss">
 @import '../scss/vue.scss';
 .footer {
-    background-color: $grey-color;
-    color: #ffffff;
-    padding-top: 16px;
-    padding-bottom: 32px;
+  background-color: $grey-color;
+  color: #ffffff;
+  padding-top: 16px;
+  margin-top: 32px;
+  padding-bottom: 32px;
+  text-align: center;
 }
 .label {
-    display: flex;
-    justify-content: center;
-    div {
-        margin-right: 16px;
-    }
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+  div {
+      margin-right: 16px;
+  }
 }
 .bottom-divider {
-    width: 70%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-color: $divider-color;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: $divider-color;
 }
 </style>

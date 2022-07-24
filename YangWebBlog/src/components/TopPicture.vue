@@ -7,9 +7,12 @@ const container=ref('transparent')
 const activeMenu = computed(() => {
   return route.path
 })
+
+const innerWidth=computed(()=>window.innerWidth)
+
 const down=()=>{
   window.scrollTo({
-    top: window.innerHeight-58,
+    top: window.innerHeight+1,
     behavior: "smooth"
   })
 }
@@ -39,13 +42,17 @@ const menuData=[
   {title: '关于我', index: '/about'}
 ]
 watch(() => route.path, (current, prevState) => {
-    if(current==='/home')
+    if(current!=='/home'||window.innerWidth<1200)
+      container.value='#353638'
+    else
       container.value='transparent'
 }, { deep: true, immediate: true })
 onMounted(()=>{
-  let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
+  let style = window.getComputedStyle(document.getElementById('pic'));
   if(style.display==='none')
     container.value = '#353638'
+  else
+    container.value='transparent'
   window.addEventListener("scroll", handleScroll)
   window.onresize=handleScroll
 })
@@ -70,6 +77,7 @@ onMounted(()=>{
           <el-sub-menu
             v-if="item.children&&item.children.length"
             :index="item.index"
+            popper-class="pppp"
           >
             <template #title>
               <span>{{item.title}}</span>
@@ -93,7 +101,7 @@ onMounted(()=>{
   </el-menu>
 </div>
   
-<div class="top-picture" v-show="route.path==='/home'">
+<div id="pic" :class="{'transparent':route.path!=='/home'||innerWidth<1200, 'top-picture':route.path==='/home'}">
   <div class="top-picture-first"></div>
   <div class="top-picture-second"></div>
   <div class="top-picture-wave"></div>
@@ -106,9 +114,11 @@ onMounted(()=>{
 </div>
 
 </template>
-
 <style scoped lang="scss">
 @import '../scss/vue';
+.transparent {
+  display: none;
+}
 .menu {
   position: fixed;
   top: 0;
@@ -125,16 +135,18 @@ onMounted(()=>{
     border-bottom: none;
     transition-duration: 500ms;
   }
+
 }
 .top-picture {
+
   position: relative;
   height: 100vh;
   width: 100vw;
-    @media only screen and (max-width:1228px) {
+  @media only screen and (max-width:1228px) {
     display: none;
   }
   &-wave{
-    background: repeat-x url("./public/svg.png");
+    background: repeat-x url("/svg.png");
     background-size: 20%;
     height: 13vh;
     width: 100vw;
@@ -142,12 +154,11 @@ onMounted(()=>{
     position: absolute;
     left: 0;
     z-index: 1;
-    //transform: translateY(calc(86vh + 6px));
     bottom: 0;
   }
 
   &-first {
-    background: url(public/homepic1.jpg) no-repeat left top;
+    background: url(/homepic1.jpg) no-repeat left top;
     background-size: cover;
     height: 100vh;
     position: absolute;
@@ -162,8 +173,8 @@ onMounted(()=>{
     width: 100vw;
     left: 0;
     top: 0;
-    -webkit-mask: url(public/AYJuRke.png);
-    mask: url(public/AYJuRke.png);
+    -webkit-mask: url(/AYJuRke.png);
+    mask: url(/AYJuRke.png);
     -webkit-mask-size: 3000% 100%;
     mask-size: 3000% 100%;
     animation: maskMove 2s steps(29) infinite alternate;
@@ -177,7 +188,7 @@ onMounted(()=>{
     left: 0;
     height: 100vh;
     width: 100vw;
-    background: url(public/homepic2.jpg) no-repeat left top;
+    background: url(/homepic2.jpg) no-repeat left top;
     background-size: cover;
   }
 

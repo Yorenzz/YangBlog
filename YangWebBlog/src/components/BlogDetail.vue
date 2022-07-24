@@ -17,12 +17,16 @@ const data=reactive({
 const blogID=ref(route.query.ID)
 watchEffect(() => route.query.ID, (currentID, prevState) => {
     console.log('id', currentID)
+  getArticleById(currentID)
 }, { deep: true })
+watchEffect(()=> data.text, (current, prev)=>{
+  nextTick(()=>{Prism.highlightAll()})
+})
 const getBlogByID=()=>{
     getArticleById(blogID.value).then((res)=>{
         console.log('res',res)
         const blogData=res.data[0]
-        data.text=blogData.text.replaceAll('<pre>', '<pre class="language-js line-numbers">')
+        data.text=blogData.text.replaceAll('<code>', '<code class="language-js line-numbers">')
         data.title=blogData.title
         data.category=blogData.category
         data.readtime=blogData.readtime
@@ -40,7 +44,7 @@ getBlogByID()
 </script>
 <template>
 <div class="blog typo">
-    <div class="blog-title typo">{{data.title}}</div>
+    <h2 class="typo">{{data.title}}</h2>
     <div class="typo" v-html="data.text"></div>
 </div>
 
@@ -50,14 +54,12 @@ getBlogByID()
     height: auto;
     border-radius: 0.125rem;
     background: white;
-    border-style: solid;
-    border-color: #cbc6c6;
-    border-width: 1px;
+    border: 1px #cbc6c6 solid;
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 16px;
     padding: 0 32px 16px;
     &-title{
-        font-family:Lato;
+        font-family:Lato,serif;
         font-size:24px;
         font-weight:700;
         margin-top: 22px;

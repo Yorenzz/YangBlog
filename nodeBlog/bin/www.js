@@ -23,6 +23,7 @@ const server = http.createServer(app.callback());
  */
 
 server.listen(port);
+console.log('Listening on port '+port)
 server.on('error', onError);
 server.on('listening', onListening);
 

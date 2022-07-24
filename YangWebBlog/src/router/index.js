@@ -15,6 +15,17 @@ const routes = [
         component:()=>import('../components/BlogDetail.vue')
     },
     {
+        path: '/category',
+        name: '分类',
+        redirect: '/category/study',
+        children: [
+            {path: '/category/study',name:'学习笔记',component:()=>import('../components/category/Study.vue')},
+            {path: '/category/project',name:'个人项目',component:()=>import('../components/category/Project.vue')},
+            {path: '/category/technology',name:'技术杂烩',component:()=>import('../components/category/Technology.vue')},
+            {path: '/category/notes',name:'心情随写',component:()=>import('../components/category/Notes.vue')}
+        ]
+    },
+    {
         path:'/timeaxis',
         name:'时间轴',
         component:()=>import('../components/TimeAxis.vue')

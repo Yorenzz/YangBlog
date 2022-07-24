@@ -7,12 +7,10 @@
       <el-avatar
           class="avatar"
           shape="square"
-          src="/public/empty.png"
-          alt="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/ba07afa100ed743f068fe35a75353b06.png"
+          src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/ba07afa100ed743f068fe35a75353b06.png"
       />
     </div>
-      
-      <hr/>
+
       <div class="name">
         Yorenz
       </div>
@@ -28,6 +26,8 @@
   background: white;
   border: 1px #cbc6c6 solid;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  width: 18.75%;
+  text-align: center;
   .avatar {
     width: 100%;
     height: 100%;

@@ -36,7 +36,8 @@ getArticle()
 
 <template>
   <div class="middle">
-    <div class="middle-article"  v-for="(item,index) in textArray">
+    <div class="middle-article typo"  v-for="(item,index) in textArray" :key="index">
+      <div class="article-title">{{item.title}}</div>
       <div v-html="item.describe"></div>
       <div class="article-button">
         <el-button type="primary" @click="blogDetail(item['_id'])">
@@ -67,7 +68,6 @@ getArticle()
     &:hover {
       box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.3);
     }
-     
     border-radius: 0.125rem;
     background: white;
     border: 1px #cbc6c6 solid;
@@ -75,6 +75,7 @@ getArticle()
     margin-bottom: 16px;
     padding: 0 32px 16px;
     .article-button {
+      text-align: center;
       margin-top: 16px;
     }
   }

@@ -1,14 +1,12 @@
 <script setup>
 import Home from './pages/Home.vue'
 </script>
-
 <template>
   <div id="blog-app">
     <div class="main-app">
       <Home />
     </div>
   </div>
-
 </template>
 <style scoped lang="scss">
 @import './scss/vue.scss';

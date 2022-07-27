@@ -1,5 +1,6 @@
 const {getText, getArticleById} = require("../service/article");
 const router = require('koa-router')()
+const request=require('request-promise')
 router.prefix('/publictext')
 
 router.post('/getText',async (ctx)=>{
@@ -14,6 +15,12 @@ router.get('/getArticleById', async (ctx)=>{
     console.log('body', ID)
     let res=await getArticleById(ID)
     ctx.body=res.data
+})
+
+router.get('/getIP', async (ctx)=>{
+    let req=await request('https://realip.cc/')
+    console.log('ip',req)
+    ctx.body=req
 })
 
 module.exports = router

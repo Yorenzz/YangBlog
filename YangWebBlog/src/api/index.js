@@ -15,3 +15,10 @@ export function getArticleById(ID){
         params: {ID}
     })
 }
+
+export function getIP(){
+    return request({
+        url: '/publictext/getIP',
+        method: 'GET'
+    })
+}

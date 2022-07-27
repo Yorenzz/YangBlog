@@ -5,8 +5,15 @@ import RightDetail from "../components/RightDetail.vue";
 import Footer from "../components/Footer.vue";
 import { useRoute } from "vue-router";
 import {computed} from "vue";
+import {getIP} from "../api/index.js";
 const route =useRoute()
 const innerWidth=computed(()=>window.innerWidth)
+const getVisitorIP=()=>{
+  getIP().then((res)=>{
+    console.log('ip', res)
+  })
+}
+getVisitorIP()
 </script>
 
 <template>

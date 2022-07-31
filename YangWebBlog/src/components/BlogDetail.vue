@@ -9,7 +9,7 @@ const data=reactive({
     title: '',
     time: '',
     top: '',
-    readtime: '',
+    readTime: '',
     label: '',
     num: '',
     category: ''
@@ -29,10 +29,10 @@ const getBlogByID=()=>{
         data.text=blogData.text.replaceAll('<code>', '<code class="language-js line-numbers">')
         data.title=blogData.title
         data.category=blogData.category
-        data.readtime=blogData.readtime
+        data.readTime=blogData.readtime
         data.label=blogData.label
         data.num=blogData.num
-        data.readtime=blogData.readtime
+        data.readTime=blogData.readtime
         data.top=blogData.top
         data.time=blogData.time
         nextTick(()=>{Prism.highlightAll()})

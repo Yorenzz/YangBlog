@@ -16,7 +16,7 @@ const down=()=>{
     behavior: "smooth"
   })
 }
-
+const pic=ref()
 const handleScroll=()=>{
   let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
   if(document.documentElement.scrollTop>window.innerHeight-59||style.display==='none') {
@@ -48,7 +48,8 @@ watch(() => route.path, (current, prevState) => {
       container.value='transparent'
 }, { deep: true, immediate: true })
 onMounted(()=>{
-  let style = window.getComputedStyle(document.getElementById('pic'));
+  console.log('id',pic.value)
+  let style = window.getComputedStyle(pic.value);
   if(style.display==='none')
     container.value = '#353638'
   else
@@ -101,7 +102,7 @@ onMounted(()=>{
   </el-menu>
 </div>
   
-<div id="pic" :class="{'transparent':route.path!=='/home'||innerWidth<1200, 'top-picture':route.path==='/home'}">
+<div ref="pic" :class="{'transparent':route.path!=='/home'||innerWidth<1200, 'top-picture':route.path==='/home'}">
   <div class="top-picture-first"></div>
   <div class="top-picture-second"></div>
   <div class="top-picture-wave"></div>

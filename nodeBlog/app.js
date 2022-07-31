@@ -11,12 +11,16 @@ const SECRET='yangEzzz'
 const index = require('./routes/index')
 const users = require('./routes/users')
 const article = require("./routes/article");
-const publictext = require("./routes/publictext");
-// const {verify} = require("jsonwebtoken")
+const publicText = require("./routes/publicText");
+const {mongoose}=require('mongoose')
+const {log} = require("debug");
+const {url,dbName}=require('./config')
+mongoose.connect(`${url}/${dbName}`, ()=>{
+  console.log('MongoDB连接成功')
+})
+mongoose.connection.on('err', console.error)
 
-// error handler
 onerror(app)
-
 app.use(cors())
 // middlewares
 /* 当token验证异常时候的处理，如token过期、token错误 */
@@ -82,7 +86,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(article.routes(), users.allowedMethods())
-app.use(publictext.routes(), users.allowedMethods())
+app.use(publicText.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

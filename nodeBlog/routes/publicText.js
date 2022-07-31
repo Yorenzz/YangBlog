@@ -5,7 +5,7 @@ router.prefix('/publictext')
 
 router.post('/getText',async (ctx)=>{
     const {category,pageSize,currentPage}=ctx.request.body
-    console.log('get',pageSize,currentPage)
+    // console.log('get',pageSize,currentPage)
     let res=await getText(category,pageSize,currentPage)
     ctx.body=res.data
 })//获取文章

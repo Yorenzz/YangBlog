@@ -37,13 +37,30 @@ getArticle()
 <template>
   <div class="middle">
     <div class="middle-article typo"  v-for="(item,index) in textArray" :key="index">
-      <div class="article-title">{{item.title}}</div>
+      <h5 class="typo">{{item.title}}</h5>
+
+        <div class="article-time">
+          <div class="time-item blue-time">
+            <el-icon class="icon"><Calendar /></el-icon>
+            <span>{{item.time}}</span>
+          </div>
+          <div class="time-item red-time">
+            <el-icon class="icon"><View /></el-icon>
+            <span>{{item.readtime}}</span>
+          </div>
+          <div class="time-item">
+            <el-icon class="icon"><EditPen /></el-icon>
+            <span>字数≈{{item.num}}</span>
+          </div>
+        </div>
+
       <div v-html="item.describe"></div>
       <div class="article-button">
         <el-button type="primary" @click="blogDetail(item['_id'])">
           阅读全文
         </el-button>
       </div>
+      <el-divider/>
     </div>
     <div class="middle-pagination">
       <el-pagination
@@ -66,7 +83,7 @@ getArticle()
   &-article {
     height: auto;
     &:hover {
-      box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.3);
     }
     border-radius: 0.125rem;
     background: white;
@@ -77,6 +94,28 @@ getArticle()
     .article-button {
       text-align: center;
       margin-top: 16px;
+    }
+    .article-time {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+      .time-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 16px;
+        .icon {
+          margin-right: 3px;
+        }
+
+      }
+      .blue-time {
+        color: blue
+      }
+      .red-time {
+        color: red
+      }
     }
   }
   &-pagination{

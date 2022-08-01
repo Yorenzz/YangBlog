@@ -3,10 +3,12 @@ import {useEffect, useRef, useState} from "react"
 import './article.css'
 import { Input } from 'antd';
 import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
+import Editor from 'react-markdown-editor-lite';
+import TabSpace from "../../editorPlugins/tabSpace";
 import 'react-markdown-editor-lite/lib/index.css';
 import {sendArticle} from "../../api";
 import moment from 'moment'
+Editor.use(TabSpace)
 export const Article=()=>{
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const mdEditorDescribe = useRef(null);
@@ -93,7 +95,7 @@ export const Article=()=>{
                 <Form.Item
                     label="文章描述"
                 >
-                    <MdEditor
+                    <Editor
                         className='mdEditor'
                         ref={mdEditorDescribe}
                         plugins={[
@@ -110,10 +112,11 @@ export const Article=()=>{
                             'image',
                             'link',
                             'logger',
+                            "tab-insert",
                             'mode-toggle',
                             'full-screen',
-                            'tab-insert',
-                            'block-wrap'
+                            'block-wrap',
+                            'tabSpace'
                         ]}
                         renderHTML={text => mdParser.render(text)}
                     />
@@ -121,7 +124,7 @@ export const Article=()=>{
                 <Form.Item
                     label="文章正文"
                 >
-                    <MdEditor
+                    <Editor
                         className='mdEditor'
                         ref={mdEditorText}
                         plugins={[

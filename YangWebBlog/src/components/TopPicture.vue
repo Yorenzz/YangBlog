@@ -18,7 +18,7 @@ const down=()=>{
 }
 const pic=ref()
 const handleScroll=()=>{
-  let style = window.getComputedStyle(document.getElementsByClassName('top-picture')[0]);
+  let style = window.getComputedStyle(pic.value);
   if(document.documentElement.scrollTop>window.innerHeight-59||style.display==='none') {
     container.value = '#353638'
   }

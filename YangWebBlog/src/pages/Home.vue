@@ -12,6 +12,27 @@ const getVisitorIP=()=>{
   getIP().then((res)=>{
     console.log('ip', res)
   })
+  fetch('https://api.vore.top/api/welcome', {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },})
+  .then(
+      function(response){
+        if(response.status!==200){
+          console.log("存在一个问题，状态码为："+response.status);
+          return;
+        }
+        //检查响应文本
+        response.text().then(function(data){
+          const regExp = /\((.+?)\)/g;
+          const matches = data.match(regExp)
+          console.log(data, typeof data, data.split('"'), matches);
+        });
+      }
+  )
+  .catch(function(err){
+    console.log("Fetch错误:"+err);
+  });
+
 }
 getVisitorIP()
 </script>

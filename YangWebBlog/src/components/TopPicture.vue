@@ -48,7 +48,6 @@ watch(() => route.path, (current, prevState) => {
       container.value='transparent'
 }, { deep: true, immediate: true })
 onMounted(()=>{
-  console.log('id',pic.value)
   let style = window.getComputedStyle(pic.value);
   if(style.display==='none')
     container.value = '#353638'

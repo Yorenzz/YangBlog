@@ -4,35 +4,29 @@ import LeftIntroduction from "../components/LeftIntrodution.vue";
 import RightDetail from "../components/RightDetail.vue";
 import Footer from "../components/Footer.vue";
 import { useRoute } from "vue-router";
-import {computed} from "vue";
+import {computed, reactive} from "vue";
 import {getIP} from "../api/index.js";
 const route =useRoute()
-const innerWidth=computed(()=>window.innerWidth)
-const getVisitorIP=()=>{
-  getIP().then((res)=>{
-    console.log('ip', res)
-  })
-  fetch('https://api.vore.top/api/welcome', {headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },})
-  .then(
-      function(response){
-        if(response.status!==200){
-          console.log("存在一个问题，状态码为："+response.status);
-          return;
-        }
-        //检查响应文本
-        response.text().then(function(data){
-          const regExp = /\((.+?)\)/g;
-          const matches = data.match(regExp)
-          console.log(data, typeof data, data.split('"'), matches);
-        });
-      }
-  )
-  .catch(function(err){
-    console.log("Fetch错误:"+err);
-  });
 
+const data=reactive({
+  ip: '',
+  ipData: []
+})
+const innerWidth=computed(()=>window.innerWidth)
+
+const getVisitorIP=()=>{
+  fetch('https://extreme-ip-lookup.com/json/').then(res=>{
+    res.json().then(res1=>{
+      data.ip=res1.query
+      console.log('log', data.ip)
+      fetch(`https://api.vore.top/api/IPdata?ip=${data.ip}`).then(res2=>{
+        res2.json().then(res3=>{
+          console.log('ipfrom', res3.ipdata)
+          data.ipData=res3['ipdata']
+        })
+      })
+    })
+  })
 }
 getVisitorIP()
 </script>

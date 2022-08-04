@@ -12,8 +12,9 @@ async function insertArticle(text){
     }
 }
 
-async function getText(msg,pageSize,currentPage){
+async function getText(category,pageSize,currentPage){
     try{
+        console.log(category)
         const res=await ArticleModel.find().limit(pageSize).skip((currentPage-1)*pageSize)
         return new SuccessModel(res)
     }catch (e){

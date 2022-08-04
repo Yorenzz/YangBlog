@@ -1,80 +1,97 @@
 <script setup>
-import {nextTick, onMounted, ref} from 'vue'
-import {getText} from "../api";
+import { nextTick, onMounted, ref } from 'vue'
+import { getText } from '../api'
 import { useRoute, useRouter } from 'vue-router'
 const router = useRouter()
-const textArray=ref([])
-let currentPage=ref(1)
-let pageSize=ref(5)
-const pageChange=(page)=>{
-  currentPage.value=page
+const textArray = ref([])
+let currentPage = ref(1)
+let pageSize = ref(5)
+const pageChange = (page) => {
+  currentPage.value = page
   getArticle()
 }
-const sizeChange=(size)=>{
-  pageSize.value=size
-  currentPage.value=1
+const sizeChange = (size) => {
+  pageSize.value = size
+  currentPage.value = 1
   getArticle()
 }
-const blogDetail=(ID)=>{
+const blogDetail = (ID) => {
   console.log('id', ID)
-  router.push({path: '/blog', query: {ID:ID}})
+  router.push({ path: '/blog', query: { ID: ID } })
 }
-const getArticle=()=>{
-  getText({category:'生活随笔',pageSize:pageSize.value,currentPage:currentPage.value}).then((res)=>{
+const getArticle = () => {
+  getText({
+    category: '生活随笔',
+    pageSize: pageSize.value,
+    currentPage: currentPage.value,
+  }).then((res) => {
     console.log(res.data)
     //后端传回总文章数
-    textArray.value=res.data.map((item) => {
-      item.text = item.text.replaceAll('<pre>', '<pre class="language-js line-numbers">')
-      item.describe=item.describe.replaceAll('<pre>', '<pre class="language-js line-numbers">')
+    textArray.value = res.data.map((item) => {
+      item.text = item.text.replaceAll(
+        '<pre>',
+        '<pre class="language-js line-numbers">',
+      )
+      item.describe = item.describe.replaceAll(
+        '<pre>',
+        '<pre class="language-js line-numbers">',
+      )
       return item
     })
-    nextTick(()=>{Prism.highlightAll()})
-})
+    nextTick(() => {
+      Prism.highlightAll()
+    })
+  })
 }
 getArticle()
 </script>
 
 <template>
   <div class="middle">
-    <div class="middle-article typo"  v-for="(item,index) in textArray" :key="index">
-      <h5 class="typo">{{item.title}}</h5>
-
-        <div class="article-time">
-          <div class="time-item blue-time">
-            <el-icon class="icon"><Calendar /></el-icon>
-            <span>{{item.time}}</span>
-          </div>
-          <div class="time-item red-time">
-            <el-icon class="icon"><View /></el-icon>
-            <span>{{item.readtime}}</span>
-          </div>
-          <div class="time-item">
-            <el-icon class="icon"><EditPen /></el-icon>
-            <span>字数≈{{item.num}}</span>
-          </div>
+    <div
+      class="middle-article typo"
+      v-for="(item, index) in textArray"
+      :key="index"
+    >
+      <h5 class="typo">{{ item.title }}</h5>
+      <div class="article-time">
+        <div class="time-item blue-time">
+          <el-icon class="icon"><Calendar /></el-icon>
+          <span>{{ item.time }}</span>
         </div>
+        <div class="time-item red-time">
+          <el-icon class="icon"><View /></el-icon>
+          <span>{{ item.readtime }}</span>
+        </div>
+        <div class="time-item">
+          <el-icon class="icon"><EditPen /></el-icon>
+          <span>字数≈{{ item.num }}</span>
+        </div>
+      </div>
 
       <div v-html="item.describe"></div>
+      <div class="item-picture">
+        <el-image :src="item.img" />
+      </div>
       <div class="article-button">
         <el-button type="primary" @click="blogDetail(item['_id'])">
           阅读全文
         </el-button>
       </div>
-      <el-divider/>
+      <el-divider />
     </div>
     <div class="middle-pagination">
       <el-pagination
-            background
-            layout="prev, pager, next, sizes"
-            :total="50"
-            :page-sizes="[5, 10, 15, 20]"
-            v-model:currentPage="currentPage"
-            v-model:page-size="pageSize"
-            @current-change="pageChange"
-            @size-change="sizeChange"
+        background
+        layout="prev, pager, next, sizes"
+        :total="50"
+        :page-sizes="[5, 10, 15, 20]"
+        v-model:currentPage="currentPage"
+        v-model:page-size="pageSize"
+        @current-change="pageChange"
+        @size-change="sizeChange"
       />
     </div>
-    
   </div>
 </template>
 
@@ -108,20 +125,18 @@ getArticle()
         .icon {
           margin-right: 3px;
         }
-
       }
       .blue-time {
-        color: blue
+        color: blue;
       }
       .red-time {
-        color: red
+        color: red;
       }
     }
   }
-  &-pagination{
+  &-pagination {
     display: flex;
     justify-content: center;
   }
 }
-
 </style>

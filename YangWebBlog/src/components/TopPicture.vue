@@ -1,121 +1,145 @@
 <script setup>
-import { onMounted, ref, computed, watch } from 'vue';
-import { useRoute } from 'vue-router';
-const route=useRoute()
+import { onMounted, ref, computed, watch } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 
-const container=ref('transparent')
+const container = ref("transparent");
 const activeMenu = computed(() => {
-  return route.path
-})
+  return route.path;
+});
 
-const innerWidth=computed(()=>window.innerWidth)
+const innerWidth = computed(() => window.innerWidth);
 
-const down=()=>{
+const down = () => {
   window.scrollTo({
-    top: window.innerHeight+1,
-    behavior: "smooth"
-  })
-}
-const pic=ref()
-const handleScroll=()=>{
+    top: window.innerHeight + 1,
+    behavior: "smooth",
+  });
+};
+const pic = ref();
+const handleScroll = () => {
   let style = window.getComputedStyle(pic.value);
-  if(document.documentElement.scrollTop>window.innerHeight-59||style.display==='none') {
-    container.value = '#353638'
+  if (
+    document.documentElement.scrollTop > window.innerHeight - 59 ||
+    style.display === "none"
+  ) {
+    container.value = "#353638";
+  } else {
+    container.value = "transparent";
   }
-  else{
-    container.value='transparent'
-  }
-}
-const menuData=[
-  {title:'首页', index:'/home'},
+};
+const menuData = [
   {
-    title: '分类',
-    index:'/category',
-    children:[
-      {title:'学习笔记', index:'/category/study'},
-      {title:'个人项目', index:'/category/project'},
-      {title:'技术杂烩', index:'/category/technology'},
-      {title:'心情随写', index:'/category/notes'},
-    ]},
-  {title: '时间轴', index: '/timeaxis'},
-  {title: '动态', index: '/dynamic'},
-  {title: '关于我', index: '/about'}
-]
-watch(() => route.path, (current, prevState) => {
-    if(current!=='/home'||window.innerWidth<1200)
-      container.value='#353638'
-    else
-      container.value='transparent'
-}, { deep: true, immediate: true })
-onMounted(()=>{
+    title: "首页",
+    index: "/home",
+  },
+  {
+    title: "分类",
+    index: "/category",
+    children: [
+      {
+        title: "学习笔记",
+        index: "/category/study",
+      },
+      {
+        title: "个人项目",
+        index: "/category/project",
+      },
+      {
+        title: "技术杂烩",
+        index: "/category/technology",
+      },
+      {
+        title: "心情随写",
+        index: "/category/notes",
+      },
+    ],
+  },
+  {
+    title: "时间轴",
+    index: "/timeaxis",
+  },
+  {
+    title: "动态",
+    index: "/dynamic",
+  },
+  {
+    title: "关于我",
+    index: "/about",
+  },
+];
+watch(
+  () => route.path,
+  (current, prevState) => {
+    if (current !== "/home" || window.innerWidth < 1200)
+      container.value = "#353638";
+    else container.value = "transparent";
+  },
+  { deep: true, immediate: true }
+);
+onMounted(() => {
   let style = window.getComputedStyle(pic.value);
-  if(style.display==='none')
-    container.value = '#353638'
-  else
-    container.value='transparent'
-  window.addEventListener("scroll", handleScroll)
-  window.onresize=handleScroll
-})
+  if (style.display === "none") container.value = "#353638";
+  else container.value = "transparent";
+  window.addEventListener("scroll", handleScroll);
+  window.onresize = handleScroll;
+});
 </script>
 <template>
-<div class="menu">
-  <el-menu
-          :default-active='activeMenu'
-          mode="horizontal"
-          :background-color="container"
-          active-text-color="#ffd04b"
-          text-color="#fff"
-          router
-      >
-        <el-menu-item disabled class="menu-title">
-          Yorenz's Blog
-        </el-menu-item>
-        <template
-          v-for="item in menuData"
-          :key="item.index"
+  <div class="menu">
+    <el-menu
+      :default-active="activeMenu"
+      mode="horizontal"
+      :background-color="container"
+      active-text-color="#ffd04b"
+      text-color="#fff"
+      router
+    >
+      <el-menu-item disabled class="menu-title"> Yorenz's Blog </el-menu-item>
+      <template v-for="item in menuData" :key="item.index">
+        <el-sub-menu
+          v-if="item.children && item.children.length"
+          :index="item.index"
+          popper-class="pppp"
         >
-          <el-sub-menu
-            v-if="item.children&&item.children.length"
-            :index="item.index"
-            popper-class="pppp"
-          >
-            <template #title>
-              <span>{{item.title}}</span>
-            </template>
-            <el-menu-item
-              v-for="itemChild in item.children"
-              :key="itemChild.index"
-              :index="itemChild.index"
-            >
-              <span>{{itemChild.title}}</span>
-            </el-menu-item>
-          </el-sub-menu>
+          <template #title>
+            <span>{{ item.title }}</span>
+          </template>
           <el-menu-item
-            v-else
-            :index="item.index"
+            v-for="itemChild in item.children"
+            :key="itemChild.index"
+            :index="itemChild.index"
           >
-            {{item.title}}
+            <span>{{ itemChild.title }}</span>
           </el-menu-item>
-          
-        </template>
-  </el-menu>
-</div>
-  
-<div ref="pic" :class="{'transparent':route.path!=='/home'||innerWidth<1200, 'top-picture':route.path==='/home'}">
-  <div class="top-picture-first"></div>
-  <div class="top-picture-second"></div>
-  <div class="top-picture-wave"></div>
-  <div class="title-all">
-    <div class="title" data-text="Yorenz's Blog">
-      Yorenz's Blog
+        </el-sub-menu>
+        <el-menu-item v-else :index="item.index">
+          {{ item.title }}
+        </el-menu-item>
+      </template>
+    </el-menu>
+  </div>
+
+  <div
+    ref="pic"
+    :class="{
+      transparent: route.path !== '/home' || innerWidth < 1200,
+      'top-picture': route.path === '/home',
+    }"
+  >
+    <div class="top-picture-first"></div>
+    <div class="top-picture-second"></div>
+    <div class="top-picture-wave"></div>
+    <div class="title-all">
+      <div class="title" data-text="Yorenz's Blog">Yorenz's Blog</div>
+    </div>
+    <div class="down" @click="down">
+      <el-icon :size="50"><Bottom /></el-icon>
     </div>
   </div>
-  <div class="down" @click="down"><el-icon :size="50"><Bottom /></el-icon></div>
-</div>
-
 </template>
 <style scoped lang="scss">
-@import '../scss/vue';
+@import "../scss/vue";
 .transparent {
   display: none;
 }
@@ -131,21 +155,19 @@ onMounted(()=>{
     font-size: 16px;
     opacity: 1;
   }
-  ::v-deep(.el-menu){
+  ::v-deep(.el-menu) {
     border-bottom: none;
     transition-duration: 500ms;
   }
-
 }
 .top-picture {
-
   position: relative;
   height: 100vh;
   width: 100vw;
-  @media only screen and (max-width:1228px) {
+  @media only screen and (max-width: 1228px) {
     display: none;
   }
-  &-wave{
+  &-wave {
     background: repeat-x url("/svg.png");
     background-size: 20%;
     height: 13vh;
@@ -166,7 +188,7 @@ onMounted(()=>{
     top: 0;
     width: 100%;
   }
-  
+
   &-second {
     position: absolute;
     height: 100vh;
@@ -178,7 +200,6 @@ onMounted(()=>{
     -webkit-mask-size: 3000% 100%;
     mask-size: 3000% 100%;
     animation: maskMove 2s steps(29) infinite alternate;
-
   }
 
   &-second::before {
@@ -196,7 +217,7 @@ onMounted(()=>{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     line-height: 17vh;
     width: 50vw;
@@ -218,8 +239,9 @@ onMounted(()=>{
     position: absolute;
     font-size: 6rem;
     top: 50%;
-    left: 49.5%;white-space: nowrap;
-    transform: translate(-50%,-50%);
+    left: 49.5%;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
     text-shadow: 4px 0 red;
     clip-path: inset(0 0 0 0);
     animation: ani2 1s infinite linear alternate-reverse;
@@ -232,7 +254,7 @@ onMounted(()=>{
     position: absolute;
     top: 50%;
     left: 50.5%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     text-shadow: -4px 0 blue;
     clip-path: inset(0 0 0 0);
     animation: ani1 1s infinite linear alternate-reverse;
@@ -249,6 +271,5 @@ onMounted(()=>{
     left: 50%;
     cursor: pointer;
   }
-}//top-picture
-
+} //top-picture
 </style>

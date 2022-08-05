@@ -22,6 +22,6 @@ import Home from './pages/Home.vue'
 .main-app {
   flex: 1;
   height: 100%;
-  overflow: auto;
+  overflow: scroll;
 }
 </style>

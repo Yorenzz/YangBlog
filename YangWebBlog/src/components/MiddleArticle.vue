@@ -2,6 +2,7 @@
 import { nextTick, onMounted, ref } from 'vue'
 import { getText } from '../api'
 import { useRoute, useRouter } from 'vue-router'
+import { scrollToArticle, scrollToTop } from '../common/util.js'
 const router = useRouter()
 const textArray = ref([])
 let currentPage = ref(1)
@@ -9,11 +10,13 @@ let pageSize = ref(5)
 const pageChange = (page) => {
   currentPage.value = page
   getArticle()
+  scrollToArticle()
 }
 const sizeChange = (size) => {
   pageSize.value = size
   currentPage.value = 1
   getArticle()
+  scrollToArticle()
 }
 const blogDetail = (ID) => {
   console.log('id', ID)
@@ -68,11 +71,7 @@ getArticle()
           <span>字数≈{{ item.num }}</span>
         </div>
       </div>
-
       <div v-html="item.describe"></div>
-      <div class="item-picture">
-        <el-image :src="item.img" />
-      </div>
       <div class="article-button">
         <el-button type="primary" @click="blogDetail(item['_id'])">
           阅读全文

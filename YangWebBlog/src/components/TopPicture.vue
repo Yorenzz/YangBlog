@@ -1,89 +1,84 @@
 <script setup>
-import { onMounted, ref, computed, watch } from "vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
+import { onMounted, ref, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { scrollToArticle } from '../common/util.js'
+const route = useRoute()
 
-const container = ref("transparent");
+const container = ref('transparent')
 const activeMenu = computed(() => {
-  return route.path;
-});
+  return route.path
+})
 
-const innerWidth = computed(() => window.innerWidth);
+const innerWidth = computed(() => window.innerWidth)
 
-const down = () => {
-  window.scrollTo({
-    top: window.innerHeight + 1,
-    behavior: "smooth",
-  });
-};
-const pic = ref();
+const pic = ref()
 const handleScroll = () => {
-  let style = window.getComputedStyle(pic.value);
+  let style = window.getComputedStyle(pic?.value)
   if (
     document.documentElement.scrollTop > window.innerHeight - 59 ||
-    style.display === "none"
+    style.display === 'none'
   ) {
-    container.value = "#353638";
+    container.value = '#353638'
   } else {
-    container.value = "transparent";
+    container.value = 'transparent'
   }
-};
+}
 const menuData = [
   {
-    title: "首页",
-    index: "/home",
+    title: '首页',
+    index: '/home',
   },
   {
-    title: "分类",
-    index: "/category",
+    title: '分类',
+    index: '/category',
     children: [
       {
-        title: "学习笔记",
-        index: "/category/study",
+        title: '学习笔记',
+        index: '/category/study',
       },
       {
-        title: "个人项目",
-        index: "/category/project",
+        title: '个人项目',
+        index: '/category/project',
       },
       {
-        title: "技术杂烩",
-        index: "/category/technology",
+        title: '技术杂烩',
+        index: '/category/technology',
       },
       {
-        title: "心情随写",
-        index: "/category/notes",
+        title: '心情随写',
+        index: '/category/notes',
       },
     ],
   },
   {
-    title: "时间轴",
-    index: "/timeaxis",
+    title: '时间轴',
+    index: '/timeaxis',
   },
   {
-    title: "动态",
-    index: "/dynamic",
+    title: '动态',
+    index: '/dynamic',
   },
   {
-    title: "关于我",
-    index: "/about",
+    title: '关于我',
+    index: '/about',
   },
-];
+]
 watch(
   () => route.path,
   (current, prevState) => {
-    if (current !== "/home" || window.innerWidth < 1200)
-      container.value = "#353638";
-    else container.value = "transparent";
+    if (current !== '/home' || window.innerWidth < 1200)
+      container.value = '#353638'
+    else container.value = 'transparent'
   },
-  { deep: true, immediate: true }
-);
+  { deep: true, immediate: true },
+)
 onMounted(() => {
-  let style = window.getComputedStyle(pic.value);
-  if (style.display === "none") container.value = "#353638";
-  else container.value = "transparent";
-  window.addEventListener("scroll", handleScroll);
-  window.onresize = handleScroll;
-});
+  let style = window.getComputedStyle(pic.value)
+  if (style.display === 'none') container.value = '#353638'
+  else container.value = 'transparent'
+  window.addEventListener('scroll', handleScroll)
+  window.onresize = handleScroll
+})
 </script>
 <template>
   <div class="menu">
@@ -95,7 +90,7 @@ onMounted(() => {
       text-color="#fff"
       router
     >
-      <el-menu-item disabled class="menu-title"> Yorenz's Blog </el-menu-item>
+      <el-menu-item disabled class="menu-title">Yorenz's Blog</el-menu-item>
       <template v-for="item in menuData" :key="item.index">
         <el-sub-menu
           v-if="item.children && item.children.length"
@@ -133,13 +128,13 @@ onMounted(() => {
     <div class="title-all">
       <div class="title" data-text="Yorenz's Blog">Yorenz's Blog</div>
     </div>
-    <div class="down" @click="down">
+    <div class="down" @click="scrollToArticle">
       <el-icon :size="50"><Bottom /></el-icon>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
-@import "../scss/vue";
+@import '../scss/vue';
 .transparent {
   display: none;
 }
@@ -168,7 +163,7 @@ onMounted(() => {
     display: none;
   }
   &-wave {
-    background: repeat-x url("/svg.png");
+    background: repeat-x url('/svg.png');
     background-size: 20%;
     height: 13vh;
     width: 100vw;
@@ -203,7 +198,7 @@ onMounted(() => {
   }
 
   &-second::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -226,7 +221,7 @@ onMounted(() => {
   }
 
   .title {
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
     font-size: 6rem;
     color: white;
     text-shadow: 5px 5px 5px #16efd6;

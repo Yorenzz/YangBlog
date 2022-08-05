@@ -17,15 +17,11 @@
     <script>
         document.onreadystatechange = function() {
             if (document.readyState !== "complete") {
-                document.querySelector(
-                    "body").style.visibility = "hidden";
-                document.querySelector(
-                    "#loader").style.visibility = "visible";
+                document.querySelector("body").style.visibility = "hidden";
+                document.querySelector("#loader").style.visibility = "visible";
             } else {
-                document.querySelector(
-                    "#loader").style.display = "none";
-                document.querySelector(
-                    "body").style.visibility = "visible";
+                document.querySelector("#loader").style.display = "none";
+                document.querySelector("body").style.visibility = "visible";
             }
         };
     </script>
@@ -43,6 +39,24 @@
          height: 70px;
          animation: spin 1s linear infinite;
      }
+     ::-webkit-scrollbar {
+       width: 6px;
+       height: 5px;
+     }
+
+     ::-webkit-scrollbar-thumb {
+       border-radius: 5px;
+       -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+       background: deepskyblue;
+       scrollbar-arrow-color: red;
+     }
+
+     ::-webkit-scrollbar-track {
+       -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+       border-radius: 0;
+       background: rgba(0,0,0,0);
+     }
+
 
      @keyframes spin {
          100% {

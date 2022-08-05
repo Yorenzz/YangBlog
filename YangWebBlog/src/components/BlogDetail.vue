@@ -2,6 +2,7 @@
 import { watchEffect, ref, nextTick, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { getArticleById } from '../api'
+import { scrollToTop } from '../common/util.js'
 const route = useRoute()
 const data = reactive({
   text: '',
@@ -13,6 +14,7 @@ const data = reactive({
   num: '',
   category: '',
 })
+scrollToTop()
 const blogID = ref(route.query.ID)
 watchEffect(
   () => route.query.ID,

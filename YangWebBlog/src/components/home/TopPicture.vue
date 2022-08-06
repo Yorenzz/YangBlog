@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { scrollToArticle } from '../common/util.js'
+import { scrollToArticle } from '../../common/util.js'
 const route = useRoute()
 
 const container = ref('transparent')
@@ -34,19 +34,19 @@ const menuData = [
     children: [
       {
         title: '学习笔记',
-        index: '/category/study',
+        index: '/category/学习笔记',
       },
       {
         title: '个人项目',
-        index: '/category/project',
+        index: '/category/个人项目',
       },
       {
         title: '技术杂烩',
-        index: '/category/technology',
+        index: '/category/技术杂烩',
       },
       {
         title: '心情随写',
-        index: '/category/notes',
+        index: '/category/心情随写',
       },
     ],
   },
@@ -134,7 +134,7 @@ onMounted(() => {
   </div>
 </template>
 <style scoped lang="scss">
-@import '../scss/vue';
+@import '../../scss/vue';
 .transparent {
   display: none;
 }

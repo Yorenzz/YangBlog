@@ -1,8 +1,9 @@
 <script setup>
+import Tag from '../common/Tag.vue'
 </script>
 
 <template>
-  <div class="right-detail">111</div>
+  <div class="right-detail"></div>
 </template>
 
 <style scoped lang="scss">

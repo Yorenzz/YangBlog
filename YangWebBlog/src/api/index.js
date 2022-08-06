@@ -30,3 +30,18 @@ export function getArticleByCategory(category) {
     params: { category },
   })
 }
+
+export function getArticleByTag(tag) {
+  return request({
+    url: '/publictext/getArticleByTag',
+    method: 'GET',
+    params: { tag },
+  })
+}
+
+export function getTotalBlogNum() {
+  return request({
+    url: '/publictext/getTotalBlogNum',
+    method: 'GET',
+  })
+}

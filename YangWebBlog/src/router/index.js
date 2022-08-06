@@ -7,17 +7,22 @@ const routes = [
   {
     path: '/home',
     name: '首页',
-    component: () => import('../components/MiddleArticle.vue'),
-  },
-  {
-    path: '/blog',
-    name: '博客正文',
-    component: () => import('../components/BlogDetail.vue'),
+    component: () => import('../components/blog/MiddleArticle.vue'),
   },
   {
     path: '/category/:category',
     name: '分类',
-    component: () => import('../components/category.vue'),
+    component: () => import('../components/blog/MiddleArticle.vue'),
+  },
+  {
+    path: '/tag/:tag',
+    name: '标签',
+    component: () => import('../components/blog/MiddleArticle.vue'),
+  },
+  {
+    path: '/blog',
+    name: '博客正文',
+    component: () => import('../components/blog/BlogDetail.vue'),
   },
   {
     path: '/timeaxis',
@@ -37,7 +42,7 @@ const routes = [
   {
     path: '/404',
     name: '404',
-    component: () => import('../components/404.vue'),
+    component: () => import('../components/common/404.vue'),
   },
   {
     path: '/:pathMatch(.*)',

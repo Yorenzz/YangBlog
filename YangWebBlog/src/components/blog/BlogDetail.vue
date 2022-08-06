@@ -1,8 +1,8 @@
 <script setup>
 import { watchEffect, ref, nextTick, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-import { getArticleById } from '../api'
-import { scrollToTop } from '../common/util.js'
+import { getArticleById } from '../../api/index.js'
+import { scrollToTop } from '../../common/util.js'
 const route = useRoute()
 const data = reactive({
   text: '',
@@ -62,7 +62,7 @@ getBlogByID()
 <template>
   <div class="blog typo">
     <h2 class="typo">{{ data.title }}</h2>
-    <div class="typo" v-html="data.text"></div>
+    <div class="typo detail-title" v-html="data.text"></div>
   </div>
 </template>
 <style scoped lang="scss">

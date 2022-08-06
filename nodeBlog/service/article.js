@@ -1,7 +1,7 @@
 const { ObjectID } = require('../config')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const ArticleModel = require('../dbModel/ArticleModel')
-async function insertArticle(text) {
+const insertArticle = async (text) => {
   text.readtime = 0
   text.top = 0
   try {
@@ -12,9 +12,9 @@ async function insertArticle(text) {
   }
 }
 
-async function getText(category, pageSize, currentPage) {
+const getText = async (pageSize, currentPage) => {
   try {
-    console.log(category)
+    console.log('1', pageSize, currentPage)
     const res = await ArticleModel.find()
       .limit(pageSize)
       .skip((currentPage - 1) * pageSize)
@@ -24,9 +24,19 @@ async function getText(category, pageSize, currentPage) {
   }
 }
 
-async function getArticleById(ID) {
+const getArticleById = async (ID) => {
   try {
     const res = await ArticleModel.find({ _id: new ObjectID(ID) })
+    console.log('id', res)
+    return new SuccessModel(res)
+  } catch (e) {
+    return new ErrorModel(e)
+  }
+}
+
+const getArticleByTag = async (tag) => {
+  try {
+    const res = await ArticleModel.find({ label: tag })
     console.log('id', res)
     return new SuccessModel(res)
   } catch (e) {
@@ -44,9 +54,20 @@ const getArticleByCategory = async (category) => {
   }
 }
 
+const getTotalBlogNum = async () => {
+  try {
+    const res = await ArticleModel.count()
+    return new SuccessModel(res)
+  } catch (e) {
+    return new ErrorModel(e)
+  }
+}
+
 module.exports = {
   insertArticle,
   getText,
   getArticleById,
   getArticleByCategory,
+  getArticleByTag,
+  getTotalBlogNum,
 }

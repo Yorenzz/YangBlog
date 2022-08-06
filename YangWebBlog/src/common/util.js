@@ -8,6 +8,21 @@ export const scrollToTop = () => {
 export const scrollToArticle = () => {
   window.scroll({
     top: window.innerHeight + 1,
-    behavior: 'smooth',
+    behavior: 'instant',
+  })
+}
+
+export const getVisitorIP = () => {
+  fetch('https://extreme-ip-lookup.com/json/').then(res => {
+    res.json().then(res1 => {
+      data.ip = res1.query
+      console.log('log', data.ip)
+      fetch(`https://api.vore.top/api/IPdata?ip=${data.ip}`).then(res2 => {
+        res2.json().then(res3 => {
+          console.log('ipfrom', res3.ipdata)
+          data.ipData = res3.ipdata
+        })
+      })
+    })
   })
 }

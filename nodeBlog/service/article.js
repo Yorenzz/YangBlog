@@ -14,10 +14,10 @@ const insertArticle = async (text) => {
 
 const getText = async (pageSize, currentPage) => {
   try {
-    console.log('1', pageSize, currentPage)
     const res = await ArticleModel.find()
       .limit(pageSize)
       .skip((currentPage - 1) * pageSize)
+    console.log(res)
     return new SuccessModel(res)
   } catch (e) {
     return new ErrorModel(e)

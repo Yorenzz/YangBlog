@@ -5,17 +5,17 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const cors = require('koa2-cors');
-const jwtKoa=require('koa-jwt')
-const SECRET='yangEzzz'
+const cors = require('koa2-cors')
+const jwtKoa = require('koa-jwt')
+const SECRET = 'yangEzzz'
 const index = require('./routes/index')
 const users = require('./routes/users')
-const article = require("./routes/article");
-const publicText = require("./routes/publicText");
-const {mongoose}=require('mongoose')
-const {log} = require("debug");
-const {url,dbName}=require('./config')
-mongoose.connect(`${url}/${dbName}`, ()=>{
+const article = require('./routes/article')
+const publicText = require('./routes/publicText')
+const { mongoose } = require('mongoose')
+const { log } = require('debug')
+const { url, dbName } = require('./config')
+mongoose.connect(`${url}/${dbName}?authSource=${dbName}`, () => {
   console.log('MongoDB连接成功')
 })
 mongoose.connection.on('err', console.error)
@@ -28,32 +28,38 @@ app.use((ctx, next) => {
   return next().catch((err) => {
     //console.log('eee',err.status)
     if (err.status === 401) {
-      ctx.status = 401;
-      ctx.body='UnAuth'
+      ctx.status = 401
+      ctx.body = 'UnAuth'
     } else {
-      throw err;
+      throw err
     }
-  });
-});
+  })
+})
 
-app.use(jwtKoa({
-  // 密匙
-  secret: SECRET
-}).unless({
-  // 自定义忽略jwt验证的目录
-  path: [/^\/users\/login/,/^\/publictext\/*/]
-}))
+app.use(
+  jwtKoa({
+    // 密匙
+    secret: SECRET,
+  }).unless({
+    // 自定义忽略jwt验证的目录
+    path: [/^\/users\/login/, /^\/publictext\/*/],
+  }),
+)
 
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
-}))
+app.use(
+  bodyparser({
+    enableTypes: ['json', 'form', 'text'],
+  }),
+)
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
-}))
+app.use(
+  views(__dirname + '/views', {
+    extension: 'pug',
+  }),
+)
 
 // logger
 
@@ -91,6 +97,6 @@ app.use(publicText.routes(), users.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-});
+})
 
 module.exports = app

@@ -166,7 +166,9 @@ watchEffect(() => {
         <div v-for="tag in item.label" class="tag-item">
           <Tag
             :tag-name="tag"
-            :color="`#${Math.floor(Math.random() * 16777215).toString(16)}`"
+            :color="`#${
+              Math.floor(Math.random() * 16777215).toString(16).length===6?Math.floor(Math.random() * 16777215).toString(16):'0'+Math.floor(Math.random() * 16777215).toString(16)
+              }`"
           />
         </div>
       </div>

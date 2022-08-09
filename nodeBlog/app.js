@@ -12,6 +12,7 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const article = require('./routes/article')
 const publicText = require('./routes/publicText')
+const tool = require('./routes/tool')
 const { mongoose } = require('mongoose')
 const { log } = require('debug')
 const { url, dbName } = require('./config')
@@ -42,7 +43,7 @@ app.use(
     secret: SECRET,
   }).unless({
     // 自定义忽略jwt验证的目录
-    path: [/^\/users\/login/, /^\/publictext\/*/],
+    path: [/^\/users\/login/, /^\/publictext\/*/, /^\/tool\/*/],
   }),
 )
 
@@ -91,8 +92,9 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-app.use(article.routes(), users.allowedMethods())
-app.use(publicText.routes(), users.allowedMethods())
+app.use(article.routes(), article.allowedMethods())
+app.use(publicText.routes(), publicText.allowedMethods())
+app.use(tool.routes(), tool.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

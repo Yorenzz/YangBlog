@@ -45,3 +45,10 @@ export function getTotalBlogNum() {
     method: 'GET',
   })
 }
+
+export function getBingPic(){
+  return request({
+    url: '/tool/getBingPicture',
+    method: 'GET',
+  })
+}

@@ -1,7 +1,7 @@
 <script setup>
-import { watchEffect, ref, nextTick, reactive } from 'vue'
+import { watch, ref, nextTick, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-import { getArticleById } from '../../api/index.js'
+import { getArticleById, getBingPic } from '../../api/index.js'
 import { scrollToTop } from '../../common/util.js'
 const route = useRoute()
 const data = reactive({
@@ -13,10 +13,11 @@ const data = reactive({
   label: '',
   num: '',
   category: '',
+  image: '',
 })
 scrollToTop()
 const blogID = ref(route.query.ID)
-watchEffect(
+watch(
   () => route.query.ID,
   (currentID, prevState) => {
     console.log('id', currentID)
@@ -24,7 +25,7 @@ watchEffect(
   },
   { deep: true },
 )
-watchEffect(
+watch(
   () => data.text,
   (current, prev) => {
     nextTick(() => {
@@ -57,12 +58,22 @@ const getBlogByID = () => {
       console.warn(e)
     })
 }
+const getBingpicture=()=>{
+  getBingPic().then(res=>{
+    console.log('url', res.data);
+    data.image = res.data
+  }).catch(e=>{
+    console.warn(e);
+  })
+}
+getBingpicture()
 getBlogByID()
 </script>
 <template>
   <div class="blog typo">
     <h2 class="typo">{{ data.title }}</h2>
     <div class="typo detail-title" v-html="data.text"></div>
+    <div><el-image :src="data.image" :alt="data.image" style="width: 500px; height: 500px"/></div>
   </div>
 </template>
 <style scoped lang="scss">
@@ -74,6 +85,7 @@ getBlogByID()
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 16px;
   padding: 0 32px 16px;
+  min-height: 80vh;
   &-title {
     font-family: Lato, serif;
     font-size: 24px;

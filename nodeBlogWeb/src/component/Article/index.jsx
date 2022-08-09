@@ -35,7 +35,7 @@ export const Article=()=>{
 
     }
     const submit=()=>{
-        const date=moment(new Date()).utcOffset(8).format('YYYY MMMM D dddd, H:mm:ss')
+        const date=moment().format('YYYY/MM/DD HH:mm:ss')
         console.log('date',typeof date)
         const mes={
             text:mdEditorText.current.getHtmlValue(),

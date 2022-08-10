@@ -1,28 +1,16 @@
 <script setup>
 import { onMounted, ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { scrollToArticle } from '../../common/util.js'
-const route = useRoute()
+import { scrollToArticleSmooth } from '../../common/util.js'
 
+const route = useRoute()
 const container = ref('transparent')
+const pic = ref()
+
 const activeMenu = computed(() => {
   return route.path
 })
-
 const innerWidth = computed(() => window.innerWidth)
-
-const pic = ref()
-const handleScroll = () => {
-  let style = window.getComputedStyle(pic?.value)
-  if (
-    document.documentElement.scrollTop > window.innerHeight - 59 ||
-    style.display === 'none'
-  ) {
-    container.value = '#353638'
-  } else {
-    container.value = 'transparent'
-  }
-}
 const menuData = [
   {
     title: '首页',
@@ -63,6 +51,21 @@ const menuData = [
     index: '/about',
   },
 ]
+
+const imgLoad=()=>{
+  console.log('1')
+}
+const handleScroll = () => {
+  let style = window.getComputedStyle(pic?.value)
+  if (
+    document.documentElement.scrollTop > window.innerHeight - 59 ||
+    style.display === 'none'
+  ) {
+    container.value = '#353638'
+  } else {
+    container.value = 'transparent'
+  }
+}
 watch(
   () => route.path,
   (current, prevState) => {
@@ -128,7 +131,7 @@ onMounted(() => {
     <div class="title-all">
       <div class="title" data-text="Yorenz's Blog">Yorenz's Blog</div>
     </div>
-    <div class="down" @click="scrollToArticle">
+    <div class="down" @click="scrollToArticleSmooth">
       <el-icon :size="50"><Bottom /></el-icon>
     </div>
   </div>

@@ -5,10 +5,17 @@ export const scrollToTop = () => {
   })
 }
 
-export const scrollToArticle = () => {
+export const scrollToArticleInstant = () => {
   window.scroll({
     top: window.innerHeight + 1,
     behavior: 'instant',
+  })
+}
+
+export const scrollToArticleSmooth = () => {
+  window.scroll({
+    top: window.innerHeight + 1,
+    behavior: 'smooth',
   })
 }
 

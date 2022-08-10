@@ -7,7 +7,7 @@ import {
   getTotalBlogNum,
 } from '../../api/index.js'
 import { useRoute, useRouter } from 'vue-router'
-import { scrollToArticle, scrollToTop } from '../../common/util.js'
+import { scrollToArticleInstant, scrollToTop } from '../../common/util.js'
 import Tag from '../common/Tag.vue'
 
 const router = useRouter()
@@ -19,13 +19,13 @@ const totalRow = ref(0)
 
 const pageChange = page => {
   currentPage.value = page
-  scrollToArticle()
+  scrollToArticleInstant()
   getArticle()
 }
 const sizeChange = size => {
   pageSize.value = size
   currentPage.value = 1
-  scrollToArticle()
+  scrollToArticleInstant()
   getArticle()
 }
 const blogDetail = ID => {

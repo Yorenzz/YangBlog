@@ -1,6 +1,7 @@
 const { ObjectID } = require('../config')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const ArticleModel = require('../dbModel/ArticleModel')
+const LabelModel = require('../dbModel/LabelModel')
 const insertArticle = async (text) => {
   text.readtime = 0
   text.top = 0
@@ -17,7 +18,7 @@ const getText = async (pageSize, currentPage) => {
     const res = await ArticleModel.find()
       .limit(pageSize)
       .skip((currentPage - 1) * pageSize)
-    console.log(res)
+    // console.log(res)
     return new SuccessModel(res)
   } catch (e) {
     return new ErrorModel(e)
@@ -27,7 +28,7 @@ const getText = async (pageSize, currentPage) => {
 const getArticleById = async (ID) => {
   try {
     const res = await ArticleModel.find({ _id: new ObjectID(ID) })
-    console.log('id', res)
+    // console.log('id', res)
     return new SuccessModel(res)
   } catch (e) {
     return new ErrorModel(e)
@@ -37,7 +38,7 @@ const getArticleById = async (ID) => {
 const getArticleByTag = async (tag) => {
   try {
     const res = await ArticleModel.find({ label: tag })
-    console.log('id', res)
+    // console.log('id', res)
     return new SuccessModel(res)
   } catch (e) {
     return new ErrorModel(e)
@@ -47,7 +48,7 @@ const getArticleByTag = async (tag) => {
 const getArticleByCategory = async (category) => {
   try {
     const res = await ArticleModel.find({ category: category })
-    console.log('res', res)
+    // console.log('res', res)
     return new SuccessModel(res)
   } catch (e) {
     return new ErrorModel(e)
@@ -63,6 +64,24 @@ const getTotalBlogNum = async () => {
   }
 }
 
+const getAllTags = async () => {
+  try {
+    const res = await LabelModel.find()
+    return new SuccessModel(res)
+  }catch(e) {
+    return new ErrorModel(e)
+  }
+}
+
+const getTagsColor = async (tagName) => {
+  try {
+    const res = await LabelModel.findOne({ value: tagName }, { color:1, _id:0 })
+    return new SuccessModel(res)
+  }catch(e) {
+    return new ErrorModel(e)
+  }
+}
+
 module.exports = {
   insertArticle,
   getText,
@@ -70,4 +89,6 @@ module.exports = {
   getArticleByCategory,
   getArticleByTag,
   getTotalBlogNum,
+  getAllTags,
+  getTagsColor
 }

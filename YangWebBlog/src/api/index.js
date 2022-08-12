@@ -16,13 +16,6 @@ export function getArticleById(ID) {
   })
 }
 
-export function getIP() {
-  return request({
-    url: '/publictext/getIP',
-    method: 'GET',
-  })
-}
-
 export function getArticleByCategory(category) {
   return request({
     url: '/publictext/getArticleByCategory',
@@ -50,5 +43,20 @@ export function getBingPic(){
   return request({
     url: '/tool/getBingPicture',
     method: 'GET',
+  })
+}
+
+export function getAllTags(){
+  return request({
+    url: '/publictext/getAllTags',
+    method: 'GET',
+  })
+}
+
+export function getTagsColor(tagName){
+  return request({
+    url: '/publictext/getTagsColor',
+    method: 'GET',
+    params: { tagName },
   })
 }

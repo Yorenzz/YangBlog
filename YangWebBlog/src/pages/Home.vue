@@ -5,7 +5,6 @@ import RightDetail from '../components/home/RightDetail.vue'
 import Footer from '../components/home/Footer.vue'
 import { useRoute } from 'vue-router'
 import { computed, reactive } from 'vue'
-import { getIP } from '../api/index.js'
 const route = useRoute()
 
 const data = reactive({

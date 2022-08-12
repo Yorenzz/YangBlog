@@ -42,7 +42,6 @@ const getArticle = () => {
     pageSize: pageSize.value,
     currentPage: currentPage.value,
   }).then(res => {
-    console.log(res.data, res)
     //后端传回总文章数
     textArray.value = res.data.map(item => {
       item.text = item.text.replaceAll(
@@ -121,7 +120,6 @@ watchEffect(() => {
     console.log('tag', route.params.tag)
     getArticleFromTag()
   } else {
-    console.log('home')
     getArticle()
   }
 })
@@ -163,12 +161,9 @@ watchEffect(() => {
       </div>
       <el-divider />
       <div class="middle-tag">
-        <div v-for="tag in item.label" class="tag-item">
+        <div v-for="tag in item.label" class="tag-item" :key="item.label">
           <Tag
             :tag-name="tag"
-            :color="`#${
-              Math.floor(Math.random() * 16777215).toString(16).length===6?Math.floor(Math.random() * 16777215).toString(16):'0'+Math.floor(Math.random() * 16777215).toString(16)
-              }`"
           />
         </div>
       </div>

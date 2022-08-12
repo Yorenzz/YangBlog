@@ -4,6 +4,8 @@ const {
   getArticleByCategory,
   getArticleByTag,
   getTotalBlogNum,
+  getAllTags,
+  getTagsColor
 } = require('../service/article')
 const router = require('koa-router')()
 const request = require('request-promise')
@@ -18,7 +20,6 @@ router.post('/getText', async (ctx) => {
 
 router.get('/getArticleById', async (ctx) => {
   const { ID } = ctx.request.query
-  console.log('body', ID)
   let res = await getArticleById(ID)
   ctx.body = res.data
 })
@@ -41,10 +42,17 @@ router.get('/getTotalBlogNum', async (ctx) => {
   ctx.body = res.data
 })
 
-router.get('/getIP', async (ctx) => {
-  let req = await request('https://realip.cc/')
-  console.log('ip', req)
-  ctx.body = req
+
+
+router.get('/getAllTags', async(ctx)=>{
+  const res=await getAllTags()
+  ctx.body=res.data
+})
+
+router.get('/getTagsColor', async(ctx)=>{
+  const { tagName } = ctx.request.query
+  const res=await getTagsColor(tagName)
+  ctx.body=res.data
 })
 
 module.exports = router

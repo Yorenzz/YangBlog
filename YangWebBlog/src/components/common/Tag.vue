@@ -1,26 +1,31 @@
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { getTagsColor } from '../../api';
 
 const router = useRouter()
 const props = defineProps({
   tagName: {
     type: String,
     default: '',
-  },
-  color: {
-    type: String,
-    default: '',
-  },
+  }
 })
+const color=ref('')
+
+getTagsColor(props.tagName).then(res=>{
+  color.value=res.data.color
+}).catch(e=>{
+  console.warn(e)
+})
+
 const findTag = () => {
-  console.log(`/tag/${props.tagName}`)
   router.push(`/tag/${props.tagName}`)
 }
 </script>
 
 <template>
   <div class="tag-content" @click="findTag">
-    <div class="tag" :style="{ backgroundColor: props.color }">
+    <div class="tag" :style="{ backgroundColor: color }">
       <div class="tag-circle"></div>
       {{ props.tagName }}
     </div>

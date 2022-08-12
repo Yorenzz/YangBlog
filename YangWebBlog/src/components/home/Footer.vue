@@ -6,7 +6,7 @@ import moment from 'moment'
   <div class="footer">
     <div>sssss</div>
     <el-divider class="bottom-divider" />
-    <span>Copyright © 2021 ~ {{ moment().format('YYYY') }} Yorenz'S BLOG</span>
+    <span>Copyright © 2021 ~ {{ moment().format('YYYY') }} Yorenz's BLOG</span>
     <div class="label">
       <div>
         <a

@@ -68,16 +68,39 @@ const getAllTags = async () => {
   try {
     const res = await LabelModel.find()
     return new SuccessModel(res)
-  }catch(e) {
+  } catch (e) {
     return new ErrorModel(e)
   }
 }
 
 const getTagsColor = async (tagName) => {
   try {
-    const res = await LabelModel.findOne({ value: tagName }, { color:1, _id:0 })
+    const res = await LabelModel.findOne(
+      { value: tagName },
+      { color: 1, _id: 0 },
+    )
     return new SuccessModel(res)
-  }catch(e) {
+  } catch (e) {
+    return new ErrorModel(e)
+  }
+}
+
+const setLabelColor = async (value, color) => {
+  try {
+    const res = await LabelModel.findOneAndUpdate(
+      { value: value },
+      {
+        $setOnInsert: {
+          value: value,
+          color: color,
+        },
+      },
+      {
+        upsert: true,
+      },
+    )
+    return new SuccessModel(res)
+  } catch (e) {
     return new ErrorModel(e)
   }
 }
@@ -90,5 +113,6 @@ module.exports = {
   getArticleByTag,
   getTotalBlogNum,
   getAllTags,
-  getTagsColor
+  getTagsColor,
+  setLabelColor,
 }

@@ -1,22 +1,24 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getTagsColor } from '../../api';
+import { getTagsColor } from '../../api'
 
 const router = useRouter()
 const props = defineProps({
   tagName: {
     type: String,
     default: '',
-  }
+  },
 })
-const color=ref('')
+const color = ref('')
 
-getTagsColor(props.tagName).then(res=>{
-  color.value=res.data.color
-}).catch(e=>{
-  console.warn(e)
-})
+getTagsColor(props.tagName)
+  .then(res => {
+    color.value = res.data.color
+  })
+  .catch(e => {
+    console.warn(e)
+  })
 
 const findTag = () => {
   router.push(`/tag/${props.tagName}`)

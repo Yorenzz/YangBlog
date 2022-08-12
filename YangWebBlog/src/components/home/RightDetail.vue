@@ -1,15 +1,17 @@
 <script setup>
 import Tag from '../common/Tag.vue'
 import { getAllTags } from '../../api'
-import { reactive } from 'vue';
+import { reactive } from 'vue'
 
-const tagList=reactive([])
-getAllTags().then((res)=>{
-  tagList.value=res.data
-  console.log('tag', tagList.value)
-}).catch(e=>{
-  console.warn(e)
-})
+const tagList = reactive([])
+getAllTags()
+  .then(res => {
+    tagList.value = res.data
+    console.log('tag', tagList.value)
+  })
+  .catch(e => {
+    console.warn(e)
+  })
 </script>
 
 <template>
@@ -19,13 +21,9 @@ getAllTags().then((res)=>{
       <el-divider></el-divider>
       <div class="tag-content">
         <div class="tag-item" v-for="item in tagList.value">
-          <Tag 
-            :tag-name="item.value"
-            :color="item.color"
-          />
+          <Tag :tag-name="item.value" :color="item.color" />
+        </div>
       </div>
-      </div>
-      
     </div>
   </div>
 </template>
@@ -57,6 +55,5 @@ getAllTags().then((res)=>{
       }
     }
   }
-  
 }
 </style>

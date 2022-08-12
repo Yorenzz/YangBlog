@@ -16,6 +16,21 @@ export function sendArticle(message){
     })
 }
 
+export function setLabelColor(message){
+    return request({
+        url: '/article/setLabelColor',
+        method: 'POST',
+        data: message
+    })
+}
+
+export function getAllTags(){
+    return request({
+        url: '/publictext/getAllTags',
+        method: 'GET',
+    })
+}
+
 export function testaaa(message){
     return request({
         url: '/string',

@@ -5,7 +5,8 @@ const {
   getArticleByTag,
   getTotalBlogNum,
   getAllTags,
-  getTagsColor
+  getTagsColor,
+  setLabelColor,
 } = require('../service/article')
 const router = require('koa-router')()
 const request = require('request-promise')
@@ -42,17 +43,15 @@ router.get('/getTotalBlogNum', async (ctx) => {
   ctx.body = res.data
 })
 
-
-
-router.get('/getAllTags', async(ctx)=>{
-  const res=await getAllTags()
-  ctx.body=res.data
+router.get('/getAllTags', async (ctx) => {
+  const res = await getAllTags()
+  ctx.body = res.data
 })
 
-router.get('/getTagsColor', async(ctx)=>{
+router.get('/getTagsColor', async (ctx) => {
   const { tagName } = ctx.request.query
-  const res=await getTagsColor(tagName)
-  ctx.body=res.data
+  const res = await getTagsColor(tagName)
+  ctx.body = res.data
 })
 
 module.exports = router

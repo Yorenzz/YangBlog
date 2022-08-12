@@ -6,36 +6,47 @@ import MarkdownIt from 'markdown-it';
 import Editor from 'react-markdown-editor-lite';
 import TabSpace from "../../editorPlugins/tabSpace";
 import 'react-markdown-editor-lite/lib/index.css';
-import {sendArticle} from "../../api";
+import { getAllTags, sendArticle, setLabelColor } from '../../api'
 import moment from 'moment'
+import { getRandomColor } from '../../common/util'
 Editor.use(TabSpace)
 export const Article=()=>{
-    const mdParser = new MarkdownIt(/* Markdown-it options */);
-    const mdEditorDescribe = useRef(null);
-    const mdEditorText = useRef(null);
-    const [title,setTitle]=useState('')
-    const [img,setImg]=useState('')
-    const [num,setNum]=useState(200)
-    const [category,setCategory]=useState('study')
-    const [label,setLabel]=useState({})
-    let children = [];
-    let labelObj={
-        0:'react',
-        1:'blog'
-    }
-    const { Option } = Select;
+  const mdParser = new MarkdownIt(/* Markdown-it options */);
+  const mdEditorDescribe = useRef(null);
+  const mdEditorText = useRef(null);
+  const [title,setTitle]=useState('')
+  const [img,setImg]=useState('')
+  const [num,setNum]=useState(200)
+  const [category,setCategory]=useState('study')
+  const [label,setLabel]=useState({})
+  const  [children, setChildren] = useState([]);
+  const { Option } = Select;
 
-    for (let i = 0; i < 2; i++) {
-        children.push(<Option key={labelObj[i]}>{labelObj[i]}</Option>);
-    }
-    function handleChange(value) {
-        let obj = (Object.assign({}, value))
-        console.log(value,obj,labelObj)
-        setLabel(obj)
+  useEffect(()=>{
+    getAllTags()
+    .then(res => {
+      const tagList = res.data
+      console.log('tag', tagList)
+      const optionChildren = []
+      for (let i = 0; i < tagList.length; i++) {
+        optionChildren.push(<Option key={tagList[i].value}>{tagList[i].value}</Option>);
+      }
+      setChildren(optionChildren)
+    })
+    .catch(e => {
+      console.warn(e)
+    })
+  },[])
 
-    }
+
+  function handleChange(value) {
+    let obj = (Object.assign({}, value))
+    setLabel(obj)
+  }
+
     const submit=()=>{
         const date=moment().format('YYYY/MM/DD HH:mm:ss')
+        const labelArr = Array.from(Object.values(label),x=>x)
         console.log('date',typeof date)
         const mes={
             text:mdEditorText.current.getHtmlValue(),
@@ -45,12 +56,19 @@ export const Article=()=>{
             img,
             num,
             category,
-            label
+            label:labelArr
         }
-       //console.log(mes)
         sendArticle(mes).then(response=>{
             console.log('res',response)
-            message.success('上传成功')
+            message.success('上传成功').then(()=>{
+              labelArr.map(item=>{
+                const color = getRandomColor()
+                console.log('col', item, color)
+                setLabelColor({ value:item, color }).then(res=>{
+
+                }).catch(e=>{})
+              })
+            })
         }).catch(reason=>{
             console.log('res',reason.message)
             message.error('111'+reason.message)

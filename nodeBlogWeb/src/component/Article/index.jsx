@@ -38,7 +38,6 @@ export const Article=()=>{
     })
   },[])
 
-
   function handleChange(value) {
     let obj = (Object.assign({}, value))
     setLabel(obj)
@@ -47,7 +46,7 @@ export const Article=()=>{
     const submit=()=>{
         const date=moment().format('YYYY/MM/DD HH:mm:ss')
         const labelArr = Array.from(Object.values(label),x=>x)
-        console.log('date',typeof date)
+        console.log('date',mdEditorText.current.getMdValue())
         const mes={
             text:mdEditorText.current.getHtmlValue(),
             describe:mdEditorDescribe.current.getHtmlValue(),

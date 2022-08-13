@@ -24,7 +24,7 @@ const articleSchema = new Schema(
       require: true,
     },
     readtime: {
-      type: String,
+      type: Number,
       require: true,
     },
     text: {

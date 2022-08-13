@@ -27,6 +27,10 @@ const getText = async (pageSize, currentPage) => {
 
 const getArticleById = async (ID) => {
   try {
+    const add = await ArticleModel.update(
+      { _id: new ObjectID(ID) },
+      { $inc: { readtime: 1 } },
+    )
     const res = await ArticleModel.find({ _id: new ObjectID(ID) })
     // console.log('id', res)
     return new SuccessModel(res)

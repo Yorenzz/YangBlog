@@ -1,6 +1,6 @@
 import {Button, Col, Form, Row, Modal, Select, message} from "antd";
 import {useEffect, useRef, useState} from "react"
-import './article.css'
+import './style/dynamic.scss'
 import { Input } from 'antd';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';

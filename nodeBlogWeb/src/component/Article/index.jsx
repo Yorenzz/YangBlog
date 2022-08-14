@@ -1,6 +1,6 @@
-import {Button, Col, Form, Row, Modal, Select, message} from "antd";
+import {Button, Modal, Select, message} from "antd";
 import {useEffect, useRef, useState} from "react"
-import './article.css'
+import './style/article.scss'
 import { Input } from 'antd';
 import MarkdownIt from 'markdown-it';
 import Editor from 'react-markdown-editor-lite';
@@ -46,14 +46,13 @@ export const Article=()=>{
     const submit=()=>{
         const date=moment().format('YYYY/MM/DD HH:mm:ss')
         const labelArr = Array.from(Object.values(label),x=>x)
-        console.log('date',mdEditorText.current.getMdValue())
         const mes={
             text:mdEditorText.current.getHtmlValue(),
             describe:mdEditorDescribe.current.getHtmlValue(),
             title,
             time:date,
             img,
-            num,
+            num:mdEditorText.current.getMdValue().length,
             category,
             label:labelArr
         }
@@ -73,124 +72,109 @@ export const Article=()=>{
             message.error('111'+reason.message)
         })
     }
-    const onFinish=()=>{
-
-    }
-    const onFinishFailed=()=>{
-
+    const getBingPic=()=>{
+      setImg('111')
+      console.log(img)
     }
     return (
         <>
-            <Form
-                name="basic"
-                layout="vertical"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-            >
-                <Row gutter={24}>
-                    <Col span={12}>
-                        <Form.Item
-                        label="文章标题"
-                        name="title"
-                        rules={[{ required: true, message: '请输入标题！' }]}
-                    >
-                        <Input onChange={e=>setTitle(e.target.value)}/>
-                    </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item
-                        label="文章首图url"
-                        name="url"
-                        rules={[{ required: true, message: '请输入url！' }]}
-                    >
-                        <Input onChange={e=>setImg(e.target.value)}/>
-                    </Form.Item>
-                    </Col>
-                </Row>
-                <Form.Item
-                    label="文章描述"
-                >
-                    <Editor
-                        className='mdEditor'
-                        ref={mdEditorDescribe}
-                        plugins={[
-                            'header',
-                            'font-bold',
-                            'font-italic',
-                            'font-strikethrough',
-                            'list-unordered',
-                            'list-ordered',
-                            'block-quote',
-                            'block-code-inline',
-                            'block-code-block',
-                            'table',
-                            'image',
-                            'link',
-                            'logger',
-                            "tab-insert",
-                            'mode-toggle',
-                            'full-screen',
-                            'block-wrap',
-                            'tabSpace'
-                        ]}
-                        renderHTML={text => mdParser.render(text)}
-                    />
-                </Form.Item>
-                <Form.Item
-                    label="文章正文"
-                >
-                    <Editor
-                        className='mdEditor'
-                        ref={mdEditorText}
-                        plugins={[
-                            'header',
-                            'font-bold',
-                            'font-italic',
-                            'font-strikethrough',
-                            'list-unordered',
-                            'list-ordered',
-                            'block-quote',
-                            'block-code-inline',
-                            'block-code-block',
-                            'table',
-                            'image',
-                            'link',
-                            'logger',
-                            'mode-toggle',
-                            'full-screen',
-                            'tab-insert',
-                            'block-wrap'
-                        ]}
-                        renderHTML={text => mdParser.render(text)}
-                    />
-                </Form.Item>
-                <Row gutter={24}>
-                    <Col span={12}>
-                        <Form.Item
-                            label="分类"
-                            name="category"
-                            rules={[{ required: true, message: '请选择分类！' }]}
-                        >
-                            <Input onChange={e=>setCategory(e.target.value)}/>
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item
-                            label="标签"
-                            name="label"
-                        >
-                            <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={handleChange}>
-                                {children}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </Form>
-            <Button type="primary" className='buttonContainer' onClick={submit}>
+          <div>
+            <div className="titleInput">
+              <div className="title">
+                <span className="redText">*</span>文章标题
+                <Input value={title} onChange={e=>setTitle(e.target.value)}/>
+              </div>
+
+              <div className="url">
+                <div>
+                  <span className="redText">*</span>文章首图url
+                  <div className="inputUrl">
+                    <Input value={img} onChange={e=>setImg(e.target.value)}/>
+                    <Button onClick={getBingPic}>获取随机图片</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span className="redText">*</span><span>文章描述</span>
+              <Editor
+                  className='describe'
+                  ref={mdEditorDescribe}
+                  plugins={[
+                    'header',
+                    'font-bold',
+                    'font-italic',
+                    'font-strikethrough',
+                    'list-unordered',
+                    'list-ordered',
+                    'block-quote',
+                    'block-code-inline',
+                    'block-code-block',
+                    'table',
+                    'image',
+                    'link',
+                    'logger',
+                    "tab-insert",
+                    'mode-toggle',
+                    'full-screen',
+                    'block-wrap',
+                    'tabSpace'
+                  ]}
+                  renderHTML={text => mdParser.render(text)}
+              />
+            </div>
+
+            <div>
+              <span className="redText">*</span><span>文章正文</span>
+              <Editor
+                  className='article'
+                  ref={mdEditorText}
+                  plugins={[
+                    'header',
+                    'font-bold',
+                    'font-italic',
+                    'font-strikethrough',
+                    'list-unordered',
+                    'list-ordered',
+                    'block-quote',
+                    'block-code-inline',
+                    'block-code-block',
+                    'table',
+                    'image',
+                    'link',
+                    'logger',
+                    'mode-toggle',
+                    'full-screen',
+                    'tab-insert',
+                    'block-wrap'
+                  ]}
+                  renderHTML={text => mdParser.render(text)}
+              />
+            </div>
+
+            <div className="categoryTag">
+              <div className="category" >
+                <span className="redText">*</span>分类
+                <Input onChange={e=>setCategory(e.target.value)}/>
+              </div>
+              <div className="tag">
+                <span>标签</span>
+                <Select mode="tags" className="tagInput" placeholder="Tags Mode" onChange={handleChange}>
+                  {children}
+                </Select>
+              </div>
+
+            </div>
+
+            <div className='buttonContainer'>
+              <Button type="primary" className='button' onClick={submit}>
                 上传文章
-            </Button>
+              </Button>
+            </div>
+          </div>
+
+
         </>
     )
 }

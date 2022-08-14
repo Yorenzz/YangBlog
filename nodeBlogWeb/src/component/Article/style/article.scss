@@ -1,0 +1,53 @@
+.titleInput {
+  display: flex;
+  margin-bottom: 32px;
+  .title {
+    width: 50%;
+    padding-right: 16px;
+  }
+  .url {
+    width: 50%;
+    .inputUrl {
+      display: flex;
+    }
+  }
+}
+
+.describe {
+  margin-top: 4px;
+  height: 400px;
+  margin-bottom: 32px;
+}
+
+.article {
+  margin-top: 4px;
+  height: 600px;
+  margin-bottom: 32px;
+}
+
+.categoryTag {
+  display: flex;
+  margin-bottom: 32px;
+  .category {
+    width: 50%;
+    padding-right: 16px;
+  }
+  .tag {
+    width: 50%;
+    .tagInput {
+      width: 100%;
+    }
+  }
+}
+
+.buttonContainer {
+  height: 30px;
+  .button {
+    float: right;
+  }
+}
+
+
+.redText {
+  color: red;
+}

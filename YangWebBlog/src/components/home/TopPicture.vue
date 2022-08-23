@@ -52,7 +52,7 @@ const menuData = [
   },
 ]
 
-const imgLoad=()=>{
+const imgLoad = () => {
   console.log('1')
 }
 const handleScroll = () => {

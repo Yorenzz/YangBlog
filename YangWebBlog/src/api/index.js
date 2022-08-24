@@ -39,24 +39,32 @@ export function getTotalBlogNum() {
   })
 }
 
-export function getBingPic(){
+export function getBingPic() {
   return request({
     url: '/tool/getBingPicture',
     method: 'GET',
   })
 }
 
-export function getAllTags(){
+export function getAllTags() {
   return request({
     url: '/publictext/getAllTags',
     method: 'GET',
   })
 }
 
-export function getTagsColor(tagName){
+export function getTagsColor(tagName) {
   return request({
     url: '/publictext/getTagsColor',
     method: 'GET',
     params: { tagName },
+  })
+}
+
+export function getIP(ip) {
+  return request({
+    url: '/publictext/getIP',
+    method: 'GET',
+    params: { ip },
   })
 }

@@ -15,7 +15,7 @@ router.prefix('/publictext')
 router.post('/getText', async (ctx) => {
   const { pageSize, currentPage } = ctx.request.body
   let res = await getText(pageSize, currentPage)
-  console.log(res)
+  // console.log(res)
   ctx.body = res.data
 }) //获取文章
 
@@ -52,6 +52,13 @@ router.get('/getTagsColor', async (ctx) => {
   const { tagName } = ctx.request.query
   const res = await getTagsColor(tagName)
   ctx.body = res.data
+})
+
+router.get('/getIP', async (ctx) => {
+  const { ip } = ctx.request.query
+  let req = await request(`http://ip-api.com/json/${ip}?lang=zh-CN`)
+  console.log('ip', req)
+  ctx.body = req
 })
 
 module.exports = router

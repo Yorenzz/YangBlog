@@ -5,6 +5,8 @@ import RightDetail from '../components/home/RightDetail.vue'
 import Footer from '../components/home/Footer.vue'
 import { useRoute } from 'vue-router'
 import { computed, reactive } from 'vue'
+import { getIP } from '../api/index.js'
+
 const route = useRoute()
 
 const data = reactive({
@@ -13,24 +15,12 @@ const data = reactive({
 })
 
 const getVisitorIP = () => {
-  fetch('https://extreme-ip-lookup.com/json/').then((res) => {
-    res.json().then((res1) => {
+  fetch('https://extreme-ip-lookup.com/json/').then(res => {
+    res.json().then(res1 => {
       data.ip = res1.query
-      fetch(`https://api.vore.top/api/IPdata?ip=${data.ip}`).then((res2) => {
-        res2.json().then((res3) => {
-          data.ipData = res3.ipdata
-          console.log(data.ipData)
-          console.log(
-            '你的ip是' +
-              data.ip +
-              ' 你所在地为 ' +
-              data.ipData.info1 +
-              ' ' +
-              data.ipData.info2 +
-              ' ' +
-              data.ipData.info3,
-          )
-        })
+      console.log(data.ip)
+      getIP(data.ip).then(res => {
+        console.log('ip', res)
       })
     })
   })

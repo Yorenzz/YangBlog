@@ -1,4 +1,4 @@
-import request from '../request'
+import request, { mock } from '../request'
 
 export function getText(message) {
   return request({
@@ -12,7 +12,7 @@ export function getArticleById(ID) {
   return request({
     url: '/publictext/getArticleById',
     method: 'GET',
-    params: { ID },
+    data: { ID },
   })
 }
 
@@ -20,7 +20,7 @@ export function getArticleByCategory(category) {
   return request({
     url: '/publictext/getArticleByCategory',
     method: 'GET',
-    params: { category },
+    data: { category },
   })
 }
 
@@ -28,21 +28,21 @@ export function getArticleByTag(tag) {
   return request({
     url: '/publictext/getArticleByTag',
     method: 'GET',
-    params: { tag },
+    data: { tag },
   })
 }
 
 export function getTotalBlogNum() {
   return request({
     url: '/publictext/getTotalBlogNum',
-    method: 'GET',
+    data: 'GET',
   })
 }
 
 export function getBingPic() {
   return request({
     url: '/tool/getBingPicture',
-    method: 'GET',
+    data: 'GET',
   })
 }
 
@@ -57,7 +57,7 @@ export function getTagsColor(tagName) {
   return request({
     url: '/publictext/getTagsColor',
     method: 'GET',
-    params: { tagName },
+    data: { tagName },
   })
 }
 
@@ -65,6 +65,22 @@ export function getIP(ip) {
   return request({
     url: '/publictext/getIP',
     method: 'GET',
-    params: { ip },
+    data: { ip },
   })
+}
+
+export function getHistoryToday() {
+  return mock({
+    url: '/tool/today',
+    method: 'GET',
+  })
+  // https://api.oick.cn/lishi/api.php
+}
+
+export function getSentence() {
+  return mock({
+    url: '/tool/sentence',
+    method: 'GET',
+  })
+  // https://v1.hitokoto.cn/?c=a
 }

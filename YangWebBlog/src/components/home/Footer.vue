@@ -1,10 +1,54 @@
 <script setup>
 import moment from 'moment'
+import { reactive, ref } from 'vue';
+import { getHistoryToday, getSentence } from '../../api';
+
+const historyToday = ref([])
+const sentence = reactive({
+  value: '',
+  book: '',
+})
+const getTodayHistory = () => {
+  getHistoryToday().then( res => {
+    historyToday.value = res.data.result
+  })
+}
+const getASentence = () => {
+  getSentence().then( res => {
+    sentence.value = res.data.hitokoto
+    sentence.book = res.data.from
+  })
+}
+getTodayHistory()
+getASentence()
 </script>
 
 <template>
   <div class="footer">
-    <div>sssss</div>
+    <div class="footer-top">
+      <div class="history-today">
+        <span>历史上的今天</span>
+        <el-carousel
+          height="50px"
+          direction="vertical"
+          :autoplay="true"
+          indicator-position="none"
+        >
+          <el-carousel-item
+            v-for="item in historyToday"
+            :key="item.title"
+          >
+            <div>{{ item.date }}</div>
+            <div>{{ item.title }}</div>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <el-divider direction="vertical" class="vertical-divider"/>
+      <div class="sentence">
+        <div class="sentence-value">&emsp;&emsp;{{ sentence.value }}</div>
+        <div class="sentence-book">——{{ sentence.book }}</div>
+      </div>
+    </div>
     <el-divider class="bottom-divider" />
     <span>Copyright © 2021 ~ {{ moment().format('YYYY') }} Yorenz's BLOG</span>
     <div class="label">
@@ -76,6 +120,27 @@ import moment from 'moment'
   margin-top: 32px;
   padding-bottom: 32px;
   text-align: center;
+  &-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .history-today {
+      width: 400px;
+      color: #7f7f7f;
+    }
+    .sentence {
+      color: #7f7f7f;
+      width: 400px;
+      margin-left: 80px;
+      &-value {
+        text-align: left;
+      }
+      &-book {
+        text-align: right;
+      }
+    }
+  }
+  
 }
 .label {
   display: flex;
@@ -89,6 +154,10 @@ import moment from 'moment'
   width: 70%;
   left: 50%;
   transform: translateX(-50%);
+  border-color: $divider-color;
+}
+.vertical-divider {
+  height: 74px;
   border-color: $divider-color;
 }
 </style>

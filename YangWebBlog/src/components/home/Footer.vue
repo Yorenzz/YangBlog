@@ -51,7 +51,7 @@ getASentence()
       </div>
     </div>
     <el-divider class="bottom-divider" />
-    <span>Copyright © 2021 ~ {{ moment().format('YYYY') }} Yorenz's BLOG</span>
+    <span>Copyright © 2021 ~ {{ moment().format('YYYY') }} Yorenz's Blog</span>
     <div class="label">
       <div>
         <a
@@ -141,7 +141,7 @@ getASentence()
       }
     }
   }
-  
+
 }
 .label {
   display: flex;

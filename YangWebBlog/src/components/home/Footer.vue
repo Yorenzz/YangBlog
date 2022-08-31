@@ -19,6 +19,7 @@ const getASentence = () => {
     sentence.book = res.data.from
   })
 }
+
 getTodayHistory()
 getASentence()
 </script>

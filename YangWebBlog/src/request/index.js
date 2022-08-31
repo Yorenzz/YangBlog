@@ -5,14 +5,14 @@ const service=axios.create({
     timeout: 30000
 })
 
-service.interceptors.request.use(req => {
-    const headers = req.headers
-    if (!headers.Authorization) {
-        console.log(1);
-    }
-    // headers.Authorization = 'Bear Jack'
-    return req
-})
+// service.interceptors.request.use(req => {
+//     const headers = req.headers
+//     if (!headers.Authorization) {
+//         console.log(1);
+//     }
+//     // headers.Authorization = 'Bear Jack'
+//     return req
+// })
 
 // service.interceptors.response.use(res => {
 // const { code, data, msg } = res.data

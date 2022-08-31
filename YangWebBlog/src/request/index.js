@@ -7,7 +7,10 @@ const service=axios.create({
 
 service.interceptors.request.use(req => {
     const headers = req.headers
-    if (!headers.Authorization) headers.Authorization = 'Bear Jack'
+    if (!headers.Authorization) {
+        console.log(1);
+    }
+    // headers.Authorization = 'Bear Jack'
     return req
 })
 

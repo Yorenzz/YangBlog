@@ -10,6 +10,7 @@
     "@ant-design/icons": "^4.7.0",
     "antd": "^4.22.4",
     "axios": "^0.27.2",
+    "echarts": "^5.3.3",
     "esbuild-windows-64": "^0.14.54",
     "markdown-it": "^13.0.1",
     "moment": "^2.29.4",

@@ -3,7 +3,7 @@ import {message} from "antd"
 import {handleUserResponse, logout} from "./routeValidate";
 
 const request=axios.create({
-    baseURL: 'http://localhost:8080/',
+    baseURL: 'http://175.178.115.221:8080',
     timeout:30000
 })
 

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import config from '../config/index.js'
 const service=axios.create({
-    baseURL: 'http://175.178.115.221:8080',
+    baseURL: config.baseApi,
     timeout: 30000
 })
 

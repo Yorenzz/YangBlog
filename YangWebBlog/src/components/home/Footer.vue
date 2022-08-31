@@ -125,6 +125,7 @@ getASentence()
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     .history-today {
       width: 400px;
       color: #7f7f7f;

@@ -70,16 +70,16 @@ export function getIP(ip) {
 }
 
 export function getHistoryToday() {
-  return mock({
-    url: '/tool/today',
+  return request({
+    url: '/tool/getHistoryToday',
     method: 'GET',
   })
   // https://api.oick.cn/lishi/api.php
 }
 
 export function getSentence() {
-  return mock({
-    url: '/tool/sentence',
+  return request({
+    url: '/tool/getSentence',
     method: 'GET',
   })
   // https://v1.hitokoto.cn/?c=a

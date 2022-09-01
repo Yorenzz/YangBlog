@@ -9,16 +9,22 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  color: {
+    type: String,
+    default: '',
+  }
 })
-const color = ref('')
+const requestColor = ref('')
+if(!props.color){
+  getTagsColor(props.tagName)
+    .then(res => {
+      requestColor.value = res.data.color
+    })
+    .catch(e => {
+      console.warn(e)
+    })
 
-getTagsColor(props.tagName)
-  .then(res => {
-    color.value = res.data.color
-  })
-  .catch(e => {
-    console.warn(e)
-  })
+}
 
 const findTag = () => {
   router.push(`/tag/${props.tagName}`)
@@ -27,7 +33,7 @@ const findTag = () => {
 
 <template>
   <div class="tag-content" @click="findTag">
-    <div class="tag" :style="{ backgroundColor: color }">
+    <div class="tag" :style="{ backgroundColor: props?.color ? props.color: requestColor }">
       <div class="tag-circle"></div>
       {{ props.tagName }}
     </div>

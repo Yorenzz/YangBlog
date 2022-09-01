@@ -35,14 +35,14 @@ export function getArticleByTag(tag) {
 export function getTotalBlogNum() {
   return request({
     url: '/publictext/getTotalBlogNum',
-    data: 'GET',
+    method: 'GET',
   })
 }
 
 export function getBingPic() {
   return request({
     url: '/tool/getBingPicture',
-    data: 'GET',
+    method: 'GET',
   })
 }
 

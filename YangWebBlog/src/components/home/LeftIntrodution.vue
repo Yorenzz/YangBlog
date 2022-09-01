@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+
+const activeName=ref('')
+</script>
 
 <template>
   <div class="left-introduction">
@@ -11,7 +15,25 @@
     </div>
 
     <div class="name">Yorenz</div>
-    <span>占位占位占位</span>
+    <div class="introduction">
+      <el-collapse v-model="activeName" accordion>
+      <el-collapse-item title="接触过的技术..." name="1">
+        <div>
+          JavaScript、Nodejs、MongoDB、Koa2、Express、Vue、React、Typescript...
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="玩过的游戏..." name="2">
+        <div>
+          LOL、SkyLine、死亡细胞、D4L2、公主连结、明日方舟、无期迷途...
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="喜欢听的歌..." name="3">
+        <div>
+          你猜&#128536;
+        </div>
+      </el-collapse-item>
+    </el-collapse>
+    </div>
   </div>
 </template>
 
@@ -41,8 +63,13 @@
     box-shadow: -1px 2px 5px 3px rgba(0, 0, 0, 0.3);
   }
   .name {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: STLiti;
+    margin: 16px 0;
+  }
+  .introduction {
+    margin: 16px 16px;
   }
 }
 </style>

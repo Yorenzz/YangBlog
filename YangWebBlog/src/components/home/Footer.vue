@@ -10,7 +10,13 @@ const sentence = reactive({
 })
 const getTodayHistory = () => {
   getHistoryToday().then( res => {
-    historyToday.value = res.data.result
+    console.log(res.data);
+    try{
+      historyToday.value = JSON.parse(res.data).result
+    }
+    catch(e){
+      console.warn('历史上的今天返回格式错误，不显示');
+    }
   })
 }
 const getASentence = () => {
@@ -27,7 +33,10 @@ getASentence()
 <template>
   <div class="footer">
     <div class="footer-top">
-      <div class="history-today">
+      <div 
+        v-if="historyToday.length" 
+        class="history-today"
+      >
         <span>历史上的今天</span>
         <el-carousel
           height="50px"
@@ -44,7 +53,11 @@ getASentence()
           </el-carousel-item>
         </el-carousel>
       </div>
-      <el-divider direction="vertical" class="vertical-divider"/>
+      <el-divider 
+        v-if="historyToday.length&&sentence.value" 
+        direction="vertical" 
+        class="vertical-divider"
+      />
       <div class="sentence">
         <div class="sentence-value">&emsp;&emsp;{{ sentence.value }}</div>
         <div class="sentence-book">——{{ sentence.book }}</div>
@@ -117,7 +130,7 @@ getASentence()
 .footer {
   background-color: $grey-color;
   color: #ffffff;
-  padding-top: 16px;
+  padding-top: 32px;
   margin-top: 32px;
   padding-bottom: 32px;
   text-align: center;
@@ -133,7 +146,6 @@ getASentence()
     .sentence {
       color: #7f7f7f;
       width: 400px;
-      margin-left: 80px;
       &-value {
         text-align: left;
       }
@@ -161,5 +173,6 @@ getASentence()
 .vertical-divider {
   height: 74px;
   border-color: $divider-color;
+  margin-right: 80px;
 }
 </style>

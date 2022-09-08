@@ -11,12 +11,18 @@ const sentence = reactive({
 const getTodayHistory = () => {
   getHistoryToday().then( res => {
     console.log(res.data);
-    try{
-      historyToday.value = JSON.parse(res.data).result
+    if(res.data instanceof Object){
+      historyToday.value = res.data.result
     }
-    catch(e){
-      console.warn('历史上的今天返回格式错误，不显示');
+    else{
+      try{
+        historyToday.value = JSON.parse(res.data).result
+      }
+      catch(e){
+        console.warn('历史上的今天返回格式错误，不显示');
+      }      
     }
+
   })
 }
 const getASentence = () => {

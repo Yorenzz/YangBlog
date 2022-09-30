@@ -1,22 +1,27 @@
 import {Navigate} from 'react-router-dom'
-import {lazy, ReactNode} from 'react'
+import {lazy, LazyExoticComponent} from 'react'
+import Router from '../interface/router'
 
-interface Router {
-    name?: string,
-    path: string,
-    children?: Array<Router>,
-    element: ReactNode,
-}
-
-const lazyLoad=(moduleName: string)=>{
-    const Modules = lazy(()=>import(moduleName))
-    return <Modules/>
-}
+const Login = lazy(()=>import('../pages/Login'))
+const Home = lazy(()=>import('../pages/Home'))
 
 const routes: Array<Router> = [
     {
+        name: '登录',
         path: '/login',
-        element: lazyLoad('../pages/login/Login')
+        element: <Login/>
+    },
+    {
+        name: '主页',
+        path: '/',
+        element: <Navigate to="/home"></Navigate>,
+        children: [
+            {
+                name: '主页',
+                path: '/home',
+                element: <Home/>
+            }
+        ]
     }
 ]
 

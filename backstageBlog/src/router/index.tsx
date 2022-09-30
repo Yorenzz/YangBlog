@@ -1,9 +1,10 @@
 import {Navigate} from 'react-router-dom'
 import {lazy, LazyExoticComponent} from 'react'
-import Router from '../interface/router'
+import Router from '../typing/router'
 
 const Login = lazy(()=>import('../pages/Login'))
 const Home = lazy(()=>import('../pages/Home'))
+const HomePage = lazy(()=>import('../pages/HomePage'))
 
 const routes: Array<Router> = [
     {
@@ -14,12 +15,12 @@ const routes: Array<Router> = [
     {
         name: '主页',
         path: '/',
-        element: <Navigate to="/home"></Navigate>,
+        element: <Home/>,
         children: [
             {
                 name: '主页',
-                path: '/home',
-                element: <Home/>
+                path: '/homepage',
+                element: <HomePage/>,
             }
         ]
     }

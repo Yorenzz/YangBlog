@@ -4,7 +4,7 @@ interface Router {
     name?: string,
     path: string,
     children?: Array<Router>,
-    element: LazyExoticComponent<any> | ReactNode,
+    element: ReactNode,
 }
 
 export default Router

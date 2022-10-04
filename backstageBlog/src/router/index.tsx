@@ -5,11 +5,12 @@ import Router from '../typing/router'
 const Login = lazy(()=>import('../pages/Login'))
 const Home = lazy(()=>import('../pages/Home'))
 const HomePage = lazy(()=>import('../pages/HomePage'))
+const Article = lazy(()=>import('../pages/Article'))
 
 const routes: Array<Router> = [
     {
         name: '登录',
-        path: '/login',
+        path: '/Login',
         element: <Login/>
     },
     {
@@ -19,8 +20,13 @@ const routes: Array<Router> = [
         children: [
             {
                 name: '主页',
-                path: '/homepage',
+                path: '/',
                 element: <HomePage/>,
+            },
+            {
+                name: '写文章',
+                path: '/write-article',
+                element: <Article/>
             }
         ]
     }

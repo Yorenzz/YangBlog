@@ -13,6 +13,7 @@
     "@wangeditor/editor-for-react": "^1.0.5",
     "antd": "^4.23.2",
     "bizcharts": "^4.1.20",
+    "echarts": "^5.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.1",

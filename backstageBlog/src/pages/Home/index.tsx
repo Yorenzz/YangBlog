@@ -11,8 +11,8 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const { Content, Footer, Sider } = Layout;
 
@@ -24,7 +24,7 @@ const items: MenuProps['items'] = [
 	},
 	{
 		label: '博客编辑',
-		key: 'SubMenu',
+		key: '/write',
 		icon: <SettingOutlined />,
 		children: [
 			{
@@ -41,7 +41,7 @@ const items: MenuProps['items'] = [
 	},
 	{
 		label: '博客管理',
-		key: 'SubMenu2',
+		key: '/edit',
 		icon: <SettingOutlined />,
 		children: [
 			{
@@ -59,22 +59,35 @@ const items: MenuProps['items'] = [
 ];
 
 const Home: React.FC = () => {
+	const location = useLocation()
+	const { pathname } = location
 	const [collapsed, setCollapsed] = useState(false);
+	const [openkey, setOpenkey] = useState([''])
 	const navigateTo=useNavigate()
 	const handleClick: MenuProps['onClick'] = (e: any)=>{
 		console.log(e)
 		navigateTo(e.key)
 	}
-
+	const handleOpen=(openkey: string[]):void=>{
+		setOpenkey(openkey)
+	}
+	console.log(pathname);
+	useEffect(()=>{
+		const key = pathname.slice(0,pathname.indexOf('-'))
+		setOpenkey([key])
+	}, [])
 	return (
 	  <Layout style={{ minHeight: '100vh' }}>
 		<Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
 		  <div className="logo" />
 		  <Menu
 			  theme="dark"
-			  defaultSelectedKeys={['1']}
 			  mode="inline"
+			  defaultSelectedKeys={[pathname]}
 			  items={items}
+			  defaultOpenKeys={openkey}
+			  openKeys={openkey}
+			  onOpenChange={handleOpen}
 			  onClick={handleClick}
 		  />
 		</Sider>

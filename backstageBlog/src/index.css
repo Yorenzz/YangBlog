@@ -28,3 +28,6 @@ h1 {
   line-height: 1.1;
 }
 
+.lazyWidth {
+  margin-left: 200px;
+}

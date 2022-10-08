@@ -6,6 +6,7 @@ const Login = lazy(()=>import('../pages/Login'))
 const Home = lazy(()=>import('../pages/Home'))
 const HomePage = lazy(()=>import('../pages/HomePage'))
 const Article = lazy(()=>import('../pages/Article'))
+const Dynamic = lazy(()=>import('../pages/Dynamic'))
 
 const routes: Array<Router> = [
     {
@@ -27,6 +28,11 @@ const routes: Array<Router> = [
                 name: '写文章',
                 path: '/write-article',
                 element: <Article/>
+            },
+            {
+                name: '写动态',
+                path: '/write-dynamic',
+                element: <Dynamic/>
             }
         ]
     }

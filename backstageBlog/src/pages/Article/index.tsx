@@ -38,7 +38,6 @@ const Article: React.FC = () => {
 		} catch (errorInfo) {
 			console.log('Failed:', errorInfo);
 		}
-		console.log(form.getFieldValue('title'))
 		const date=moment().format('YYYY/MM/DD HH:mm:ss')
 		const labelArr = Array.from(Object.values(label),x=>x)
 		const mes={

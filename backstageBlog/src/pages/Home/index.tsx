@@ -62,19 +62,17 @@ const Home: React.FC = () => {
 	const location = useLocation()
 	const { pathname } = location
 	const [collapsed, setCollapsed] = useState(false);
-	const [openkey, setOpenkey] = useState([''])
+	const [openKey, setOpenKey] = useState([''])
 	const navigateTo=useNavigate()
 	const handleClick: MenuProps['onClick'] = (e: any)=>{
-		console.log(e)
 		navigateTo(e.key)
 	}
-	const handleOpen=(openkey: string[]):void=>{
-		setOpenkey(openkey)
+	const handleOpen=(open: string[]):void=>{
+		setOpenKey(open)
 	}
-	console.log(pathname);
 	useEffect(()=>{
 		const key = pathname.slice(0,pathname.indexOf('-'))
-		setOpenkey([key])
+		setOpenKey([key])
 	}, [])
 	return (
 	  <Layout style={{ minHeight: '100vh' }}>
@@ -85,8 +83,8 @@ const Home: React.FC = () => {
 			  mode="inline"
 			  defaultSelectedKeys={[pathname]}
 			  items={items}
-			  defaultOpenKeys={openkey}
-			  openKeys={openkey}
+			  defaultOpenKeys={openKey}
+			  openKeys={openKey}
 			  onOpenChange={handleOpen}
 			  onClick={handleClick}
 		  />

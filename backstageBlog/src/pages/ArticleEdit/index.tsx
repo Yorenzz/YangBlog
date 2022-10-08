@@ -1,9 +1,9 @@
 import React from "react";
 
-const DynamicEdit:React.FC=()=>{
+const ArticleEdit:React.FC=()=>{
     return (
         <div>dynamic</div>
     )
 }
 
-export default DynamicEdit
+export default ArticleEdit

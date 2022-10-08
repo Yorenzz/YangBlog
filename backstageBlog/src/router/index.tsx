@@ -7,6 +7,8 @@ const Home = lazy(()=>import('../pages/Home'))
 const HomePage = lazy(()=>import('../pages/HomePage'))
 const Article = lazy(()=>import('../pages/Article'))
 const Dynamic = lazy(()=>import('../pages/Dynamic'))
+const ArticleEdit = lazy(()=>import('../pages/ArticleEdit'))
+const DynamicEdit = lazy(()=>import('../pages/DynamicEdit'))
 
 const routes: Array<Router> = [
     {
@@ -33,6 +35,16 @@ const routes: Array<Router> = [
                 name: '写动态',
                 path: '/write-dynamic',
                 element: <Dynamic/>
+            },
+            {
+                name: '写动态',
+                path: '/edit-article',
+                element: <ArticleEdit/>
+            },
+            {
+                name: '写动态',
+                path: '/edit-dynamic',
+                element: <DynamicEdit/>
             }
         ]
     }

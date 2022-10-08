@@ -1,9 +1,10 @@
 import axios from 'axios'
+import config from '../config/index.js'
 import {message} from "antd"
 import {handleUserResponse, logout} from "./routeValidate";
 
 const service = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: config.baseApi,
     timeout: 8000,
 })
 
@@ -33,7 +34,7 @@ const service = axios.create({
 //     }
 // })
 
-const request = (options) => {
+const request = (options: any) => {
     options.method = options.method || 'get'
     if (options.method.toLowerCase() === 'get') {
         options.params = options.data

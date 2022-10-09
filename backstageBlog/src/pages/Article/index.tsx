@@ -11,10 +11,6 @@ const Article: React.FC = () => {
 	const [editor2, setEditor2] = useState<IDomEditor | null>(null)
 	const [context, setContext] = useState('')
 	const [article, setArticle] = useState('')
-	const [title,setTitle]=useState('')
-	const [img,setImg]=useState('')
-	const [num,setNum]=useState(200)
-	const [category,setCategory]=useState('study')
 	const [label,setLabel]=useState({})
 	const  [children, setChildren] = useState([]);
 	const toolbarConfig1: Partial<IToolbarConfig> = { }
@@ -35,26 +31,26 @@ const Article: React.FC = () => {
 		try {
 			const values = await form.validateFields();
 			console.log('Success:', values);
+			const date=moment().format('YYYY/MM/DD HH:mm:ss')
+			const labelArr = Array.from(Object.values(label),x=>x)
+			const mes={
+				text: article,
+				describe: context,
+				title: form.getFieldValue('title'),
+				time: date,
+				img: form.getFieldValue('img'),
+				num: article.length,
+				category: form.getFieldValue('category'),
+				label:labelArr
+			}
+			sendArticle(mes).then((response: object)=>{
+				console.log('res',response)
+			}).catch((reason: object)=>{
+				console.log('res',reason)
+			})
 		} catch (errorInfo) {
 			console.log('Failed:', errorInfo);
 		}
-		const date=moment().format('YYYY/MM/DD HH:mm:ss')
-		const labelArr = Array.from(Object.values(label),x=>x)
-		const mes={
-			text: article,
-			describe: context,
-			title: form.getFieldValue('title'),
-			time: date,
-			img: form.getFieldValue('img'),
-			num: article.length,
-			category: form.getFieldValue('category'),
-			label:labelArr
-		}
-		sendArticle(mes).then((response: object)=>{
-			console.log('res',response)
-		}).catch((reason: object)=>{
-			console.log('res',reason)
-		})
 	}
 
 	useEffect(()=>{
@@ -73,10 +69,10 @@ const Article: React.FC = () => {
 		})
 	},[])
 
-	const checkText = () =>{
-		return !!(context && context.length > 0);
-
-	}
+	// const checkText = () =>{
+	// 	return !!(context && context.length > 0);
+	//
+	// }
 
 	return (
 		<div>

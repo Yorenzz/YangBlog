@@ -1,7 +1,13 @@
 import {Navigate} from 'react-router-dom'
-import {lazy, LazyExoticComponent} from 'react'
+import React, {lazy, LazyExoticComponent, ReactNode, Suspense} from 'react'
 import Router from '../typing/router'
+import { Spin } from 'antd'
 
+const Module = (children: ReactNode) :ReactNode => {
+    return <Suspense fallback={<Spin tip="Loading..."></Spin>}>
+                {children}
+            </Suspense>
+}
 const Login = lazy(()=>import('../pages/Login'))
 const Home = lazy(()=>import('../pages/Home'))
 const HomePage = lazy(()=>import('../pages/HomePage'))
@@ -9,6 +15,8 @@ const Article = lazy(()=>import('../pages/Article'))
 const Dynamic = lazy(()=>import('../pages/Dynamic'))
 const ArticleEdit = lazy(()=>import('../pages/ArticleEdit'))
 const DynamicEdit = lazy(()=>import('../pages/DynamicEdit'))
+const Category = lazy(()=>import('../pages/Category'))
+const Label = lazy(()=>import('../pages/Label'))
 
 const routes: Array<Router> = [
     {
@@ -24,27 +32,37 @@ const routes: Array<Router> = [
             {
                 name: '主页',
                 path: '/',
-                element: <HomePage/>,
+                element: Module(<HomePage/>),
             },
             {
                 name: '写文章',
                 path: '/write-article',
-                element: <Article/>
+                element: Module(<Article/>),
             },
             {
                 name: '写动态',
                 path: '/write-dynamic',
-                element: <Dynamic/>
+                element: Module(<Dynamic/>)
             },
             {
-                name: '写动态',
+                name: '文章管理',
                 path: '/edit-article',
-                element: <ArticleEdit/>
+                element: Module(<ArticleEdit/>)
             },
             {
-                name: '写动态',
+                name: '动态管理',
                 path: '/edit-dynamic',
-                element: <DynamicEdit/>
+                element: Module(<DynamicEdit/>)
+            },
+            {
+                name: '分类管理',
+                path: '/edit-category',
+                element: Module(<Category/>)
+            },
+            {
+                name: '标签管理',
+                path: '/edit-label',
+                element: Module(<Label/>)
             }
         ]
     }

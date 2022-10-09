@@ -9,9 +9,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
  
   <React.StrictMode>
      <BrowserRouter>
-        <Suspense fallback={<div className='laztWidth'>Loading...</div>}>
           <App />
-        </Suspense>
       </BrowserRouter>
   </React.StrictMode>
 )

@@ -1,12 +1,12 @@
 import './style.scss'
 import {
-	DesktopOutlined,
+	FormOutlined,
 	FileOutlined,
-	PieChartOutlined,
-	TeamOutlined,
-	UserOutlined,
-	MailOutlined,
-	AppstoreOutlined,
+	EditOutlined,
+	TagsOutlined,
+	MessageOutlined,
+	FundOutlined,
+	FolderOpenOutlined,
 	SettingOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -20,22 +20,22 @@ const items: MenuProps['items'] = [
 	{
 		label: 'Dashboard',
 		key: '/',
-		icon: <MailOutlined />,
+		icon: <FundOutlined />,
 	},
 	{
 		label: '博客编辑',
 		key: '/write',
-		icon: <SettingOutlined />,
+		icon: <FormOutlined />,
 		children: [
 			{
 				label: '写文章',
 				key: '/write-article',
-				icon: <MailOutlined />,
+				icon: <EditOutlined />,
 			},
 			{
 				label: '写动态',
 				key: '/write-dynamic',
-				icon: <MailOutlined />,
+				icon: <EditOutlined />,
 			},
 		]
 	},
@@ -47,13 +47,23 @@ const items: MenuProps['items'] = [
 			{
 				label: '文章管理',
 				key: '/edit-article',
-				icon: <MailOutlined />,
+				icon: <FileOutlined />,
 			},
 			{
 				label: '动态管理',
 				key: '/edit-dynamic',
-				icon: <MailOutlined />,
+				icon: <MessageOutlined />,
 			},
+			{
+				label: '分类管理',
+				key: '/edit-category',
+				icon: <FolderOpenOutlined />,
+			},
+			{
+				label: '标签管理',
+				key: '/edit-label',
+				icon: <TagsOutlined />,
+			}
 		]
 	}
 ];

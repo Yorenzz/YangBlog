@@ -27,7 +27,6 @@ router.get('/verify', async (ctx, next) => {
 })
 
 router.post('/login', async (ctx) => {
-
   const { username, password: upassword } = ctx.request.body
   //console.log(username,upassword)
   let userInfo = null

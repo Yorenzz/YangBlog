@@ -31,6 +31,13 @@ export function getAllTags(){
         method: 'GET',
     })
 }
+
+export function getCommentNum(){
+    return request({
+        url: '/article/getCommentNum',
+        method: 'GET',
+    })
+}
 //
 //
 // export function verify(token){

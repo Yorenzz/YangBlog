@@ -13,6 +13,7 @@ const users = require('./routes/users')
 const article = require('./routes/article')
 const publicText = require('./routes/publicText')
 const tool = require('./routes/tool')
+const util = require('./utils/util')
 const { mongoose } = require('mongoose')
 const { log } = require('debug')
 const { url, dbName } = require('./config')
@@ -25,12 +26,11 @@ onerror(app)
 app.use(cors())
 // middlewares
 /* 当token验证异常时候的处理，如token过期、token错误 */
-app.use((ctx, next) => {
-  return next().catch((err) => {
-    //console.log('eee',err.status)
+app.use(async (ctx, next) => {
+  await next().catch(err => {
     if (err.status === 401) {
-      ctx.status = 401
-      ctx.body = 'UnAuth'
+      ctx.status = 200
+      ctx.body = util.fail('登录失效', util.CODE.AUTH_ERROR)
     } else {
       throw err
     }
@@ -43,7 +43,7 @@ app.use(
     secret: SECRET,
   }).unless({
     // 自定义忽略jwt验证的目录
-    path: [/^\/users\/login/, /^\/publictext\/*/, /^\/tool\/*/],
+    path: [/^\/users\/login/, /^\/publictext\/*/, /^\/tool\/*/, /^\/article\/*/],
   }),
 )
 

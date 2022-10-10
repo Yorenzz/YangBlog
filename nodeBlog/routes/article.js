@@ -1,5 +1,7 @@
 const { insertArticle, getText, setLabelColor } = require('../service/article')
+const { getCommentNum } = require('../service/backstage')
 const router = require('koa-router')()
+const utils = require('../utils/util')
 router.prefix('/article')
 
 router.post('/send', async (ctx) => {
@@ -30,6 +32,11 @@ router.post('/setLabelColor', async (ctx) => {
   const { value, color } = ctx.request.body
   let res = await setLabelColor(value, color)
   ctx.body = res.data
+})
+
+router.get('/getCommentNum', async (ctx)=>{
+  const res = await getCommentNum()
+  ctx.body = utils.success(res)
 })
 
 module.exports = router

@@ -4,7 +4,7 @@ const env:Env = import.meta.env.MODE as Env || 'prod'
 export const TOKEN_KEY = 'XToken'
 const EnvConfig : Config = {
 	dev: {
-		baseApi: 'http://localhost:3000',
+		baseApi: 'http://localhost:8080',
 	},
 	prod: {
 		baseApi: 'http://175.178.115.221:8080',

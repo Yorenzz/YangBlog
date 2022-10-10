@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from '../config/index.js'
 import {message} from "antd"
 import {handleUserResponse, logout} from "./routeValidate";
+import { RequestInterface } from '../typing/request.js';
 
 const service = axios.create({
     baseURL: config.baseApi,
@@ -16,25 +17,25 @@ const service = axios.create({
 //     return req
 // })
 //
-// service.interceptors.response.use(res => {
-//     const { code, data, msg } = res.data
-//     if (code === 200) {
-//         // msg && ElMessage.success(msg)
-//         return data
-//     } else if (code === 40001) {
-//         // ElMessage.error(msg || 'Token验证失败')
-//         storage.clearItem(TOKEN_KEY)
-//         setTimeout(() => {
-//             router.push('/login').then(r => {})
-//         })
-//         return Promise.reject(msg)
-//     } else {
-//         // ElMessage.error(msg || '异常')
-//         return Promise.reject(msg || '异常')
-//     }
-// })
+service.interceptors.response.use(res => {
+    const { code, data, msg } = res.data
+    if (code === 200) {
+        // msg && ElMessage.success(msg)
+        return data
+    } else if (code === 40001) {
+        // ElMessage.error(msg || 'Token验证失败')
+        // storage.clearItem(TOKEN_KEY)
+        // setTimeout(() => {
+        //     router.push('/login').then(r => {})
+        // })
+        return Promise.reject(msg)
+    } else {
+        // ElMessage.error(msg || '异常')
+        return Promise.reject(msg || '异常')
+    }
+})
 
-const request = (options: any) => {
+const request = (options: RequestInterface) => {
     options.method = options.method || 'get'
     if (options.method.toLowerCase() === 'get') {
         options.params = options.data

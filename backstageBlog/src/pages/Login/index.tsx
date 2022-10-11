@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './style.scss'
 
 const Login: React.FC = () => {
 	const navigate = useNavigate()
@@ -16,7 +17,8 @@ const Login: React.FC = () => {
 		navigate('/home')
 	}
 	return (
-	<Form
+    <div className="loginContent">
+      <Form
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
@@ -46,6 +48,8 @@ const Login: React.FC = () => {
         </Button>
       </Form.Item>
     </Form>
+    </div>
+	
 	)
 }
 

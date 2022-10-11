@@ -45,44 +45,42 @@ router.post('/login', async (ctx) => {
 })
 
 
-// return new Promise(async (resolve,reject)=>{
-//       const { username, password: upassword } = ctx.request.body
-//       console.log(username,upassword)
-//       let userInfo = null
-//       let user=await userCheck(username)
-//       let {uname,password}=user
-//       console.log('1',uname,password)
-//       if (username === uname && parseInt(upassword)=== password) {
-//         userInfo = { userid: 1, username: uname }
-//       }
-//       console.log('2',userInfo)
-//       let token = null
-//       if (userInfo) {
-//         token = jwt.sign(userInfo, SECRET, { expiresIn: '24h' })// 加密 userInfo
-//       }
-//       if (userInfo === null) {
-//         reject({ errno: -1, msg: '登录失败' })// 登陆失败
-//       }else{
-//         resolve({ errno: 0, jwt: token })// 登陆成功给前端返回加密的token
-//       }
-//     }
-// ).then(
-//     val=>{
-//       console.log('val',val)
-//       ctx.body=val
-//     }
-// ).catch(
-//     reason=>{
-//       console.log('reason',reason)
-//       ctx.body=reason
-//     })
-
-router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
+router.post('/login', async function (ctx, next) {
+  const { username, password } = ctx.request.body
+  const res = await Login(username, md5(password))
+  const data = { username: res[0].username, role: res[0].role }
+  // console.log(res)
+  if (res && res.length) {
+    data.token = jwt.sign(
+      {
+        res,
+      },
+      'Yorenz',
+      { expiresIn: '24h' },
+    )
+    ctx.body = utils.success(data, '登录成功')
+  } else {
+    ctx.body = utils.fail('用户名或密码错误')
+  }
 })
 
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
+router.get('/verify', async (ctx, next) => {
+  const  { token } = ctx.request.query
+  let res = {
+    username: '',
+    role: '',
+  }
+  jwt.verify(token, 'Yorenz', (err, data)=>{
+    if(err){
+      console.log('e', err)
+    }
+    else {
+      // console.log(data, 'data');
+      res.username = data.res[0].username
+      res.role = data.res[0].role
+    }
+  })
+  ctx.body = utils.success(res)
 })
 
 module.exports = router

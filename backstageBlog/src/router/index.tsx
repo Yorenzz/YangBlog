@@ -2,6 +2,7 @@ import {Navigate} from 'react-router-dom'
 import React, {lazy, LazyExoticComponent, ReactNode, Suspense} from 'react'
 import Router from '../typing/router'
 import { Spin } from 'antd'
+import WithAuth from '../component/Auth'
 
 const Module = (children: ReactNode) :ReactNode => {
     return <Suspense fallback={<Spin tip="Loading..."></Spin>}>
@@ -21,7 +22,7 @@ const Label = lazy(()=>import('../pages/Label'))
 const routes: Array<Router> = [
     {
         name: '登录',
-        path: '/Login',
+        path: '/login',
         element: <Login/>
     },
     {
@@ -62,7 +63,7 @@ const routes: Array<Router> = [
             {
                 name: '标签管理',
                 path: '/edit-label',
-                element: Module(<Label/>)
+                element: <WithAuth>{Module(<Label/>)}</WithAuth>
             }
         ]
     }

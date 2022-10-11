@@ -18,7 +18,7 @@ const requestColor = ref('')
 if(!props.color){
   getTagsColor(props.tagName)
     .then(res => {
-      requestColor.value = res.data.color
+      requestColor.value = res.color
     })
     .catch(e => {
       console.warn(e)

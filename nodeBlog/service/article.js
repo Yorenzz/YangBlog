@@ -5,92 +5,42 @@ const LabelModel = require('../dbModel/LabelModel')
 const insertArticle = async (text) => {
   text.readtime = 0
   text.top = 0
-  try {
-    const res1 = await ArticleModel.create(text)
-    return new SuccessModel(res1)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return ArticleModel.create(text)
 }
 
 const getText = async (pageSize, currentPage) => {
-  try {
-    const res = await ArticleModel.find()
-      .limit(pageSize)
-      .skip((currentPage - 1) * pageSize)
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return ArticleModel.find().limit(pageSize).skip((currentPage - 1) * pageSize)
 }
 
 const getArticleById = async (ID) => {
-  try {
-    const add = await ArticleModel.update(
-      { _id: new ObjectID(ID) },
-      { $inc: { readtime: 1 } },
-    )
-    const res = await ArticleModel.find({ _id: new ObjectID(ID) })
-    // console.log('id', res)
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return ArticleModel.find({ _id: new ObjectID(ID) })
 }
 
 const getArticleByTag = async (tag) => {
-  try {
-    const res = await ArticleModel.find({ label: tag })
-    // console.log('id', res)
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return ArticleModel.find({ label: tag })
 }
 
 const getArticleByCategory = async (category) => {
-  try {
-    const res = await ArticleModel.find({ category: category })
-    // console.log('res', res)
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return ArticleModel.find({ category: category })
 }
 
 const getTotalBlogNum = async () => {
-  try {
-    const res = await ArticleModel.count()
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return ArticleModel.count()
 }
 
 const getAllTags = async () => {
-  try {
-    const res = await LabelModel.find()
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
+  return LabelModel.find()
 }
 
 const getTagsColor = async (tagName) => {
-  try {
-    const res = await LabelModel.findOne(
+  return LabelModel.findOne(
       { value: tagName },
       { color: 1, _id: 0 },
     )
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
 }
 
 const setLabelColor = async (value, color) => {
-  try {
-    const res = await LabelModel.findOneAndUpdate(
+    return LabelModel.findOneAndUpdate(
       { value: value },
       {
         $setOnInsert: {
@@ -102,10 +52,6 @@ const setLabelColor = async (value, color) => {
         upsert: true,
       },
     )
-    return new SuccessModel(res)
-  } catch (e) {
-    return new ErrorModel(e)
-  }
 }
 
 module.exports = {

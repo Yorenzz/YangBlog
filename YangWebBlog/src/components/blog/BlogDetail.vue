@@ -37,7 +37,7 @@ const getBlogByID = () => {
   getArticleById(blogID.value)
     .then((res) => {
       console.log('res', res)
-      const blogData = res.data[0]
+      const blogData = res[0]
       data.text = blogData.text.replaceAll(
         '<code>',
         '<code class="language-js line-numbers">',
@@ -60,8 +60,8 @@ const getBlogByID = () => {
 }
 const getBingpicture=()=>{
   getBingPic().then(res=>{
-    console.log('url', res.data);
-    data.image = res.data
+    console.log('url', res);
+    data.image = res
   }).catch(e=>{
     console.warn(e);
   })

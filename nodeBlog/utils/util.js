@@ -41,7 +41,7 @@ module.exports = {
             code,data,msg
         }
     },
-    fail(msg='',code=CODE.BUSINESS_ERROR,data=''){
+    fail(msg='',data='',code=CODE.BUSINESS_ERROR){
         return {
             code,data,msg
         }

@@ -34,7 +34,7 @@ const blogDetail = ID => {
 }
 const getBlogNum = () => {
   getTotalBlogNum().then(res => {
-    totalRow.value = res.data
+    totalRow.value = res
   })
 }
 const getArticle = () => {
@@ -43,7 +43,7 @@ const getArticle = () => {
     currentPage: currentPage.value,
   }).then(res => {
     //后端传回总文章数
-    textArray.value = res.data.map(item => {
+    textArray.value = res.map(item => {
       item.text = item.text.replaceAll(
         '<pre>',
         '<pre class="language-js line-numbers">',
@@ -64,7 +64,7 @@ const getArticleFromCategory = () => {
   getArticleByCategory(route.params.category)
     .then(res => {
       console.log('res', res)
-      textArray.value = res.data.map(item => {
+      textArray.value = res.map(item => {
         item.text = item.text.replaceAll(
           '<pre>',
           '<pre class="language-js line-numbers">',
@@ -89,7 +89,7 @@ const getArticleFromTag = () => {
   getArticleByTag(route.params.tag)
     .then(res => {
       console.log('res', res)
-      textArray.value = res.data.map(item => {
+      textArray.value = res.map(item => {
         item.text = item.text.replaceAll(
           '<pre>',
           '<pre class="language-js line-numbers">',
@@ -136,7 +136,7 @@ watchEffect(() => {
     <div
       class="blog-article typo"
       v-for="(item, index) in textArray"
-      :key="index"
+      :key="item._id"
     >
       <h5 class="typo">{{ item.title }}</h5>
       <div class="article-time">

@@ -6,8 +6,7 @@ import { reactive } from 'vue'
 const tagList = reactive([])
 getAllTags()
   .then(res => {
-    tagList.value = res.data
-    console.log('tag', tagList.value)
+    tagList.value = res
   })
   .catch(e => {
     console.warn(e)

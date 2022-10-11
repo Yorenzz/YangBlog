@@ -10,13 +10,12 @@ const sentence = reactive({
 })
 const getTodayHistory = () => {
   getHistoryToday().then( res => {
-    console.log(res.data);
-    if(res.data instanceof Object){
-      historyToday.value = res.data.result
+    if(res instanceof Object){
+      historyToday.value = res.result
     }
     else{
       try{
-        historyToday.value = JSON.parse(res.data).result
+        historyToday.value = JSON.parse(res).result
       }
       catch(e){
         console.warn('历史上的今天返回格式错误，不显示');
@@ -27,8 +26,8 @@ const getTodayHistory = () => {
 }
 const getASentence = () => {
   getSentence().then( res => {
-    sentence.value = res.data.hitokoto
-    sentence.book = res.data.from
+    sentence.value = res.hitokoto
+    sentence.book = res.from
   })
 }
 
@@ -71,7 +70,7 @@ getASentence()
     </div>
     <el-divider class="bottom-divider" />
     <span>Copyright © 2021 ~ {{ moment().format('YYYY') }} Yorenz's Blog</span>
-    <div class="label">
+    <!-- <div class="label">
       <div>
         <a
           rel="external nofollow noopener"
@@ -128,7 +127,7 @@ getASentence()
           <img src="https://img.shields.io/badge/OSS-TencentCOS-pink" alt="" />
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <style scoped lang="scss">

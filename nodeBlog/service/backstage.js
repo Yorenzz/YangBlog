@@ -1,14 +1,9 @@
 const ArticleModel = require('../dbModel/ArticleModel')
 const LabelModel = require('../dbModel/LabelModel')
 const getCommentNum = async () => {
-    try {
-        const res = await ArticleModel.count()
-        return res
-    } catch (e) {
-        return e
-    }
-  }
+  return ArticleModel.count()
+}
 
-  module.exports = {
-    getCommentNum,
-  }
+module.exports = {
+  getCommentNum,
+}

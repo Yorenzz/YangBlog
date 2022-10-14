@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import config from '../config/index.js'
 import {message} from "antd"
 import {handleUserResponse, logout} from "./routeValidate";
@@ -17,7 +17,7 @@ const service = axios.create({
 //     return req
 // })
 //
-service.interceptors.response.use(res => {
+service.interceptors.response.use((res: AxiosResponse) => {
     const { code, data, msg } = res.data
     if (code === 200) {
         // msg && ElMessage.success(msg)
@@ -35,7 +35,7 @@ service.interceptors.response.use(res => {
     }
 })
 
-const request = (options: RequestInterface) => {
+const request = (options: AxiosRequestConfig): Promise<any>=> {
     options.method = options.method || 'get'
     if (options.method.toLowerCase() === 'get') {
         options.params = options.data

@@ -32,6 +32,13 @@ export function getAllTags(){
     })
 }
 
+export function getAllLabel(){
+    return request({
+        url: '/article/getAllLabel',
+        method: 'GET',
+    })
+}
+
 export function getCommentNum(){
     return request({
         url: '/article/getCommentNum',

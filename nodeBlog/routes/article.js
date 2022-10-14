@@ -1,5 +1,5 @@
 const { insertArticle, getText, setLabelColor } = require('../service/article')
-const { getCommentNum } = require('../service/backstage')
+const { getCommentNum, getAllLabel } = require('../service/backstage')
 const router = require('koa-router')()
 const utils = require('../utils/util')
 router.prefix('/article')
@@ -37,6 +37,16 @@ router.post('/setLabelColor', async (ctx) => {
 router.get('/getCommentNum', async (ctx)=>{
   try{
     const res = await getCommentNum()
+    ctx.body = utils.success(res)
+  }
+  catch(e){
+    ctx.body = utils.fail(e)
+  }
+})
+
+router.get('/getAllLabel', async (ctx)=>{
+  try{
+    const res = await getAllLabel()
     ctx.body = utils.success(res)
   }
   catch(e){

@@ -1,5 +1,7 @@
 const { insertArticle, getText, setLabelColor } = require('../service/article')
-const { getCommentNum, getAllLabel } = require('../service/backstage')
+const { getCommentNum, getAllLabel,
+  updateLabel
+} = require('../service/backstage')
 const router = require('koa-router')()
 const utils = require('../utils/util')
 router.prefix('/article')
@@ -50,6 +52,16 @@ router.get('/getAllLabel', async (ctx)=>{
     ctx.body = utils.success(res)
   }
   catch(e){
+    ctx.body = utils.fail(e)
+  }
+})
+
+router.post('/updateLabel',async (ctx)=>{
+  const { id, value, color } = ctx.request.body
+  try{
+    const res = await updateLabel(id, value, color)
+    ctx.body = utils.success(res, '编辑成功')
+  }catch (e) {
     ctx.body = utils.fail(e)
   }
 })

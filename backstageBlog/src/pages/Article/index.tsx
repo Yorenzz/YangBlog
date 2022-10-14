@@ -56,7 +56,7 @@ const Article: React.FC = () => {
 	useEffect(()=>{
 		getAllTags()
 		.then(res => {
-			const tagList = res.data
+			const tagList = res
 			console.log('tag', tagList)
 			const optionChildren = []
 			for (let i = 0; i < tagList.length; i++) {

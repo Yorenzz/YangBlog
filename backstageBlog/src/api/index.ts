@@ -17,14 +17,14 @@ export function sendArticle(message: ArticleType){
     })
 }
 
-// export function setLabelColor(message){
-//     return request({
-//         url: '/article/setLabelColor',
-//         method: 'POST',
-//         data: message
-//     })
-// }
-//
+export function updateLabel(id: string, value: string, color: string | undefined){
+    return request({
+        url: '/article/updateLabel',
+        method: 'POST',
+        data: {id, value, color}
+    })
+}
+
 export function getAllTags(){
     return request({
         url: '/publictext/getAllTags',

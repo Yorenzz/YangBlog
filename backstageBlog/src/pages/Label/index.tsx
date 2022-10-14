@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table, Tag } from 'antd';
+import { Button, Space, Spin, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table';
 import { getAllLabel } from "../../api";
 import { AxiosResponse } from "axios";
-interface LabelDataType {
-    no: number,
-    key: string,
-    name: string,
-    color: string
-}
+import LabelEditDialog from './LabelEditDialog'
+import { LabelDataType, LabelResType } from '../../typing/label'
 
-interface LabelResType {
-    _id: string,
-    value: string,
-    color: string
-}
-
-type resArr = Array<LabelResType>
-
-const Label:React.FC=()=>{  
+const Label:React.FC=()=>{
   const columns: ColumnsType<LabelDataType> = [
     {
         title: '序号',
@@ -32,8 +20,11 @@ const Label:React.FC=()=>{
     },
     {
         title: '颜色',
-        dataIndex: 'color',
         key: 'color',
+        render: (_, record) => (
+            <div style={{background: record.color, width: '150px', height: '30px'}}>
+            </div>
+        ),
     },
     {
         title: '操作',
@@ -47,13 +38,19 @@ const Label:React.FC=()=>{
     },
   ];
     const editLabel=(record: LabelDataType):void=>{
+        setModalVisible(true)
+        setEditData(record)
         console.log(record);
     }
     const deleteLabel=(record: LabelDataType):void=>{
         console.log(record);
     }
+    const [modalVisible, setModalVisible]=useState(false)
     const [labelData, setLabelData]=useState<LabelDataType[]>([])
-    useEffect(()=>{
+    const [editData, setEditData]=useState<LabelDataType|null>(null)
+    const [loading, setLoading]=useState(false)
+    const getLabel = ()=>{
+        setLoading(true)
         getAllLabel().then((res: LabelResType[])=>{
             console.log(res)
             setLabelData((res).map((item, index)=>{
@@ -66,10 +63,30 @@ const Label:React.FC=()=>{
             }))
         }).catch((e)=>{
             console.warn(e)
+        }).finally(()=>{
+            setLoading(false)
         })
+    }
+    useEffect(()=>{
+        getLabel()
     },[])
     return (
-        <Table columns={columns} dataSource={labelData} />
+        <>
+            <Spin spinning={loading}>
+                <Table
+                    columns={ columns }
+                    dataSource={ labelData }
+                />
+            </Spin>
+            <LabelEditDialog
+                visible={ modalVisible }
+                edit={editData}
+                setVisible={ (b:boolean)=> {
+                    setModalVisible(b)
+                } }
+                refresh={getLabel}
+            />
+        </>
     )
 }
 

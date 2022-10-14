@@ -4,7 +4,7 @@ import * as echarts from 'echarts'
 import { useEffect, useRef } from 'react'
 import { Card } from 'antd'
 import './style.scss'
-import ChinaMap from '../../component/homepage/ChinaMap'
+import ChinaMap from './ChinaMap'
 import { getCommentNum } from '../../api'
 
 const HomePage: React.FC = () => {
@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
 		const category = echarts.init(categoryChart.current)
 		category.setOption(categoryOption);
 	},[categoryOption])
-	
+
 	useEffect(()=>{
 		const label = echarts.init(labelChart.current)
 		label.setOption(labelOption);
@@ -124,7 +124,7 @@ const HomePage: React.FC = () => {
 					<Card>
 						<div className='categoryChart'>
 							<div className='categoryTitle'>分类下文章数量</div>
-							<div ref={categoryChart} style={{height:'500px',width:'100%'}}></div>	
+							<div ref={categoryChart} style={{height:'500px',width:'100%'}}></div>
 						</div>
 					</Card>
 				</div>
@@ -132,7 +132,7 @@ const HomePage: React.FC = () => {
 					<Card>
 						<div className='categoryChart'>
 							<div className='categoryTitle'>标签下文章数量</div>
-							<div ref={labelChart} style={{height:'500px',width:'100%'}}></div>	
+							<div ref={labelChart} style={{height:'500px',width:'100%'}}></div>
 						</div>
 					</Card>
 				</div>

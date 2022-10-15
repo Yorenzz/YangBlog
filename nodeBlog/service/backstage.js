@@ -13,8 +13,13 @@ const updateLabel=async (id, name, color)=>{
   return LabelModel.updateOne({_id: new ObjectID(id)},{$set:{"value":name, "color": color}})
 }
 
+const deleteLabel=async (id, name, color)=>{
+  return LabelModel.deleteOne({_id: new ObjectID(id)})
+}
+
 module.exports = {
   getCommentNum,
   getAllLabel,
-  updateLabel
+  updateLabel,
+  deleteLabel
 }

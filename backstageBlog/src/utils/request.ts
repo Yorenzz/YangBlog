@@ -20,7 +20,7 @@ const service = axios.create({
 service.interceptors.response.use((res: AxiosResponse) => {
     const { code, data, msg } = res.data
     if (code === 200) {
-        // msg && ElMessage.success(msg)
+        msg && message.success(msg)
         return data
     } else if (code === 40001) {
         // ElMessage.error(msg || 'Token验证失败')
@@ -30,7 +30,7 @@ service.interceptors.response.use((res: AxiosResponse) => {
         // })
         return Promise.reject(msg)
     } else {
-        // ElMessage.error(msg || '异常')
+        message.error(msg || '异常').then(r => {})
         return Promise.reject(msg || '异常')
     }
 })

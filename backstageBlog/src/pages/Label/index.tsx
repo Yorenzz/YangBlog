@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Spin, Table, Tag } from 'antd'
+import { Button, Popconfirm, Space, Spin, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table';
-import { getAllLabel } from "../../api";
+import { deleteLabel, getAllLabel } from '../../api'
 import { AxiosResponse } from "axios";
 import LabelEditDialog from './LabelEditDialog'
 import { LabelDataType, LabelResType } from '../../typing/label'
@@ -32,7 +32,14 @@ const Label:React.FC=()=>{
         render: (_, record) => (
           <Space>
               <Button onClick={() => editLabel(record)}>编辑</Button>
-              <Button onClick={() => deleteLabel(record)}>删除</Button>
+              <Popconfirm
+                  title="确定删除该标签？"
+                  onConfirm={() => deleteTheLabel(record)}
+                  okText="确定"
+                  cancelText="取消"
+              >
+                  <Button>删除</Button>
+              </Popconfirm>
           </Space>
         ),
     },
@@ -42,8 +49,11 @@ const Label:React.FC=()=>{
         setEditData(record)
         console.log(record);
     }
-    const deleteLabel=(record: LabelDataType):void=>{
+    const deleteTheLabel=(record: LabelDataType):void=>{
         console.log(record);
+        deleteLabel(record.key).then(r => {
+            getLabel()
+        })
     }
     const [modalVisible, setModalVisible]=useState(false)
     const [labelData, setLabelData]=useState<LabelDataType[]>([])

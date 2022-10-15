@@ -25,6 +25,14 @@ export function updateLabel(id: string, value: string, color: string | undefined
     })
 }
 
+export function deleteLabel(id: string){
+    return request({
+        url: '/article/deleteLabel',
+        method: 'POST',
+        data: {id}
+    })
+}
+
 export function getAllTags(){
     return request({
         url: '/publictext/getAllTags',

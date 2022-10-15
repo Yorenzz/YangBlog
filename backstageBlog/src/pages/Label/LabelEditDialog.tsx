@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Modal, Form, Input } from 'antd'
 import { LabelDataType } from '../../typing/label'
+// @ts-ignore
 import { SketchPicker } from 'react-color'
 import { updateLabel } from '../../api'
 interface middleProps {

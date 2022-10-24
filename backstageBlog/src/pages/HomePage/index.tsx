@@ -8,7 +8,6 @@ import ChinaMap from './ChinaMap'
 import { getCommentNum } from '../../api'
 
 const HomePage: React.FC = () => {
-
 	const categoryChart:MutableRefObject<any> = useRef(null)
 	const labelChart:MutableRefObject<any> = useRef(null)
 
@@ -89,7 +88,7 @@ const HomePage: React.FC = () => {
 				<div className='card'>
 					<Card title="今日访客数">
 						<div className='cardContent'>
-							<img width="80px" src="/public/statistics.svg" alt="" />
+							<img width="80px" src="/statistics.svg" alt="" />
 							<span>100</span>
 						</div>
 					</Card>
@@ -97,7 +96,7 @@ const HomePage: React.FC = () => {
 				<div className='card'>
 					<Card title="今日访问量">
 						<div className='cardContent'>
-							<img width="80px" src="/public/num.svg" alt="" />
+							<img width="80px" src="/num.svg" alt="" />
 							<span>100</span>
 						</div>
 					</Card>
@@ -105,7 +104,7 @@ const HomePage: React.FC = () => {
 				<div className='card'>
 					<Card title="文章总数">
 						<div className='cardContent'>
-							<img width="80px" src="/public/doc.svg" alt="" />
+							<img width="80px" src="/doc.svg" alt="" />
 							<span>{commentNum}</span>
 						</div>
 					</Card>
@@ -113,7 +112,7 @@ const HomePage: React.FC = () => {
 				<div className='card'>
 					<Card title="评论总数">
 						<div className='cardContent'>
-							<img width="80px" src="/public/comment.svg" alt="" />
+							<img width="80px" src="/comment.svg" alt="" />
 							<span>10</span>
 						</div>
 					</Card>

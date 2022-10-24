@@ -1,11 +1,11 @@
 export default {
-	setItem(key, val) {
+	setItem(key: string, val: any) {
 		window.localStorage.setItem(key, JSON.stringify(val))
 	},
-	getItem(key) {
-		return JSON.parse(window.localStorage.getItem(key))
+	getItem(key: string) {
+		return JSON.parse(window.localStorage.getItem(key) as string)
 	},
-	clearItem(key) {
+	clearItem(key: string) {
 		window.localStorage.removeItem(key)
 	},
 	clearAll() {}

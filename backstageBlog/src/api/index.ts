@@ -1,13 +1,13 @@
 import request from "../utils/request";
 import { ArticleType } from '../typing/article'
 
-// export function loginIn(message){
-//     return request({
-//         url: '/users/login',
-//         method: 'POST',
-//         data: message
-//     })
-// }
+export function loginIn(username: string, password: string){
+    return request({
+        url: '/users/login',
+        method: 'POST',
+        data: {username, password}
+    })
+}
 
 export function sendArticle(message: ArticleType){
     return request({

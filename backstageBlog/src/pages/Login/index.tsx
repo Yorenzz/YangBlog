@@ -1,5 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
+import { loginIn } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import './style.scss'
 
@@ -7,6 +8,9 @@ const Login: React.FC = () => {
 	const navigate = useNavigate()
 	const onFinish = (values: any) => {
 		console.log('Success:', values.username, values.password);
+    loginIn(values.username, values.password).then((res)=>{
+      console.log(res);
+    })
 	}
 
 	const onFinishFailed = (errorInfo: any) => {
@@ -14,7 +18,7 @@ const Login: React.FC = () => {
 	}
 
 	const submit = () => {
-		navigate('/home')
+		// navigate('/home')
 	}
 	return (
     <div className="loginContent">
@@ -43,7 +47,7 @@ const Login: React.FC = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit" onClick={submit}>
+        <Button type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>

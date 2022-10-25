@@ -3,17 +3,7 @@ const {SuccessModel, ErrorModel} = require("../model/resModel");
 const UserModel=require("../dbModel/UserModel")
 
 async function userCheck(username,password){
-    try {
-        const userRes=await UserModel.find({"uname":username})
-        if(userRes[0]===undefined)
-            return new ErrorModel('找不到该用户')
-        else if(userRes[0].password===password)
-            return new SuccessModel(userRes[0])
-        else
-            return new ErrorModel('密码错误')
-    } catch (e){
-        return new ErrorModel(e)
-    }
+    return UserModel.find({"uname":username})
 }
 
 module.exports = {

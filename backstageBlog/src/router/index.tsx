@@ -58,7 +58,7 @@ const routes: Array<Router> = [
             {
                 name: '分类管理',
                 path: '/edit-category',
-                element: Module(<Category/>)
+                element: <WithAuth>{Module(<Category/>)}</WithAuth>
             },
             {
                 name: '标签管理',

@@ -30,7 +30,7 @@ app.use(async (ctx, next) => {
   await next().catch(err => {
     if (err.status === 401) {
       ctx.status = 200
-      ctx.body = util.fail('登录失效', util.CODE.AUTH_ERROR)
+      ctx.body = util.fail('登录失效','', util.CODE.AUTH_ERROR)
     } else {
       throw err
     }
@@ -43,7 +43,7 @@ app.use(
     secret: SECRET,
   }).unless({
     // 自定义忽略jwt验证的目录
-    path: [/^\/users\/login/, /^\/publictext\/*/, /^\/tool\/*/, /^\/article\/*/],
+    path: [/^\/users\/login/, /^\/publictext\/*/, /^\/tool\/*/],
   }),
 )
 

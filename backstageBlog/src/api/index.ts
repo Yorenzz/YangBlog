@@ -53,12 +53,12 @@ export function getCommentNum(){
         method: 'GET',
     })
 }
-//
-//
-// export function verify(token){
-//     return request({
-//         url:'/users/verify',
-//         method: 'GET',
-//         data: token
-//     })
-// }
+
+
+export function verify(token: string){
+    return request({
+        url:'/users/verify',
+        method: 'GET',
+        data: {token},
+    })
+}

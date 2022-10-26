@@ -1,22 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import storage from "../../utils/storage";
+
+interface UserInfoState {
+    username: string,
+    token: string,
+    loginTime: number,
+}
+
+interface SetInfo {
+    username: string,
+    token: string,
+}
+
+const initialState: UserInfoState = {
+    username: '',
+    token: '',
+    loginTime: 0,
+}
 
 export const userInfoSlice = createSlice({
     name: 'userInfo',
-    initialState: {
-        count: 1,
-        title: 'redux toolkit pre'
-    },
+    initialState,
     reducers: {
-        increment(state, {payload}) {
-            state.count = state.count + payload.step;
+        saveInfo(state, action: PayloadAction<SetInfo>) {
+            state.username = action.payload.username;
+            state.token = action.payload.token
+            state.loginTime = 1
+            storage.setItem('XTOKEN', action.payload.token)
         },
-        decrement(state) {
-            state.count -= 1;
-        }
+        incrementLoginInTime(state){
+            state.loginTime&&state.loginTime++
+        },
     }
 });
 
-export const {increment, decrement} = userInfoSlice.actions;
+export const { saveInfo } = userInfoSlice.actions;
 
 // export const asyncIncrement = (payload) => (dispatch) => {
 //     setTimeout(()=>{

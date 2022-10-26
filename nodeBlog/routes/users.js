@@ -9,22 +9,15 @@ const util = require("../utils/util");
 router.prefix('/users')
 
 router.get('/verify', async (ctx, next) => {
-  const token = ctx.header.authorization
-    //console.log(token)
+  const token = ctx.header.authorization.split(' ')[1]
   try{
     // 解密token
-    const payload = await verify(token.split(' ')[1], SECRET)
-    //console.log(payload)
-    ctx.body = {
-      errno: 0,
-      userInfo: payload
-    }
+    const payload = verify(token, SECRET)
+    console.log(payload)
+    ctx.body = utils.success({payload, token})
   }catch(e){
     console.error(e)
-    ctx.body = {
-      errno: -1,
-      msg: 'Verify token failed.'
-    }
+    ctx.body = utils.fail('验证失败！',e)
   }
 })
 
@@ -35,18 +28,18 @@ router.post('/login', async (ctx) => {
   try{
     let user=await userCheck(username,upassword)
     if(user[0]===undefined){
-      ctx.body = util.fail('找不到该用户')
+      ctx.body = utils.fail('找不到该用户')
     } else if(user[0].password===upassword){
       console.log('user',user)
       let {uname, _id}=user[0]
       userInfo = { userid: _id, username: uname }
       let token = jwt.sign(userInfo, SECRET, { expiresIn: '24h' })  // 加密 userInfo
-      ctx.body = utils.success(token, '登录成功')// 登陆成功给前端返回加密的token
+      ctx.body = utils.success({username: uname, token}, '登录成功')// 登陆成功给前端返回加密的token
     } else{
-      ctx.body = util.fail('密码错误')
+      ctx.body = utils.fail('密码错误')
     }
   }catch(e){
-    ctx.body = util.fail('',e)
+    ctx.body = utils.fail('',e)
   }
 })
 

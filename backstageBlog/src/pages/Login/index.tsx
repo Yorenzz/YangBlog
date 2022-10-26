@@ -1,15 +1,28 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
 import { loginIn } from '../../api';
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
+import { saveInfo } from '../../store/features/userInfoSlice'
 import { useNavigate } from 'react-router-dom';
 import './style.scss'
 
 const Login: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const token = useAppSelector((state)=> state.userInfo.token)
+  console.log(token);
+  
+
 	const navigate = useNavigate()
 	const onFinish = (values: any) => {
 		console.log('Success:', values.username, values.password);
     loginIn(values.username, values.password).then((res)=>{
-      console.log(res);
+      
+      const {username, token} = res
+      console.log('1', token);
+      
+      dispatch(saveInfo({username, token}))
+      navigate('/edit-label')
+      console.log(token);
     })
 	}
 

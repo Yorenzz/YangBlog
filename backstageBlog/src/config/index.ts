@@ -1,7 +1,7 @@
 import { Config, Env } from '../typing/config'
 
 const env:Env = import.meta.env.MODE as Env || 'prod'
-export const TOKEN_KEY = 'XToken'
+export const TOKEN_KEY = 'XTOKEN'
 const EnvConfig : Config = {
 	dev: {
 		baseApi: 'http://localhost:8080',

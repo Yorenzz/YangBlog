@@ -10,18 +10,18 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch()
   const token = useAppSelector((state)=> state.userInfo.token)
   console.log(token);
-  
+
 
 	const navigate = useNavigate()
 	const onFinish = (values: any) => {
 		console.log('Success:', values.username, values.password);
     loginIn(values.username, values.password).then((res)=>{
-      
+
       const {username, token} = res
       console.log('1', token);
-      
+
       dispatch(saveInfo({username, token}))
-      navigate('/edit-label')
+      navigate('/home')
       console.log(token);
     })
 	}
@@ -66,7 +66,7 @@ const Login: React.FC = () => {
       </Form.Item>
     </Form>
     </div>
-	
+
 	)
 }
 

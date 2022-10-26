@@ -27,12 +27,12 @@ const routes: Array<Router> = [
     },
     {
         name: '主页',
-        path: '/',
+        path: '/home',
         element: <Home/>,
         children: [
             {
                 name: '主页',
-                path: '/',
+                path: '/home',
                 element: Module(<HomePage/>),
             },
             {

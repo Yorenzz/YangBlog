@@ -18,6 +18,7 @@ const LabelEditDialog:React.FC<middleProps>=(props)=>{
 		form.setFieldValue('name', props.edit?.name)
 		form.setFieldValue('color', props.edit?.color)
 	}
+	
 	useEffect(()=>{
 		init()
 	},[props.edit])

@@ -9,12 +9,14 @@ import {
 	FolderOpenOutlined,
 	SettingOutlined
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import { Button, MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import storage from '../../utils/storage';
+import { TOKEN_KEY } from '../../config';
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider, Header } = Layout;
 
 const items: MenuProps['items'] = [
 	{
@@ -80,6 +82,10 @@ const Home: React.FC = () => {
 	const handleOpen=(open: string[]):void=>{
 		setOpenKey(open)
 	}
+	const exit=()=>{
+		storage.clearItem(TOKEN_KEY)
+		navigateTo('/login')
+	}
 	useEffect(()=>{
 		const key = pathname.slice(0,pathname.indexOf('-'))
 		setOpenKey([key])
@@ -100,6 +106,9 @@ const Home: React.FC = () => {
 		  />
 		</Sider>
 		<Layout className="site-layout">
+			<Header className="header">
+				<Button onClick={exit}>退出登录</Button>
+			</Header>
 		  <Content style={{ margin: '16px 16px' }}>
 			<div className="site-layout-background" style={{ padding: 24, minHeight: '100%' }}>
 			  <Outlet></Outlet>

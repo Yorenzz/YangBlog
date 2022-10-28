@@ -1,9 +1,11 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
-import { loginIn } from '../../api';
+import { loginIn, verify } from '../../api';
 import { useAppSelector, useAppDispatch } from '../../utils/hooks'
 import { saveInfo } from '../../store/features/userInfoSlice'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { TOKEN_KEY } from "../../config";
+import storage from "../../utils/storage";
 import './style.scss'
 
 const Login: React.FC = () => {
@@ -21,7 +23,7 @@ const Login: React.FC = () => {
       console.log('1', token);
 
       dispatch(saveInfo({username, token}))
-      navigate('/home')
+      navigate('/')
       console.log(token);
     })
 	}
@@ -29,10 +31,25 @@ const Login: React.FC = () => {
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	}
-
-	const submit = () => {
-		// navigate('/home')
-	}
+  
+  const tokenStorage = storage.getItem(TOKEN_KEY)
+  const loginTime = useAppSelector((state)=> state.userInfo.loginTime)
+  if(tokenStorage){
+    if(!loginTime){
+        verify(tokenStorage).then((res)=>{
+          console.log(res);
+          const { payload, token }=res
+          const { username } = payload
+          dispatch(saveInfo({username, token}))
+          return (<Navigate to={'/'}/>)
+        }).catch((e)=>{
+          console.warn(e);
+          return (<Navigate to={'/login'}/>)
+        })
+    } else {
+      return (<Navigate to={'/'}/>)
+    }
+  }
 	return (
     <div className="loginContent">
       <Form
@@ -66,7 +83,6 @@ const Login: React.FC = () => {
       </Form.Item>
     </Form>
     </div>
-
 	)
 }
 

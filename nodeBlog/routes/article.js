@@ -1,7 +1,8 @@
 const { insertArticle, getText, setLabelColor } = require('../service/article')
 const { getCommentNum, getAllLabel,
   updateLabel,
-  deleteLabel
+  deleteLabel,
+  getTextCountByCategory
 } = require('../service/backstage')
 const router = require('koa-router')()
 const utils = require('../utils/util')
@@ -76,5 +77,17 @@ router.post('/deleteLabel',async (ctx)=>{
     ctx.body = utils.fail(e)
   }
 })
+
+router.get('/getPerCategoryText', async (ctx)=>{
+  const { category } = ctx.request.query
+  try{
+    const res = await getTextCountByCategory(category)
+    ctx.body = utils.success(res)
+  }
+  catch(e){
+    ctx.body = utils.fail(e)
+  }
+})
+
 
 module.exports = router

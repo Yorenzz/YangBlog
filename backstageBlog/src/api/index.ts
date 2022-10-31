@@ -54,6 +54,13 @@ export function getCommentNum(){
     })
 }
 
+export function getTextPerCategory(){
+    return request({
+        url: '/article/getPerCategoryText',
+        method: 'GET',
+    })
+}
+
 
 export function verify(token: string){
     return request({

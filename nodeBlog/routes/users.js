@@ -33,7 +33,7 @@ router.post('/login', async (ctx) => {
       console.log('user',user)
       let {uname, _id}=user[0]
       userInfo = { userid: _id, username: uname }
-      let token = jwt.sign(userInfo, SECRET, { expiresIn: '24h' })  // 加密 userInfo
+      let token = jwt.sign(userInfo, SECRET, { expiresIn: '2h' })  // 加密 userInfo
       ctx.body = utils.success({username: uname, token}, '登录成功')// 登陆成功给前端返回加密的token
     } else{
       ctx.body = utils.fail('密码错误')

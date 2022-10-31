@@ -20,7 +20,6 @@ const Login: React.FC = () => {
     loginIn(values.username, values.password).then((res)=>{
 
       const {username, token} = res
-      console.log('1', token);
 
       dispatch(saveInfo({username, token}))
       navigate('/')
@@ -31,7 +30,7 @@ const Login: React.FC = () => {
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	}
-  
+
   const tokenStorage = storage.getItem(TOKEN_KEY)
   const loginTime = useAppSelector((state)=> state.userInfo.loginTime)
   if(tokenStorage){

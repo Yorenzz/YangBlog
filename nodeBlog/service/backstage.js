@@ -17,9 +17,18 @@ const deleteLabel=async (id, name, color)=>{
   return LabelModel.deleteOne({_id: new ObjectID(id)})
 }
 
+const getTextCountByCategory=async ()=>{
+  return ArticleModel.aggregate([{$group: {_id: "$category", total: {$sum: 1}}}])
+}
+
+// const getTextCountByLabel=async ()=>{
+//   return ArticleModel.aggregate([{$group: {_id: "$label", total: {$sum: 1}}}])
+// }
+
 module.exports = {
   getCommentNum,
   getAllLabel,
   updateLabel,
-  deleteLabel
+  deleteLabel,
+  getTextCountByCategory
 }

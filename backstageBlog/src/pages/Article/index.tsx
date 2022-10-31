@@ -69,11 +69,6 @@ const Article: React.FC = () => {
 		})
 	},[])
 
-	// const checkText = () =>{
-	// 	return !!(context && context.length > 0);
-	//
-	// }
-
 	return (
 		<div>
 			<Form
@@ -91,8 +86,6 @@ const Article: React.FC = () => {
 				<Form.Item
 					name="img"
 					label="文章首图url"
-					rules={[{ required: true, message: '请填写文章首图url，或者点击右侧按钮随机图片' }]}
-					validateTrigger="onBlur"
 				>
 					<Input />
 				</Form.Item>

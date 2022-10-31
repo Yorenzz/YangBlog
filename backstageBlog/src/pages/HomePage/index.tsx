@@ -5,13 +5,14 @@ import { useEffect, useRef } from 'react'
 import { Card } from 'antd'
 import './style.scss'
 import ChinaMap from './ChinaMap'
-import { getCommentNum } from '../../api'
+import { getCommentNum, getTextPerCategory } from '../../api'
 
 const HomePage: React.FC = () => {
 	const categoryChart:MutableRefObject<any> = useRef(null)
 	const labelChart:MutableRefObject<any> = useRef(null)
 
 	const [commentNum, setCommentNum] = useState(0)
+	const [categoryTextArr, setCategoryTextArr] = useState([])
 	const [categoryOption, setCategoryOption]  =useState({
 		legend: {
 			top: 'bottom'
@@ -29,12 +30,7 @@ const HomePage: React.FC = () => {
 			itemStyle: {
 			borderRadius: 4
 			},
-			data: [
-			{ value: 40, name: 'rose 1' },
-			{ value: 38, name: 'rose 2' },
-			{ value: 32, name: 'rose 3' },
-			{ value: 30, name: 'rose 4' },
-			]
+			data: categoryTextArr
 		}
 		]
 	})
@@ -70,8 +66,29 @@ const HomePage: React.FC = () => {
 			setCommentNum(res)
 		})
 	}
+	const getTextCategory = () :void =>{
+		getTextPerCategory().then((res)=>{
+			console.log(res);
+			setCategoryTextArr(res.map((item: { total: number; _id: string })=>{
+				return {
+					value: item.total,
+					name: item._id
+				}
+			}))
+		})
+	}
+
 	useEffect(()=>{
 		getCategoryNum()
+	},[])
+	useEffect(()=>{
+		setCategoryOption(()=>{
+			categoryOption.series[0].data=categoryTextArr
+			return { ...categoryOption }
+		})
+	}, categoryTextArr)
+	useEffect(()=>{
+		getTextCategory()
 	},[])
 	useEffect(()=>{
 		const category = echarts.init(categoryChart.current)

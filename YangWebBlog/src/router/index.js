@@ -27,17 +27,17 @@ const routes = [
   {
     path: '/timeaxis',
     name: '时间轴',
-    component: () => import('../components/TimeAxis.vue'),
+    component: () => import('../pages/TimeAxis.vue'),
   },
   {
     path: '/dynamic',
     name: '动态',
-    component: () => import('../components/Dynamic.vue'),
+    component: () => import('../pages/Dynamic.vue'),
   },
   {
     path: '/about',
     name: '关于我',
-    component: () => import('../components/About.vue'),
+    component: () => import('../pages/About.vue'),
   },
   {
     path: '/404',

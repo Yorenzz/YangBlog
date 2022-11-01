@@ -69,6 +69,13 @@ export function getIP(ip) {
   })
 }
 
+export function getDynamic() {
+  return request({
+    url: '/publictext/getDynamic',
+    method: 'GET',
+  })
+}
+
 export function getHistoryToday() {
   return request({
     url: '/tool/getHistoryToday',

@@ -1,5 +1,4 @@
 const { ObjectID }= require("../config");
-const {SuccessModel, ErrorModel} = require("../model/resModel");
 const UserModel=require("../dbModel/UserModel")
 
 async function userCheck(username,password){

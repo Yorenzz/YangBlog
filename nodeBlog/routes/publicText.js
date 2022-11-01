@@ -7,6 +7,7 @@ const {
   getAllTags,
   getTagsColor,
   setLabelColor,
+  getDynamic,
 } = require('../service/article')
 const router = require('koa-router')()
 const utils = require('../utils/util')
@@ -83,13 +84,22 @@ router.get('/getTagsColor', async (ctx) => {
 
 router.get('/getIP', async (ctx) => {
   try{
-
+    const { ip } = ctx.request.query
+    let req = await request(`http://ip-api.com/json/${ip}?lang=zh-CN`)
+    ctx.body = utils.success(req)
   }catch(e){
     ctx.body=utils.fail(e)
   }
-  const { ip } = ctx.request.query
-  let req = await request(`http://ip-api.com/json/${ip}?lang=zh-CN`)
-  ctx.body = utils.success(req)
+})
+
+router.get('/getDynamic', async (ctx)=>{
+  try{
+    const res = await getDynamic()
+    ctx.body = utils.success(res)
+  }
+  catch(e){
+    ctx.body = utils.fail(e)
+  }
 })
 
 module.exports = router

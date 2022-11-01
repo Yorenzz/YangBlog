@@ -13,7 +13,7 @@ const updateLabel=async (id, name, color)=>{
   return LabelModel.updateOne({_id: new ObjectID(id)},{$set:{"value":name, "color": color}})
 }
 
-const deleteLabel=async (id, name, color)=>{
+const deleteLabel=async (id)=>{
   return LabelModel.deleteOne({_id: new ObjectID(id)})
 }
 

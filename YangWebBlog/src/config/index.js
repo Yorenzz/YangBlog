@@ -1,5 +1,4 @@
 const env = import.meta.env.MODE || 'prod'
-console.log('env', env);
 const EnvConfig = {
   dev: {
     baseApi: 'http://localhost:8080',

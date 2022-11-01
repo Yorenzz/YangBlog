@@ -11,13 +11,12 @@ router.get('/getBingPicture', async (ctx) => {
 
 router.get('/getHistoryToday', async (ctx) => {
     const res = await request('https://api.oick.cn/lishi/api.php')
-    console.log('today',res)
+
     ctx.body = utils.success(res)
 })
 
 router.get('/getSentence', async (ctx) => {
     const res = await request('https://v1.hitokoto.cn/?c=a')
-    console.log('sentence',typeof res)
     ctx.body = utils.success(JSON.parse(res))
 })
 

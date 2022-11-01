@@ -1,4 +1,4 @@
-const { insertArticle, getText, setLabelColor } = require('../service/article')
+const { insertArticle, getText, setLabelColor, getDynamic } = require('../service/article')
 const { getCommentNum, getAllLabel,
   updateLabel,
   deleteLabel,
@@ -88,6 +88,7 @@ router.get('/getPerCategoryText', async (ctx)=>{
     ctx.body = utils.fail(e)
   }
 })
+
 
 
 module.exports = router

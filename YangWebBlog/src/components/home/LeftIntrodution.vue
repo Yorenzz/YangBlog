@@ -10,7 +10,7 @@ const activeName=ref('')
       <el-avatar
         class="avatar"
         shape="square"
-        src="https://pic-1305446179.cos.ap-guangzhou.myqcloud.com/ba07afa100ed743f068fe35a75353b06.png"
+        src="http://rjha510cm.hn-bkt.clouddn.com/picture/ba07afa100ed743f068fe35a75353b06.png?e=1667314838&token=16HaNdopyMmYvaL1MQ_wpUVxN_m_Ttv32XOYgWpK:_ucO4kV889kr2Iu60E5EjZ01PTk="
       />
     </div>
 

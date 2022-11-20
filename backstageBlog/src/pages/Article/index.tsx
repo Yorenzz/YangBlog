@@ -4,6 +4,7 @@ import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
 import { Button, Form, Input, Select } from 'antd'
 import { getAllTags, sendArticle } from '../../api'
+import { IMAGE_TYPE_API } from '../../constant/api'
 import moment from 'moment'
 
 const Article: React.FC = () => {

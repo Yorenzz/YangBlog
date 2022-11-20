@@ -20,5 +20,11 @@ router.get('/getSentence', async (ctx) => {
     ctx.body = utils.success(JSON.parse(res))
 })
 
+router.get('/getRandomImage', async (ctx) => {
+    const { type } = ctx.request.query
+    const {data} = JSON.parse(await request(`https://api.gmit.vip/Api/${type}?format=json`))
+    ctx.body = utils.success(data?.url)
+})
+
 
 module.exports = router

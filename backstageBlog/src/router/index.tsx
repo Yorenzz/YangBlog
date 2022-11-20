@@ -58,12 +58,12 @@ const routes: Array<Router> = [
             {
                 name: '分类管理',
                 path: '/edit-category',
-                element: <WithAuth>{Module(<Category/>)}</WithAuth>
+                element: Module(<WithAuth>{Module(<Category/>)}</WithAuth>)
             },
             {
                 name: '标签管理',
                 path: '/edit-label',
-                element: <WithAuth>{Module(<Label/>)}</WithAuth>
+                element: Module(<WithAuth>{Module(<Label/>)}</WithAuth>)
             }
         ]
     }

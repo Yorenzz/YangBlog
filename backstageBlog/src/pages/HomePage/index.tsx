@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
 			categoryOption.series[0].data=categoryTextArr
 			return { ...categoryOption }
 		})
-	}, categoryTextArr)
+	}, [categoryTextArr])
 	useEffect(()=>{
 		getTextCategory()
 	},[])

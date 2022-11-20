@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
-import { Button, Form, Input, Select } from 'antd'
-import { getAllTags, sendArticle } from '../../api'
+import './style.scss'
+import { DownOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Form, Input, MenuProps, Select } from 'antd'
+import { getAllTags, sendArticle, getRandomImage } from '../../api'
 import { IMAGE_TYPE_API } from '../../constant/api'
 import moment from 'moment'
+import { log } from 'echarts/types/src/util/log'
 
 const Article: React.FC = () => {
+	const [loadings, setLoading] = useState<boolean>(false);
 	const [editor, setEditor] = useState<IDomEditor | null>(null)
 	const [editor2, setEditor2] = useState<IDomEditor | null>(null)
 	const [context, setContext] = useState('')
@@ -22,6 +26,30 @@ const Article: React.FC = () => {
 	const editorConfig2: Partial<IEditorConfig> = {
 		placeholder: '请输入内容...',
 	}
+
+	const items: MenuProps['items'] = [
+		{
+			label: '美女',
+			key: '1',
+		},
+		{
+			label: '二次元',
+			key: '2',
+		},
+		{
+			label: '动漫',
+			key: '3',
+		},
+		{
+			label: '汽车',
+			key: '4',
+		},
+		{
+			label: '风景',
+			key: '5',
+		},
+	];
+
 	const [form] = Form.useForm();
 	const handleChange = (value: object) => {
 		let obj = (Object.assign({}, value))
@@ -70,6 +98,14 @@ const Article: React.FC = () => {
 		})
 	},[])
 
+	const onHandleClick=(e: React.MouseEvent<HTMLButtonElement>)=>{
+		console.log(e)
+	}
+
+	const handleMenuClick: MenuProps['onClick'] = (e) => {
+		console.log('click', e);
+	};
+
 	return (
 		<div>
 			<Form
@@ -88,7 +124,17 @@ const Article: React.FC = () => {
 					name="img"
 					label="文章首图url"
 				>
-					<Input />
+					<div className="titleImage">
+						<Input />
+						<Dropdown.Button
+							icon={<DownOutlined />}
+							loading={loadings}
+							menu={{ items, selectable: true,onClick: handleMenuClick, }}
+							onClick={onHandleClick}
+						>
+							获取随机图片
+						</Dropdown.Button>
+					</div>
 				</Form.Item>
 
 				<Form.Item

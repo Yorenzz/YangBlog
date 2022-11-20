@@ -61,6 +61,13 @@ export function getTextPerCategory(){
     })
 }
 
+export function getRandomImage(type: String){
+    return request({
+        url: '/tool/getRandomImage',
+        method: 'GET',
+        data: {type},
+    })
+}
 
 export function verify(token: string){
     return request({

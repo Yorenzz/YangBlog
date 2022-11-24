@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import * as qiniu from 'qiniu-js'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
 import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
 import './style.scss'
@@ -10,8 +12,12 @@ import { IMAGE_TYPE_API } from '../../constant/api'
 import {ImageApi} from '../../typing/constant'
 import moment from 'moment'
 import { log } from 'echarts/types/src/util/log'
+import { useSelector } from 'react-redux'
+import { DomEditor } from '@wangeditor/editor'
 
+type InsertFnType = (url: string, alt: string, href: string) => void
 const Article: React.FC = () => {
+	const UPLOAD_TOKEN = useAppSelector((state)=> state.userInfo.UPLOAD_TOKEN)
 	const [loadings, setLoading] = useState<boolean>(false);
 	const [editor, setEditor] = useState<IDomEditor | null>(null)
 	const [editor2, setEditor2] = useState<IDomEditor | null>(null)
@@ -21,14 +27,49 @@ const Article: React.FC = () => {
 	const [imgType, setImgType] = useState<String>('SCENE')
 	const [children, setChildren] = useState([]);
 	const [imgURL, setImgURL] = useState<string>('')
-
-	const toolbarConfig1: Partial<IToolbarConfig> = { }
+	const toolbar = DomEditor.getToolbar(editor as IDomEditor)
+	const toolbarConfig1: Partial<IToolbarConfig> = {
+		excludeKeys: [
+			'group-image',
+			'group-video',
+			'divider',
+		] }
 	const editorConfig1: Partial<IEditorConfig> = {
 		placeholder: '请输入内容...',
 	}
 	const toolbarConfig2: Partial<IToolbarConfig> = { }
 	const editorConfig2: Partial<IEditorConfig> = {
 		placeholder: '请输入内容...',
+		MENU_CONF: {}
+	}
+
+	// @ts-ignore
+	editorConfig2.MENU_CONF['uploadImage'] = {
+		// 自定义上传
+		async customUpload(file: File, insertFn: InsertFnType) {  // TS 语法
+			console.log(file)
+			// async customUpload(file, insertFn) {                   // JS 语法
+			// file 即选中的文件
+			// 自己实现上传，并得到图片 url alt href
+			// 最后插入图片
+			const observable = qiniu.upload(
+				file,
+				`editor-image/${file.name}`,
+				UPLOAD_TOKEN,
+			)
+			observable.subscribe({
+				next(res){
+					console.log('next', res)
+				},
+				error(err){
+					console.log('err', err)
+				},
+				complete(res){//来到这里就是上传成功了。。
+					console.log('complete', res)
+					insertFn(`http://image.yangezzz.top/${res.key}`, '' ,'')
+				}
+			})
+		}
 	}
 
 	const items: MenuProps['items'] = [
@@ -103,6 +144,7 @@ const Article: React.FC = () => {
 	},[])
 
 	const onHandleClick=(e: React.MouseEvent<HTMLButtonElement>)=>{
+		console.log(toolbar?.getConfig().toolbarKeys)
 		setLoading(true)
 		getRandomImage(IMAGE_TYPE_API[imgType as keyof ImageApi]).then(res=>{
 			console.log(res)

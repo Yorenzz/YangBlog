@@ -26,6 +26,7 @@
     "mongoose": "^6.4.7",
     "prettier": "^2.7.1",
     "pug": "^2.0.3",
+    "qiniu": "^7.8.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },

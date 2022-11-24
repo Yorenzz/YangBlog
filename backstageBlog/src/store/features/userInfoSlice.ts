@@ -5,6 +5,7 @@ interface UserInfoState {
     username: string,
     token: string,
     loginTime: number,
+    UPLOAD_TOKEN: string
 }
 
 interface SetInfo {
@@ -16,6 +17,7 @@ const initialState: UserInfoState = {
     username: '',
     token: '',
     loginTime: 0,
+    UPLOAD_TOKEN: '',
 }
 
 export const userInfoSlice = createSlice({
@@ -31,10 +33,14 @@ export const userInfoSlice = createSlice({
         incrementLoginInTime(state){
             state.loginTime&&state.loginTime++
         },
+        saveUploadToken(state, action: PayloadAction<string>){
+            state.UPLOAD_TOKEN=action.payload
+            storage.setItem('UPLOAD_TOKEN', action.payload)
+        }
     }
 });
 
-export const { saveInfo } = userInfoSlice.actions;
+export const { saveInfo, saveUploadToken } = userInfoSlice.actions;
 
 // export const asyncIncrement = (payload) => (dispatch) => {
 //     setTimeout(()=>{

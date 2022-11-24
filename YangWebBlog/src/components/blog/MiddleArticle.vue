@@ -154,6 +154,12 @@ watchEffect(() => {
         </div>
       </div>
       <div v-html="item.describe"></div>
+			<div class="preview-img" v-if="item.img">
+				<img
+					:src="item.img"
+					alt=""
+				>
+			</div>
       <div class="article-button">
         <el-button type="primary" @click="blogDetail(item['_id'])">
           阅读全文
@@ -230,6 +236,9 @@ watchEffect(() => {
         color: red;
       }
     }
+		.preview-img {
+			width: 100%;
+		}
     .middle-tag {
       display: flex;
       justify-content: flex-start;

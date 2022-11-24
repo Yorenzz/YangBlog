@@ -69,6 +69,13 @@ export function getRandomImage(type: String){
     })
 }
 
+export function getUploadToken(){
+    return request({
+        url: '/tool/uploadToken',
+        method: 'GET',
+    })
+}
+
 export function verify(token: string){
     return request({
         url:'/users/verify',

@@ -73,7 +73,6 @@ getBlogByID()
   <div class="blog typo">
     <h2 class="typo">{{ data.title }}</h2>
     <div class="typo detail-title" v-html="data.text"></div>
-    <div><el-image :src="data.image" :alt="data.image" style="width: 500px; height: 500px"/></div>
   </div>
 </template>
 <style scoped lang="scss">

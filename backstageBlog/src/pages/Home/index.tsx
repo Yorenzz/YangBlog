@@ -12,9 +12,12 @@ import {
 import { Button, MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage';
 import { TOKEN_KEY } from '../../config';
+import { getUploadToken } from '../../api'
+import { saveUploadToken } from '../../store/features/userInfoSlice'
 
 const { Content, Footer, Sider, Header } = Layout;
 
@@ -72,6 +75,7 @@ const items: MenuProps['items'] = [
 
 const Home: React.FC = () => {
 	const location = useLocation()
+	const dispatch = useAppDispatch()
 	const { pathname } = location
 	const [collapsed, setCollapsed] = useState(false);
 	const [openKey, setOpenKey] = useState([''])
@@ -90,6 +94,14 @@ const Home: React.FC = () => {
 		const key = pathname.slice(0,pathname.indexOf('-'))
 		setOpenKey([key])
 	}, [])
+
+	useEffect(()=>{
+		getUploadToken().then((res)=>{
+			console.log(res)
+			dispatch(saveUploadToken(res))
+		})
+	}, [])
+
 	return (
 	  <Layout style={{ minHeight: '100vh' }}>
 		<Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>

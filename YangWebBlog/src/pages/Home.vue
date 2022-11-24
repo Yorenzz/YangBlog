@@ -48,11 +48,13 @@ getVisitorIP()
   margin-bottom: 32px;
 }
 .left-introduction {
+	min-width: 295px;
   @media only screen and (max-width: 900px) {
     display: none;
   }
 }
 .right-detail {
+	min-width: 295px;
   @media only screen and (max-width: 1024px) {
     display: none;
   }

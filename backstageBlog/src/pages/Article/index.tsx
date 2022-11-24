@@ -3,10 +3,11 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
 import './style.scss'
-import { DownOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Form, Input, MenuProps, Select } from 'antd'
+import { DownOutlined, FileImageOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Form, Input, MenuProps, Popover, Select, Image } from 'antd'
 import { getAllTags, sendArticle, getRandomImage } from '../../api'
 import { IMAGE_TYPE_API } from '../../constant/api'
+import {ImageApi} from '../../typing/constant'
 import moment from 'moment'
 import { log } from 'echarts/types/src/util/log'
 
@@ -17,7 +18,10 @@ const Article: React.FC = () => {
 	const [context, setContext] = useState('')
 	const [article, setArticle] = useState('')
 	const [label,setLabel]=useState({})
-	const  [children, setChildren] = useState([]);
+	const [imgType, setImgType] = useState<String>('SCENE')
+	const [children, setChildren] = useState([]);
+	const [imgURL, setImgURL] = useState<string>('')
+
 	const toolbarConfig1: Partial<IToolbarConfig> = { }
 	const editorConfig1: Partial<IEditorConfig> = {
 		placeholder: '请输入内容...',
@@ -29,24 +33,24 @@ const Article: React.FC = () => {
 
 	const items: MenuProps['items'] = [
 		{
+			label: '风景',
+			key: 'SCENE',
+		},
+		{
 			label: '美女',
-			key: '1',
+			key: 'LADY',
 		},
 		{
 			label: '二次元',
-			key: '2',
+			key: 'TWICE',
 		},
 		{
 			label: '动漫',
-			key: '3',
+			key: 'DM',
 		},
 		{
 			label: '汽车',
-			key: '4',
-		},
-		{
-			label: '风景',
-			key: '5',
+			key: 'CAR',
 		},
 	];
 
@@ -99,12 +103,28 @@ const Article: React.FC = () => {
 	},[])
 
 	const onHandleClick=(e: React.MouseEvent<HTMLButtonElement>)=>{
-		console.log(e)
+		setLoading(true)
+		getRandomImage(IMAGE_TYPE_API[imgType as keyof ImageApi]).then(res=>{
+			console.log(res)
+			form.setFieldValue('img', res)
+			setImgURL(res)
+		}).catch(e=>{
+			console.warn(e)
+		}).finally(()=>{
+			setLoading(false)
+		})
 	}
 
 	const handleMenuClick: MenuProps['onClick'] = (e) => {
-		console.log('click', e);
+		setImgType(e.key)
 	};
+
+	const content = (
+		<Image
+			width={200}
+			src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+		/>
+	)
 
 	return (
 		<div>
@@ -121,19 +141,44 @@ const Article: React.FC = () => {
 					<Input />
 				</Form.Item>
 				<Form.Item
-					name="img"
 					label="文章首图url"
 				>
 					<div className="titleImage">
-						<Input />
-						<Dropdown.Button
-							icon={<DownOutlined />}
-							loading={loadings}
-							menu={{ items, selectable: true,onClick: handleMenuClick, }}
-							onClick={onHandleClick}
+						<Form.Item
+							name="img"
+							noStyle
 						>
-							获取随机图片
-						</Dropdown.Button>
+							<Input />
+						</Form.Item>
+						<div>
+							<Dropdown.Button
+								icon={<DownOutlined />}
+								loading={loadings}
+								menu={{
+									items,
+									selectable: true,
+									onClick: handleMenuClick,
+									defaultSelectedKeys: ['SCENE'],
+								}}
+								onClick={onHandleClick}
+							>
+								获取随机图片
+							</Dropdown.Button>
+						</div>
+						<Popover content={
+							<Image
+								className="previewImg"
+								width={400}
+								height={200}
+								src={imgURL}
+								preview={false}
+							/>
+						}
+						         trigger="click" placement="bottomRight"
+						>
+						<Button type="dashed"
+						        loading={loadings} icon={<FileImageOutlined />}>预览</Button>
+						</Popover>
 					</div>
 				</Form.Item>
 

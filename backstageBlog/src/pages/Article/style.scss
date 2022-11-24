@@ -1,5 +1,11 @@
 .titleImage {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   column-gap: 16px;
+
+}
+
+.previewImg {
+  object-fit: cover;
 }

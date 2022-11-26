@@ -24,7 +24,7 @@ const props=defineProps({
     }
 })
 
-const isLike = ref(true)
+const isLike = ref(false)
 const viewLike = ref(0)
 viewLike.value = props.like
 
@@ -54,15 +54,13 @@ const cancelOrLikeDynamic = () => {
                     <span>{{ props.time }}</span>
                 </div>
             </template>
-            <div>
-                {{props.content}}
-            </div>
+            <div v-html="props.content"/>
             <footer class="card-foot">
                 <div class="foot-content">
                     <div>
                         <IconFont
                             :type="heartType"
-                            class="icon" 
+                            class="icon"
                             @click="cancelOrLikeDynamic"
                         />
                         <span>{{ viewLike }}</span>

@@ -97,7 +97,6 @@ const Home: React.FC = () => {
 
 	useEffect(()=>{
 		getUploadToken().then((res)=>{
-			console.log(res)
 			dispatch(saveUploadToken(res))
 		})
 	}, [])

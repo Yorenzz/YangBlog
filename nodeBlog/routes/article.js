@@ -2,7 +2,8 @@ const { insertArticle, getText, setLabelColor, getDynamic } = require('../servic
 const { getCommentNum, getAllLabel,
   updateLabel,
   deleteLabel,
-  getTextCountByCategory
+  getTextCountByCategory,
+  insertContext
 } = require('../service/backstage')
 const router = require('koa-router')()
 const utils = require('../utils/util')
@@ -88,6 +89,22 @@ router.get('/getPerCategoryText', async (ctx)=>{
     ctx.body = utils.fail(e)
   }
 })
+
+router.post('/sendContext', async (ctx) => {
+  const { text, time, like, watch, isSelf } = ctx.request.body
+  try{
+    let res = await insertContext({
+      text,
+      time,
+      like,
+      watch,
+      isSelf
+    })
+    ctx.body = utils.success(res.insertedId, '发布成功!')
+  }catch(e){
+    ctx.body=utils.fail(e)
+  }
+}) //上传文章
 
 
 

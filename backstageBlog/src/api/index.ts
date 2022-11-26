@@ -1,5 +1,6 @@
 import request from "../utils/request";
 import { ArticleType } from '../typing/article'
+import { DynamicContextType } from '../typing/dynamic'
 
 export function loginIn(username: string, password: string){
     return request({
@@ -58,6 +59,14 @@ export function getTextPerCategory(){
     return request({
         url: '/article/getPerCategoryText',
         method: 'GET',
+    })
+}
+
+export function sendContext(context: DynamicContextType) {
+    return request({
+        url: '/article/sendContext',
+        method: 'POST',
+        data: context
     })
 }
 

@@ -184,11 +184,14 @@ const Article: React.FC = () => {
 				</Form.Item>
 				<Form.Item
 					label="文章首图url"
+					required
 				>
 					<div className="titleImage">
 						<Form.Item
 							name="img"
 							noStyle
+							rules={[{ required: true, message: '请填写首图URL，用于首页展示，可以点击右侧按钮获取随机图片' }]}
+							validateTrigger="onBlur"
 						>
 							<Input />
 						</Form.Item>

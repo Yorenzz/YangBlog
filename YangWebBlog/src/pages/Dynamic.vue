@@ -25,10 +25,10 @@ getAllDynamic()
     <el-timeline>
       <el-timeline-item
         center
-        v-for="item in dynamicList"
+        v-for="item in dynamicList.reverse()"
         :key="item._id"
       >
-        <DynamicCard 
+        <DynamicCard
           :time="item.time"
           :content="item.text"
           :like="item.like"

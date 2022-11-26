@@ -5,7 +5,7 @@ import 'echarts/extension/bmap/bmap';
 
 const ChinaMap:React.FC=()=>{
 	const myEChart:MutableRefObject<any> = useRef(null)
-    
+
     const data = [
         { name: '海门', value: 9 },
         { name: '鄂尔多斯', value: 12 },
@@ -393,6 +393,7 @@ const ChinaMap:React.FC=()=>{
     const convertData = function (data: string | any[]) {
     let res = [];
     for (let i = 0; i < data.length; i++) {
+        // @ts-ignore
         const geoCoord = geoCoordMap[data[i].name];
         if (geoCoord) {
         res.push({

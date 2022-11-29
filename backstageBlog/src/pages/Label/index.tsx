@@ -1,18 +1,10 @@
-import React, {
-	useEffect, useState,
-} from 'react'
-import {
-	Button, Popconfirm, Space, Spin, Table, Tag,
-} from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Popconfirm, Space, Spin, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import {
-	deleteLabel, getAllLabel,
-} from '../../api'
+import { deleteLabel, getAllLabel } from '../../api'
 import { AxiosResponse } from 'axios'
 import LabelEditDialog from './LabelEditDialog'
-import {
-	LabelDataType, LabelResType,
-} from '../../typing/label'
+import { LabelDataType, LabelResType } from '../../typing/label'
 
 const Label:React.FC = () => {
 	const columns: ColumnsType<LabelDataType> = [

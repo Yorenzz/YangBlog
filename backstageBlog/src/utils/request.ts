@@ -1,6 +1,4 @@
-import axios, {
-	AxiosRequestConfig, AxiosResponse,
-} from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import config, { TOKEN_KEY } from '../config/index.js'
 import { message } from 'antd'
 import { RequestInterface } from '../typing/request.js'
@@ -24,9 +22,7 @@ service.interceptors.request.use(req => {
 })
 
 service.interceptors.response.use((res: AxiosResponse) => {
-	const {
-		code, data, msg,
-	} = res.data
+	const { code, data, msg } = res.data
 	if (code === 200) {
 		msg && message.success(msg)
 		return data

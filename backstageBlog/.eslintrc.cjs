@@ -38,7 +38,7 @@ module.exports = {
 		"no-unused-vars": "off",
 		"no-use-before-define": "error",
 		"object-property-newline": "error",
-		"object-curly-newline": ["error", { "minProperties": 2 }],
+		"object-curly-newline": ["error", { "multiline": true }],
 		"object-curly-spacing": ["error", "always"],
 		"operator-linebreak": ["error", "before"],
 		"quotes": ["error", "single", { "avoidEscape": true }],

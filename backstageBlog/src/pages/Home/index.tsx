@@ -9,29 +9,17 @@ import {
 	FolderOpenOutlined,
 	SettingOutlined,
 } from '@ant-design/icons'
-import {
-	Button, MenuProps,
-} from 'antd'
-import {
-	Layout, Menu,
-} from 'antd'
-import React, {
-	useEffect, useState,
-} from 'react'
-import {
-	useAppSelector, useAppDispatch,
-} from '../../utils/hooks'
-import {
-	Outlet, useLocation, useNavigate,
-} from 'react-router-dom'
+import { Button, MenuProps } from 'antd'
+import { Layout, Menu } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage'
 import { TOKEN_KEY } from '../../config'
 import { getUploadToken } from '../../api'
 import { saveUploadToken } from '../../store/features/userInfoSlice'
 
-const {
-	Content, Footer, Sider, Header,
-} = Layout
+const { Content, Footer, Sider, Header } = Layout
 
 const items: MenuProps['items'] = [
 	{

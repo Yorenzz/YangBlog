@@ -1,17 +1,9 @@
-import {
-	Button, Form, Input,
-} from 'antd'
+import { Button, Form, Input } from 'antd'
 import React from 'react'
-import {
-	loginIn, verify,
-} from '../../api'
-import {
-	useAppSelector, useAppDispatch,
-} from '../../utils/hooks'
+import { loginIn, verify } from '../../api'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
 import { saveInfo } from '../../store/features/userInfoSlice'
-import {
-	Navigate, useNavigate,
-} from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { TOKEN_KEY } from '../../config'
 import storage from '../../utils/storage'
 import './style.scss'
@@ -27,9 +19,7 @@ const Login: React.FC = () => {
 		console.log('Success:', values.username, values.password)
 		loginIn(values.username, values.password).then((res) => {
 
-			const {
-				username, token,
-			} = res
+			const { username, token } = res
 
 			dispatch(saveInfo({
 				username,
@@ -50,9 +40,7 @@ const Login: React.FC = () => {
 		if(!loginTime) {
 			verify(tokenStorage).then((res) => {
 				console.log(res)
-				const {
-					payload, token,
-				} = res
+				const { payload, token } = res
 				const { username } = payload
 				dispatch(saveInfo({
 					username,

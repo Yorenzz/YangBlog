@@ -1,8 +1,6 @@
 import React, { MutableRefObject } from 'react'
 import * as echarts from 'echarts'
-import {
-	useEffect, useRef,
-} from 'react'
+import { useEffect, useRef } from 'react'
 import 'echarts/extension/bmap/bmap'
 
 const ChinaMap:React.FC = () => {
@@ -982,88 +980,90 @@ const ChinaMap:React.FC = () => {
 		bmap: {
 			center: [104.13066322374, 36.240018034923],
 			zoom: 6,
-			mapStyle: { styleJson: [
-				{
-					featureType: 'water',
-					elementType: 'all',
-					stylers: { color: '#044161' },
-				},
-				{
-					featureType: 'land',
-					elementType: 'all',
-					stylers: { color: '#004981' },
-				},
-				{
-					featureType: 'railway',
-					elementType: 'all',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'highway',
-					elementType: 'all',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'highway',
-					elementType: 'labels',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'arterial',
-					elementType: 'geometry',
-					stylers: { color: '#7f7f7f' },
-				},
-				{
-					featureType: 'arterial',
-					elementType: 'geometry.fill',
-					stylers: { color: '#fefefe' },
-				},
-				{
-					featureType: 'poi',
-					elementType: 'all',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'green',
-					elementType: 'all',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'subway',
-					elementType: 'all',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'manmade',
-					elementType: 'all',
-					stylers: { color: '#d1d1d1' },
-				},
-				{
-					featureType: 'local',
-					elementType: 'all',
-					stylers: { color: '#d1d1d1' },
-				},
-				{
-					featureType: 'arterial',
-					elementType: 'labels',
-					stylers: { visibility: 'off' },
-				},
-				{
-					featureType: 'boundary',
-					elementType: 'geometry.fill',
-					stylers: { color: '#029fd4' },
-				},
-				{
-					featureType: 'building',
-					elementType: 'all',
-					stylers: { color: '#d1d1d1' },
-				},
-				{
-					featureType: 'label',
-					elementType: 'labels.text.fill',
-					stylers: { visibility: 'off' },
-				},
-			] },
+			mapStyle: {
+				styleJson: [
+					{
+						featureType: 'water',
+						elementType: 'all',
+						stylers: { color: '#044161' },
+					},
+					{
+						featureType: 'land',
+						elementType: 'all',
+						stylers: { color: '#004981' },
+					},
+					{
+						featureType: 'railway',
+						elementType: 'all',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'highway',
+						elementType: 'all',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'highway',
+						elementType: 'labels',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'arterial',
+						elementType: 'geometry',
+						stylers: { color: '#7f7f7f' },
+					},
+					{
+						featureType: 'arterial',
+						elementType: 'geometry.fill',
+						stylers: { color: '#fefefe' },
+					},
+					{
+						featureType: 'poi',
+						elementType: 'all',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'green',
+						elementType: 'all',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'subway',
+						elementType: 'all',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'manmade',
+						elementType: 'all',
+						stylers: { color: '#d1d1d1' },
+					},
+					{
+						featureType: 'local',
+						elementType: 'all',
+						stylers: { color: '#d1d1d1' },
+					},
+					{
+						featureType: 'arterial',
+						elementType: 'labels',
+						stylers: { visibility: 'off' },
+					},
+					{
+						featureType: 'boundary',
+						elementType: 'geometry.fill',
+						stylers: { color: '#029fd4' },
+					},
+					{
+						featureType: 'building',
+						elementType: 'all',
+						stylers: { color: '#d1d1d1' },
+					},
+					{
+						featureType: 'label',
+						elementType: 'labels.text.fill',
+						stylers: { visibility: 'off' },
+					},
+				],
+			},
 		},
 		series: [
 			{

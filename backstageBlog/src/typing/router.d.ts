@@ -1,6 +1,4 @@
-import {
-	LazyExoticComponent, ReactNode,
-} from 'react'
+import { LazyExoticComponent, ReactNode } from 'react'
 
 interface Router {
     name?: string,

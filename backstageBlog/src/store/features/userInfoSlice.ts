@@ -1,6 +1,4 @@
-import {
-	createSlice, PayloadAction,
-} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import storage from '../../utils/storage'
 
 interface UserInfoState {
@@ -42,9 +40,7 @@ export const userInfoSlice = createSlice({
 	},
 })
 
-export const {
-	saveInfo, saveUploadToken,
-} = userInfoSlice.actions
+export const { saveInfo, saveUploadToken } = userInfoSlice.actions
 
 // export const asyncIncrement = (payload) => (dispatch) => {
 //     setTimeout(()=>{

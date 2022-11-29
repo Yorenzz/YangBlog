@@ -1,7 +1,5 @@
 import { Navigate } from 'react-router-dom'
-import React, {
-	lazy, LazyExoticComponent, ReactNode, Suspense,
-} from 'react'
+import React, { lazy, LazyExoticComponent, ReactNode, Suspense } from 'react'
 import Router from '../typing/router'
 import { Spin } from 'antd'
 import WithAuth from '../component/Auth'

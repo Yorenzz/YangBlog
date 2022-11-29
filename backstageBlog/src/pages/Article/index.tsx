@@ -1,27 +1,13 @@
-import React, {
-	useEffect, useState,
-} from 'react'
+import React, { useEffect, useState } from 'react'
 import * as qiniu from 'qiniu-js'
-import {
-	Editor, Toolbar,
-} from '@wangeditor/editor-for-react'
-import {
-	useAppSelector, useAppDispatch,
-} from '../../utils/hooks'
-import {
-	IDomEditor, IEditorConfig, IToolbarConfig,
-} from '@wangeditor/editor'
+import { Editor, Toolbar } from '@wangeditor/editor-for-react'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
+import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
 import './style.scss'
-import {
-	DownOutlined, FileImageOutlined,
-} from '@ant-design/icons'
-import {
-	Button, Dropdown, Form, Input, MenuProps, Popover, Select, Image,
-} from 'antd'
-import {
-	getAllTags, sendArticle, getRandomImage,
-} from '../../api'
+import { DownOutlined, FileImageOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Form, Input, MenuProps, Popover, Select, Image } from 'antd'
+import { getAllTags, sendArticle, getRandomImage } from '../../api'
 import { IMAGE_TYPE_API } from '../../constant/api'
 import { ImageApi } from '../../typing/constant'
 import moment from 'moment'
@@ -42,11 +28,13 @@ const Article: React.FC = () => {
 	const [children, setChildren] = useState([])
 	const [imgURL, setImgURL] = useState<string>('')
 	const toolbar = DomEditor.getToolbar(editor as IDomEditor)
-	const toolbarConfig1: Partial<IToolbarConfig> = { excludeKeys: [
-		'group-image',
-		'group-video',
-		'divider',
-	] }
+	const toolbarConfig1: Partial<IToolbarConfig> = {
+		excludeKeys: [
+			'group-image',
+			'group-video',
+			'divider',
+		],
+	}
 	const editorConfig1: Partial<IEditorConfig> = { placeholder: '请输入内容...' }
 	const toolbarConfig2: Partial<IToolbarConfig> = { }
 	const editorConfig2: Partial<IEditorConfig> = {
@@ -81,7 +69,8 @@ const Article: React.FC = () => {
 					insertFn(`http://image.yangezzz.top/${res.key}`, '', '')
 				},
 			})
-		} }
+		},
+	}
 
 	const items: MenuProps['items'] = [
 		{

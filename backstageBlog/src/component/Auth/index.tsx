@@ -1,11 +1,7 @@
-import React, {
-	ReactNode, useEffect,
-} from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { verify } from '../../api'
-import {
-	useAppSelector, useAppDispatch,
-} from '../../utils/hooks'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
 import { saveInfo } from '../../store/features/userInfoSlice'
 import { TOKEN_KEY } from '../../config'
 import storage from '../../utils/storage'
@@ -19,9 +15,7 @@ const WithAuth = ({ children }: any) => {
 		if(!loginTime) {
 			verify(token).then((res) => {
 				console.log(res)
-				const {
-					payload, token,
-				} = res
+				const { payload, token } = res
 				const { username } = payload
 				dispatch(saveInfo({
 					username,

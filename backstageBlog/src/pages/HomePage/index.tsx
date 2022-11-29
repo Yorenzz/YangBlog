@@ -1,17 +1,11 @@
-import React, {
-	MutableRefObject, useState,
-} from 'react'
+import React, { MutableRefObject, useState } from 'react'
 
 import * as echarts from 'echarts'
-import {
-	useEffect, useRef,
-} from 'react'
+import { useEffect, useRef } from 'react'
 import { Card } from 'antd'
 import './style.scss'
 import ChinaMap from './ChinaMap'
-import {
-	getCommentNum, getTextPerCategory,
-} from '../../api'
+import { getCommentNum, getTextPerCategory } from '../../api'
 
 const HomePage: React.FC = () => {
 	const categoryChart:MutableRefObject<any> = useRef(null)

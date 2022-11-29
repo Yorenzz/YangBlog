@@ -1,21 +1,11 @@
-import React, {
-	useEffect, useState,
-} from 'react'
-import {
-	Editor, Toolbar,
-} from '@wangeditor/editor-for-react'
-import {
-	IDomEditor, IEditorConfig, IToolbarConfig,
-} from '@wangeditor/editor'
+import React, { useEffect, useState } from 'react'
+import { Editor, Toolbar } from '@wangeditor/editor-for-react'
+import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
-import {
-	Button, Switch,
-} from 'antd'
+import { Button, Switch } from 'antd'
 import moment from 'moment'
 import './style.scss'
-import {
-	sendArticle, sendContext,
-} from '../../api'
+import { sendArticle, sendContext } from '../../api'
 
 const DynamicEdit:React.FC = () => {
 	const [editor, setEditor] = useState<IDomEditor | null>(null)

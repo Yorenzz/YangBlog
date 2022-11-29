@@ -1,4 +1,4 @@
-import {ImageApi} from '../typing/constant'
+import { ImageApi } from '../typing/constant'
 
 export const IMAGE_TYPE_API: ImageApi = {
 	TWICE: 'DmImg',

@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import storage from "../../utils/storage";
+import {
+	createSlice, PayloadAction,
+} from '@reduxjs/toolkit'
+import storage from '../../utils/storage'
 
 interface UserInfoState {
     username: string,
@@ -14,33 +16,35 @@ interface SetInfo {
 }
 
 const initialState: UserInfoState = {
-    username: '',
-    token: '',
-    loginTime: 0,
-    UPLOAD_TOKEN: '',
+	username: '',
+	token: '',
+	loginTime: 0,
+	UPLOAD_TOKEN: '',
 }
 
 export const userInfoSlice = createSlice({
-    name: 'userInfo',
-    initialState,
-    reducers: {
-        saveInfo(state, action: PayloadAction<SetInfo>) {
-            state.username = action.payload.username;
-            state.token = action.payload.token
-            state.loginTime = 1
-            storage.setItem('XTOKEN', action.payload.token)
-        },
-        incrementLoginInTime(state){
-            state.loginTime&&state.loginTime++
-        },
-        saveUploadToken(state, action: PayloadAction<string>){
-            state.UPLOAD_TOKEN=action.payload
-            storage.setItem('UPLOAD_TOKEN', action.payload)
-        }
-    }
-});
+	name: 'userInfo',
+	initialState,
+	reducers: {
+		saveInfo(state, action: PayloadAction<SetInfo>) {
+			state.username = action.payload.username
+			state.token = action.payload.token
+			state.loginTime = 1
+			storage.setItem('XTOKEN', action.payload.token)
+		},
+		incrementLoginInTime(state) {
+			state.loginTime && state.loginTime++
+		},
+		saveUploadToken(state, action: PayloadAction<string>) {
+			state.UPLOAD_TOKEN = action.payload
+			storage.setItem('UPLOAD_TOKEN', action.payload)
+		},
+	},
+})
 
-export const { saveInfo, saveUploadToken } = userInfoSlice.actions;
+export const {
+	saveInfo, saveUploadToken,
+} = userInfoSlice.actions
 
 // export const asyncIncrement = (payload) => (dispatch) => {
 //     setTimeout(()=>{

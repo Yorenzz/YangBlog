@@ -8,5 +8,5 @@ export default {
 	clearItem(key: string) {
 		window.localStorage.removeItem(key)
 	},
-	clearAll() {}
+	clearAll() {},
 }

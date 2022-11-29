@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Modal, Form, Input } from 'antd'
+import React, {
+	useEffect, useState,
+} from 'react'
+import {
+	Button, Modal, Form, Input,
+} from 'antd'
 import { LabelDataType } from '../../typing/label'
 // @ts-ignore
 import { SketchPicker } from 'react-color'
@@ -10,23 +14,23 @@ interface middleProps {
 	edit: LabelDataType | null,
 	refresh: ()=>void
 }
-const LabelEditDialog:React.FC<middleProps>=(props)=>{
-	const [form] = Form.useForm();
-	const [color, setColor]=useState(props.edit?.color)
+const LabelEditDialog:React.FC<middleProps> = (props) => {
+	const [form] = Form.useForm()
+	const [color, setColor] = useState(props.edit?.color)
 
-	const init=()=>{
+	const init = () => {
 		form.setFieldValue('name', props.edit?.name)
 		form.setFieldValue('color', props.edit?.color)
 	}
-	
-	useEffect(()=>{
-		init()
-	},[props.edit])
-	useEffect(()=>{
-		setColor(props.edit?.color)
-	},[props.edit])
 
-	const colorChange = (c: { hex: React.SetStateAction<string | undefined> })=>{
+	useEffect(() => {
+		init()
+	}, [props.edit])
+	useEffect(() => {
+		setColor(props.edit?.color)
+	}, [props.edit])
+
+	const colorChange = (c: { hex: React.SetStateAction<string | undefined> }) => {
 		setColor(c.hex)
 	}
 
@@ -36,11 +40,11 @@ const LabelEditDialog:React.FC<middleProps>=(props)=>{
 		updateLabel(props.edit?.key as string, form.getFieldValue('name'), color).then(r => {
 			props.refresh()
 		})
-	};
+	}
 
 	const handleCancel = () => {
 		props.setVisible(false)
-	};
+	}
 
 	return (
 		<>
@@ -51,7 +55,10 @@ const LabelEditDialog:React.FC<middleProps>=(props)=>{
 					<Form.Item
 						label="标签名字"
 						name="name"
-						rules={[{ required: true, message: '请输入标签名字！' }]}
+						rules={[{
+							required: true,
+							message: '请输入标签名字！',
+						}]}
 					>
 						<Input />
 					</Form.Item>
@@ -59,7 +66,10 @@ const LabelEditDialog:React.FC<middleProps>=(props)=>{
 					<Form.Item
 						label="标签颜色"
 						name="color"
-						rules={[{ required: true, message: '请选择标签颜色！' }]}
+						rules={[{
+							required: true,
+							message: '请选择标签颜色！',
+						}]}
 					>
 						<SketchPicker
 							width={300}
@@ -70,7 +80,7 @@ const LabelEditDialog:React.FC<middleProps>=(props)=>{
 				</Form>
 			</Modal>
 		</>
-	);
+	)
 }
 
 export default LabelEditDialog

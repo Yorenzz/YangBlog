@@ -1,11 +1,17 @@
-import React, { MutableRefObject, useState } from 'react'
+import React, {
+	MutableRefObject, useState,
+} from 'react'
 
 import * as echarts from 'echarts'
-import { useEffect, useRef } from 'react'
+import {
+	useEffect, useRef,
+} from 'react'
 import { Card } from 'antd'
 import './style.scss'
 import ChinaMap from './ChinaMap'
-import { getCommentNum, getTextPerCategory } from '../../api'
+import {
+	getCommentNum, getTextPerCategory,
+} from '../../api'
 
 const HomePage: React.FC = () => {
 	const categoryChart:MutableRefObject<any> = useRef(null)
@@ -13,92 +19,92 @@ const HomePage: React.FC = () => {
 
 	const [commentNum, setCommentNum] = useState(0)
 	const [categoryTextArr, setCategoryTextArr] = useState([])
-	const [categoryOption, setCategoryOption]  =useState({
-		legend: {
-			top: 'bottom'
-		},
-		toolbox: {
-			show: true,
-		},
+	const [categoryOption, setCategoryOption]  = useState({
+		legend: { top: 'bottom' },
+		toolbox: { show: true },
 		series: [
-		{
-			name: '分类下文章数量',
-			type: 'pie',
-			radius: [50, 150],
-			center: ['50%', '50%'],
-			roseType: 'area',
-			itemStyle: {
-			borderRadius: 4
+			{
+				name: '分类下文章数量',
+				type: 'pie',
+				radius: [50, 150],
+				center: ['50%', '50%'],
+				roseType: 'area',
+				itemStyle: { borderRadius: 4 },
+				data: categoryTextArr,
 			},
-			data: categoryTextArr
-		}
-		]
+		],
 	})
-	const [labelOption, setLabelOption]  =useState({
-		legend: {
-			top: 'bottom'
-		},
-		toolbox: {
-			show: true,
-		},
+	const [labelOption, setLabelOption]  = useState({
+		legend: { top: 'bottom' },
+		toolbox: { show: true },
 		series: [
-		{
-			name: '标签下文章数量',
-			type: 'pie',
-			radius: [50, 150],
-			center: ['50%', '50%'],
-			roseType: 'area',
-			itemStyle: {
-			borderRadius: 4
+			{
+				name: '标签下文章数量',
+				type: 'pie',
+				radius: [50, 150],
+				center: ['50%', '50%'],
+				roseType: 'area',
+				itemStyle: { borderRadius: 4 },
+				data: [
+					{
+						value: 40,
+						name: 'rose 1',
+					},
+					{
+						value: 38,
+						name: 'rose 2',
+					},
+					{
+						value: 32,
+						name: 'rose 3',
+					},
+					{
+						value: 30,
+						name: 'rose 4',
+					},
+				],
 			},
-			data: [
-			{ value: 40, name: 'rose 1' },
-			{ value: 38, name: 'rose 2' },
-			{ value: 32, name: 'rose 3' },
-			{ value: 30, name: 'rose 4' },
-			]
-		}
-		]
+		],
 	})
-	const getCategoryNum = () :void =>{
-		getCommentNum().then((res)=>{
-			console.log(res);
+	const getCategoryNum = () :void => {
+		getCommentNum().then((res) => {
+			console.log(res)
 			setCommentNum(res)
 		})
 	}
-	const getTextCategory = () :void =>{
-		getTextPerCategory().then((res)=>{
-			console.log(res);
-			setCategoryTextArr(res.map((item: { total: number; _id: string })=>{
+	const getTextCategory = () :void => {
+		getTextPerCategory().then((res) => {
+			console.log(res)
+			setCategoryTextArr(res.map((item: { total: number; _id: string }) => {
 				return {
 					value: item.total,
-					name: item._id
+					name: item._id,
 				}
 			}))
 		})
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		getCategoryNum()
-	},[])
-	useEffect(()=>{
-		setCategoryOption(()=>{
-			categoryOption.series[0].data=categoryTextArr
+	}, [])
+	useEffect(() => {
+		setCategoryOption(() => {
+			categoryOption.series[0].data = categoryTextArr
 			return { ...categoryOption }
 		})
 	}, [categoryTextArr])
-	useEffect(()=>{
+	useEffect(() => {
 		getTextCategory()
-	},[])
-	useEffect(()=>{
+	}, [])
+	useEffect(() => {
 		const category = echarts.init(categoryChart.current)
-		category.setOption(categoryOption);
-	},[categoryOption])
+		category.setOption(categoryOption)
+	}, [categoryOption])
 
-	useEffect(()=>{
+	useEffect(() => {
 		const label = echarts.init(labelChart.current)
-		label.setOption(labelOption);
-	},[labelOption])
+		label.setOption(labelOption)
+	}, [labelOption])
 	return (
 		<div>
 			<div className='topNum'>
@@ -140,7 +146,10 @@ const HomePage: React.FC = () => {
 					<Card>
 						<div className='categoryChart'>
 							<div className='categoryTitle'>分类下文章数量</div>
-							<div ref={categoryChart} style={{height:'500px',width:'100%'}}></div>
+							<div ref={categoryChart} style={{
+								height: '500px',
+								width: '100%',
+							}}></div>
 						</div>
 					</Card>
 				</div>
@@ -148,7 +157,10 @@ const HomePage: React.FC = () => {
 					<Card>
 						<div className='categoryChart'>
 							<div className='categoryTitle'>标签下文章数量</div>
-							<div ref={labelChart} style={{height:'500px',width:'100%'}}></div>
+							<div ref={labelChart} style={{
+								height: '500px',
+								width: '100%',
+							}}></div>
 						</div>
 					</Card>
 				</div>

@@ -7,19 +7,31 @@ import {
 	MessageOutlined,
 	FundOutlined,
 	FolderOpenOutlined,
-	SettingOutlined
-} from '@ant-design/icons';
-import { Button, MenuProps } from 'antd';
-import { Layout, Menu } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../../utils/hooks'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import storage from '../../utils/storage';
-import { TOKEN_KEY } from '../../config';
+	SettingOutlined,
+} from '@ant-design/icons'
+import {
+	Button, MenuProps,
+} from 'antd'
+import {
+	Layout, Menu,
+} from 'antd'
+import React, {
+	useEffect, useState,
+} from 'react'
+import {
+	useAppSelector, useAppDispatch,
+} from '../../utils/hooks'
+import {
+	Outlet, useLocation, useNavigate,
+} from 'react-router-dom'
+import storage from '../../utils/storage'
+import { TOKEN_KEY } from '../../config'
 import { getUploadToken } from '../../api'
 import { saveUploadToken } from '../../store/features/userInfoSlice'
 
-const { Content, Footer, Sider, Header } = Layout;
+const {
+	Content, Footer, Sider, Header,
+} = Layout
 
 const items: MenuProps['items'] = [
 	{
@@ -42,7 +54,7 @@ const items: MenuProps['items'] = [
 				key: '/write-dynamic',
 				icon: <EditOutlined />,
 			},
-		]
+		],
 	},
 	{
 		label: '博客管理',
@@ -68,42 +80,42 @@ const items: MenuProps['items'] = [
 				label: '标签管理',
 				key: '/edit-label',
 				icon: <TagsOutlined />,
-			}
-		]
-	}
-];
+			},
+		],
+	},
+]
 
 const Home: React.FC = () => {
 	const location = useLocation()
 	const dispatch = useAppDispatch()
 	const { pathname } = location
-	const [collapsed, setCollapsed] = useState(false);
+	const [collapsed, setCollapsed] = useState(false)
 	const [openKey, setOpenKey] = useState([''])
-	const navigateTo=useNavigate()
-	const handleClick: MenuProps['onClick'] = (e: any)=>{
+	const navigateTo = useNavigate()
+	const handleClick: MenuProps['onClick'] = (e: any) => {
 		navigateTo(e.key)
 	}
-	const handleOpen=(open: string[]):void=>{
+	const handleOpen = (open: string[]):void => {
 		setOpenKey(open)
 	}
-	const exit=()=>{
+	const exit = () => {
 		storage.clearItem(TOKEN_KEY)
 		navigateTo('/login')
 	}
-	useEffect(()=>{
-		const key = pathname.slice(0,pathname.indexOf('-'))
+	useEffect(() => {
+		const key = pathname.slice(0, pathname.indexOf('-'))
 		setOpenKey([key])
 	}, [])
 
-	useEffect(()=>{
-		getUploadToken().then((res)=>{
+	useEffect(() => {
+		getUploadToken().then((res) => {
 			dispatch(saveUploadToken(res))
 		})
 	}, [])
 
 	return (
 	  <Layout style={{ minHeight: '100vh' }}>
-		<Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+			<Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
 		  <div className="logo" />
 		  <Menu
 			  theme="dark"
@@ -115,22 +127,24 @@ const Home: React.FC = () => {
 			  onOpenChange={handleOpen}
 			  onClick={handleClick}
 		  />
-		</Sider>
-		<Layout className="site-layout">
-			<Header className="header">
-				<Button onClick={exit}>退出登录</Button>
-			</Header>
+			</Sider>
+			<Layout className="site-layout">
+				<Header className="header">
+					<Button onClick={exit}>退出登录</Button>
+				</Header>
 		  <Content style={{ margin: '16px 16px' }}>
-			<div className="site-layout-background" style={{ padding: 24, minHeight: '100%' }}>
+					<div className="site-layout-background" style={{
+						padding: 24,
+						minHeight: '100%',
+					}}>
 			  <Outlet></Outlet>
-			</div>
+					</div>
 		  </Content>
 		  <Footer style={{ textAlign: 'center' }}>Yorenz's BLog Backstage</Footer>
-		</Layout>
+			</Layout>
 	  </Layout>
-	);
-};
-
+	)
+}
 
 
 export default Home

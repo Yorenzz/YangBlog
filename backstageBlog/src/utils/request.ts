@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import config, { TOKEN_KEY } from '../config/index.js'
 import { message } from 'antd'
-import { RequestInterface } from '../typing/request.js'
+import { RequestInterface, Result } from '../typing/request.js'
 import storage from './storage.js'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,7 +21,7 @@ service.interceptors.request.use(req => {
 	return req
 })
 
-service.interceptors.response.use((res: AxiosResponse) => {
+service.interceptors.response.use((res: AxiosResponse<Result>) => {
 	const { code, data, msg } = res.data
 	if (code === 200) {
 		msg && message.success(msg)

@@ -102,35 +102,35 @@ const Home: React.FC = () => {
 	}, [])
 
 	return (
-	  <Layout style={{ minHeight: '100vh' }}>
+		<Layout style={{ minHeight: '100vh' }}>
 			<Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-		  <div className="logo" />
-		  <Menu
-			  theme="dark"
-			  mode="inline"
-			  defaultSelectedKeys={[pathname]}
-			  items={items}
-			  defaultOpenKeys={openKey}
-			  openKeys={openKey}
-			  onOpenChange={handleOpen}
-			  onClick={handleClick}
-		  />
+				<div className="logo" />
+				<Menu
+					theme="dark"
+					mode="inline"
+					defaultSelectedKeys={[pathname]}
+					items={items}
+					defaultOpenKeys={openKey}
+					openKeys={openKey}
+					onOpenChange={handleOpen}
+					onClick={handleClick}
+				/>
 			</Sider>
 			<Layout className="site-layout">
 				<Header className="header">
 					<Button onClick={exit}>退出登录</Button>
 				</Header>
-		  <Content style={{ margin: '16px 16px' }}>
+				<Content style={{ margin: '16px 16px' }}>
 					<div className="site-layout-background" style={{
 						padding: 24,
 						minHeight: '100%',
 					}}>
-			  <Outlet></Outlet>
+						<Outlet></Outlet>
 					</div>
-		  </Content>
-		  <Footer style={{ textAlign: 'center' }}>Yorenz's BLog Backstage</Footer>
+				</Content>
+				<Footer style={{ textAlign: 'center' }}>Yorenz's BLog Backstage</Footer>
 			</Layout>
-	  </Layout>
+		</Layout>
 	)
 }
 

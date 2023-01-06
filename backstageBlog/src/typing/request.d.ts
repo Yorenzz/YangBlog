@@ -4,3 +4,9 @@ export interface RequestInterface{
     data?: object,
     params?: object
 }
+
+export interface Result<T = any> {
+    code: number,
+    msg: string,
+    data: T,
+}

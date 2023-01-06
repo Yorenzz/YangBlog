@@ -36,7 +36,7 @@ module.exports = {
 		"no-unneeded-ternary": "error",
 		"no-whitespace-before-property": "error",
 		"no-unused-vars": "off",
-		"no-use-before-define": "error",
+		"no-use-before-define": "off",
 		"object-property-newline": "error",
 		"object-curly-newline": ["error", { "multiline": true }],
 		"object-curly-spacing": ["error", "always"],

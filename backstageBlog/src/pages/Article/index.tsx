@@ -117,7 +117,7 @@ const Article: React.FC = () => {
 				category: form.getFieldValue('category'),
 				label: labelArr,
 			}
-			sendArticle(mes).then((response: object) => {
+			sendArticle(mes).then((response) => {
 				console.log('res', response)
 			}).catch((reason: object) => {
 				console.log('res', reason)

@@ -17,7 +17,7 @@ const util = require('./utils/util')
 const { mongoose } = require('mongoose')
 const { log } = require('debug')
 const { url, dbName } = require('./config')
-mongoose.connect(`${url}/${dbName}?authSource=${dbName}`, () => {
+mongoose.connect(`${url}/${dbName}?authSource=admin`, () => {
   console.log('MongoDB连接成功')
 })
 mongoose.connection.on('err', console.error)

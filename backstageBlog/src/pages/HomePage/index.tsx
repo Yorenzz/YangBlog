@@ -7,10 +7,12 @@ import './style.scss'
 import ChinaMap from './ChinaMap'
 import { getCommentNum, getTextPerCategory } from '../../api'
 
+
+let label: echarts.EChartsType
+let category: echarts.EChartsType
 const HomePage: React.FC = () => {
 	const categoryChart:MutableRefObject<any> = useRef(null)
 	const labelChart:MutableRefObject<any> = useRef(null)
-
 	const [commentNum, setCommentNum] = useState(0)
 	const [categoryTextArr, setCategoryTextArr] = useState([])
 	const [categoryOption, setCategoryOption]  = useState({
@@ -62,13 +64,13 @@ const HomePage: React.FC = () => {
 	})
 	const getCategoryNum = () :void => {
 		getCommentNum().then((res) => {
-			console.log(res)
+			// console.log(res)
 			setCommentNum(res)
 		})
 	}
 	const getTextCategory = () :void => {
 		getTextPerCategory().then((res) => {
-			console.log(res)
+			// console.log(res)
 			setCategoryTextArr(res.map((item: { total: number; _id: string }) => {
 				return {
 					value: item.total,
@@ -91,12 +93,11 @@ const HomePage: React.FC = () => {
 		getTextCategory()
 	}, [])
 	useEffect(() => {
-		const category = echarts.init(categoryChart.current)
+		!echarts.getInstanceByDom(categoryChart.current) && (category = echarts.init(categoryChart.current))
 		category.setOption(categoryOption)
 	}, [categoryOption])
-
 	useEffect(() => {
-		const label = echarts.init(labelChart.current)
+		!echarts.getInstanceByDom(labelChart.current) && (label = echarts.init(labelChart.current))
 		label.setOption(labelOption)
 	}, [labelOption])
 	return (
@@ -122,7 +123,7 @@ const HomePage: React.FC = () => {
 					<Card title="文章总数">
 						<div className='cardContent'>
 							<img width="80px" src="/doc.svg" alt="" />
-							<span>{commentNum}</span>
+							<span>{commentNum === 0 ? '--' : commentNum}</span>
 						</div>
 					</Card>
 				</div>

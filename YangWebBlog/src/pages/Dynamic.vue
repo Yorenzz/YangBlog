@@ -1,20 +1,20 @@
 <script setup>
-import DynamicCard from '../components/dynamic/DynamicCard.vue';
-import { ref } from 'vue';
-import { getDynamic } from '../api';
+import DynamicCard from '../components/dynamic/DynamicCard.vue'
+import { ref } from 'vue'
+import { getDynamic } from '../api'
 
 const dynamicList = ref([])
 const dynamicLoading = ref(false)
 
 const getAllDynamic = () => {
-  dynamicLoading.value = true
-  getDynamic().then((res)=>{
-    dynamicList.value = res
-  }).catch((e)=>{
-    console.warn(e);
-  }).finally(()=>{
-    dynamicLoading.value = false
-  })
+	dynamicLoading.value = true
+	getDynamic().then((res) => {
+		dynamicList.value = res
+	}).catch((e) => {
+		console.warn(e)
+	}).finally(() => {
+		dynamicLoading.value = false
+	})
 }
 
 getAllDynamic()

@@ -30,7 +30,7 @@ app.use(async (ctx, next) => {
   await next().catch(err => {
     if (err.status === 401) {
       ctx.status = 200
-      ctx.body = util.fail('登录失效','', util.CODE.AUTH_ERROR)
+      ctx.body = util.fail('登录失效', '', util.CODE.AUTH_ERROR)
     } else {
       throw err
     }
@@ -48,18 +48,14 @@ app.use(
 )
 
 app.use(
-  bodyparser({
-    enableTypes: ['json', 'form', 'text'],
-  }),
+  bodyparser({ enableTypes: ['json', 'form', 'text'] }),
 )
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(
-  views(__dirname + '/views', {
-    extension: 'pug',
-  }),
+  views(__dirname + '/views', { extension: 'pug' }),
 )
 
 // logger
@@ -70,25 +66,7 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
-// app.use(async (ctx,next)=>{
-//   const token = ctx.header.authorization
-//   console.log(token)
-//   try{
-//     // 解密token
-//     const payload = await verify(token.split(' ')[1], SECRET)
-//     console.log(payload)
-//     ctx.body = {
-//       errno: 0,
-//       userInfo: payload
-//     }
-//   }catch(e){
-//     console.error(e)
-//     ctx.body = {
-//       errno: -1,
-//       msg: 'Verify token failed.'
-//     }
-//   }
-// })
+
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())

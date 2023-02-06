@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const activeName=ref('')
+const activeName = ref('')
 </script>
 
 <template>
@@ -14,25 +14,39 @@ const activeName=ref('')
       />
     </div>
 
-    <div class="name">Yorenz</div>
+    <div class="name">
+      Yorenz
+    </div>
     <div class="introduction">
-      <el-collapse v-model="activeName" accordion>
-      <el-collapse-item title="接触过的技术..." name="1">
-        <div>
-          JavaScript、Nodejs、MongoDB、Koa2、Express、Vue、React、Typescript...
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="玩过的游戏..." name="2">
-        <div>
-          LOL、SkyLine、死亡细胞、D4L2、公主连结、明日方舟、无期迷途...
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="喜欢听的歌..." name="3">
-        <div>
-          你猜&#128536;
-        </div>
-      </el-collapse-item>
-    </el-collapse>
+      <el-collapse
+        v-model="activeName"
+        accordion
+      >
+        <el-collapse-item
+          title="接触过的技术..."
+          name="1"
+        >
+          <div>
+            JavaScript、Nodejs、MongoDB、Koa2、Express、Vue、React、Typescript...
+          </div>
+        </el-collapse-item>
+        <el-collapse-item
+          title="玩过的游戏..."
+          name="2"
+        >
+          <div>
+            LOL、SkyLine、死亡细胞、D4L2、公主连结、明日方舟、无期迷途...
+          </div>
+        </el-collapse-item>
+        <el-collapse-item
+          title="喜欢听的歌..."
+          name="3"
+        >
+          <div>
+            你猜&#128536;
+          </div>
+        </el-collapse-item>
+      </el-collapse>
     </div>
   </div>
 </template>

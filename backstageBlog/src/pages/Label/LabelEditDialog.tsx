@@ -31,7 +31,7 @@ const LabelEditDialog:React.FC<middleProps> = (props) => {
 	}
 
 	const handleOk = () => {
-		console.log(props.edit?.key)
+		// console.log(props.edit?.key)
 		props.setVisible(false)
 		updateLabel(props.edit?.key as string, form.getFieldValue('name'), color).then(r => {
 			props.refresh()

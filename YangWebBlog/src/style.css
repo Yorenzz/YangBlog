@@ -6,6 +6,12 @@
   line-height: 24px;
   font-weight: 400;
   font-synthesis: none;
+  --media-variable: computer;
+}
+@media only screen and (max-width: 1228px) {
+  :root {
+    --media-variable: phone;
+  }
 }
 /*处理菜单下拉框样式*/
 .el-menu--popup-container.pppp {

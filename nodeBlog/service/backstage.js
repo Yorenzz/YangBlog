@@ -10,19 +10,19 @@ const getAllLabel = async () => {
   return LabelModel.find()
 }
 
-const updateLabel=async (id, name, color)=>{
-  return LabelModel.updateOne({_id: new ObjectID(id)},{$set:{"value":name, "color": color}})
+const updateLabel = async (id, name, color) => {
+  return LabelModel.updateOne({ _id: new ObjectID(id) }, { $set: { value: name, color } })
 }
 
-const deleteLabel=async (id)=>{
-  return LabelModel.deleteOne({_id: new ObjectID(id)})
+const deleteLabel = async (id) => {
+  return LabelModel.deleteOne({ _id: new ObjectID(id) })
 }
 
-const getTextCountByCategory=async ()=>{
-  return ArticleModel.aggregate([{$group: {_id: "$category", total: {$sum: 1}}}])
+const getTextCountByCategory = async () => {
+  return ArticleModel.aggregate([{ $group: { _id: '$category', total: { $sum: 1 } } }])
 }
 
-const insertContext = async (context)=>{
+const insertContext = async (context) => {
   console.log(context)
   return DynamicModel.create(context)
 }
@@ -37,5 +37,5 @@ module.exports = {
   updateLabel,
   deleteLabel,
   getTextCountByCategory,
-  insertContext
+  insertContext,
 }

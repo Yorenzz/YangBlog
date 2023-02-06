@@ -3,7 +3,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import '@wangeditor/editor/dist/css/style.css'
 import { Button, Switch } from 'antd'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import './style.scss'
 import { sendArticle, sendContext } from '../../api'
 
@@ -19,7 +19,7 @@ const DynamicEdit:React.FC = () => {
 	}
 
 	const submit = () => {
-		const date = moment().format('YYYY/MM/DD HH:mm:ss')
+		const date = dayjs().format('YYYY/MM/DD HH:mm:ss')
 		const msg = {
 			time: date,
 			isSelf: self,

@@ -2,22 +2,22 @@
 import '../../../libs/iconfont'
 
 const props = defineProps({
-    type: {
-        type: String,
-        default: '',
-    },
+	type: {
+		type: String,
+		default: '',
+	},
 })
 </script>
 
 <template>
-    <el-icon>
-        <svg
-            class="icon"
-            aria-hidden="true"
-        >
-            <use :xlink:href="`#${props.type}`" />
-        </svg>
-    </el-icon>
+  <el-icon>
+    <svg
+      class="icon"
+      aria-hidden="true"
+    >
+      <use :xlink:href="`#${props.type}`" />
+    </svg>
+  </el-icon>
 </template>
 
 <style lang="scss" scoped>

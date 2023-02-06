@@ -2,85 +2,137 @@
 import { onMounted, ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { scrollToArticleSmooth } from '../../common/util.js'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+const sizes = {
+	width: window.innerWidth,
+	height: window.innerHeight,
+}
 const route = useRoute()
 const container = ref('transparent')
 const pic = ref()
 
 const activeMenu = computed(() => {
-  return route.path
+	return route.path
 })
 const innerWidth = computed(() => window.innerWidth)
 const menuData = [
-  {
-    title: '首页',
-    index: '/home',
-  },
-  {
-    title: '分类',
-    index: '/category',
-    children: [
-      {
-        title: '学习笔记',
-        index: '/category/学习笔记',
-      },
-      {
-        title: '个人项目',
-        index: '/category/个人项目',
-      },
-      {
-        title: '技术杂烩',
-        index: '/category/技术杂烩',
-      },
-      {
-        title: '心情随写',
-        index: '/category/心情随写',
-      },
-    ],
-  },
-  {
-    title: '时间轴',
-    index: '/timeaxis',
-  },
-  {
-    title: '动态',
-    index: '/dynamic',
-  },
-  {
-    title: '关于我',
-    index: '/about',
-  },
+	{
+		title: '首页',
+		index: '/home',
+	},
+	{
+		title: '分类',
+		index: '/category',
+		children: [{
+			title: '学习笔记',
+			index: '/category/学习笔记',
+		},
+		{
+			title: '个人项目',
+			index: '/category/个人项目',
+		},
+		{
+			title: '技术杂烩',
+			index: '/category/技术杂烩',
+		},
+		{
+			title: '心情随写',
+			index: '/category/心情随写',
+		}],
+	},
+	{
+		title: '时间轴',
+		index: '/timeaxis',
+	},
+	{
+		title: '动态',
+		index: '/dynamic',
+	},
+	{
+		title: '关于我',
+		index: '/about',
+	},
 ]
 
-const imgLoad = () => {
-  console.log('1')
-}
 const handleScroll = () => {
-  let style = window.getComputedStyle(pic?.value)
-  if (
-    document.documentElement.scrollTop > window.innerHeight - 59 ||
-    style.display === 'none'
-  ) {
-    container.value = '#353638'
-  } else {
-    container.value = 'transparent'
-  }
+	const style = window.getComputedStyle(pic?.value)
+	if (
+		document.documentElement.scrollTop > window.innerHeight - 59
+    || style.display === 'none'
+	) {
+		container.value = '#353638'
+	} else {
+		container.value = 'transparent'
+	}
 }
 watch(
-  () => route.path,
-  (current, prevState) => {
-    if (current !== '/home' || window.innerWidth < 1200)
-      container.value = '#353638'
-    else container.value = 'transparent'
-  },
-  { deep: true, immediate: true },
+	() => route.path,
+	(current, prevState) => {
+		if (current !== '/home' || window.innerWidth < 1200) { container.value = '#353638' } else container.value = 'transparent'
+	},
+	{
+		deep: true, immediate: true,
+	},
 )
 onMounted(() => {
-  let style = window.getComputedStyle(pic.value)
-  if (style.display === 'none') container.value = '#353638'
-  else container.value = 'transparent'
-  window.addEventListener('scroll', handleScroll)
-  window.onresize = handleScroll
+	const style = window.getComputedStyle(pic.value)
+	if (style.display === 'none') container.value = '#353638'
+	else container.value = 'transparent'
+	window.addEventListener('scroll', handleScroll)
+	window.onresize = handleScroll
+})
+
+onMounted(() => {
+	const canvas = document.querySelector('canvas.three-pic')
+	// 创建场景
+	const scene = new THREE.Scene()
+	// 创建相机
+	const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
+	camera.position.set(0, 0, 10)
+	scene.add(camera)
+
+	// 添加物体
+	const cubeGeometry = new THREE.BoxGeometry(1, 1, 1) // 形状
+	const cubeMaterial = new THREE.MeshBasicMaterial({
+		color: 0xffff00,
+	}) // 材质（颜色）
+	const cube = new THREE.Mesh(cubeGeometry, cubeMaterial) // 完整几何体
+	scene.add(cube)
+
+	// 初始化渲染器
+	const renderer = new THREE.WebGLRenderer({
+		canvas, antialias: true,
+	})
+	// 设置渲染尺寸大小
+	renderer.setSize(sizes.width, sizes.height)
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+	// 创建控制器
+	const controls = new OrbitControls(camera, canvas)
+	controls.enableDamping = true
+	controls.enableZoom = false
+
+	const tick = () => {
+		// 更新渲染器
+		renderer.render(scene, camera)
+
+		controls.update()
+		// 页面重绘时调用自身
+		window.requestAnimationFrame(tick)
+	}
+
+	tick()
+	window.addEventListener('resize', () => {
+		sizes.width = window.innerWidth
+		sizes.height = window.innerHeight
+		renderer.setSize(sizes.width, sizes.height)
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+		camera.aspect = sizes.width / sizes.height
+		camera.updateProjectionMatrix()
+	})
 })
 </script>
 <template>
@@ -93,8 +145,16 @@ onMounted(() => {
       text-color="#fff"
       router
     >
-      <el-menu-item disabled class="menu-title">Yorenz's Blog</el-menu-item>
-      <template v-for="item in menuData" :key="item.index">
+      <el-menu-item
+        disabled
+        class="menu-title"
+      >
+        Yorenz's Blog
+      </el-menu-item>
+      <template
+        v-for="item in menuData"
+        :key="item.index"
+      >
         <el-sub-menu
           v-if="item.children && item.children.length"
           :index="item.index"
@@ -111,7 +171,10 @@ onMounted(() => {
             <span>{{ itemChild.title }}</span>
           </el-menu-item>
         </el-sub-menu>
-        <el-menu-item v-else :index="item.index">
+        <el-menu-item
+          v-else
+          :index="item.index"
+        >
           {{ item.title }}
         </el-menu-item>
       </template>
@@ -125,14 +188,25 @@ onMounted(() => {
       'top-picture': route.path === '/home',
     }"
   >
-    <div class="top-picture-first"></div>
-    <div class="top-picture-second"></div>
-    <div class="top-picture-wave"></div>
+    <canvas class="three-pic" />
+    <!--    <div class="top-picture-first" />-->
+    <!--    <div class="top-picture-second" />-->
+    <!--    <div class="top-picture-wave" />-->
     <div class="title-all">
-      <div class="title" data-text="Yorenz's Blog">Yorenz's Blog</div>
+      <div
+        class="title"
+        data-text="Yorenz's Blog"
+      >
+        Yorenz's Blog
+      </div>
     </div>
-    <div class="down" @click="scrollToArticleSmooth">
-      <el-icon :size="50"><Bottom /></el-icon>
+    <div
+      class="down"
+      @click="scrollToArticleSmooth"
+    >
+      <el-icon :size="50">
+        <Bottom />
+      </el-icon>
     </div>
   </div>
 </template>

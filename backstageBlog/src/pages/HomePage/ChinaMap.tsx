@@ -1,11 +1,11 @@
-import React, { MutableRefObject } from 'react'
+import React, { MutableRefObject, useState } from 'react'
 import * as echarts from 'echarts'
 import { useEffect, useRef } from 'react'
 import 'echarts/extension/bmap/bmap'
 
 const ChinaMap:React.FC = () => {
+	let chinaMap: echarts.EChartsType
 	const myEChart:MutableRefObject<any> = useRef(null)
-
 	const data = [
 		{
 			name: '海门',
@@ -974,7 +974,7 @@ const ChinaMap:React.FC = () => {
 		}
 		return res
 	}
-	const option = {
+	const [option, setOption] = useState({
 		backgroundColor: 'transparent',
 		tooltip: { trigger: 'item' },
 		bmap: {
@@ -1118,11 +1118,12 @@ const ChinaMap:React.FC = () => {
 				zlevel: 1,
 			},
 		],
-	}
+	})
 	useEffect(() => {
-		const chinaMap = echarts.init(myEChart.current)
+		!chinaMap && (chinaMap = echarts.init(myEChart.current))
 		chinaMap.setOption(option)
-	}, [])
+	}, [option])
+
 	return (
 		<div>
 			<div className="title">访客地图</div>

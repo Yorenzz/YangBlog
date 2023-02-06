@@ -2,9 +2,12 @@
 </script>
 
 <template>
-  <el-backtop :bottom="50" :visibility-height="300">
+  <el-backtop
+    :bottom="50"
+    :visibility-height="300"
+  >
     <div
-        style="
+      style="
         height: 100%;
         width: 100%;
         background-color: var(--el-bg-color-overlay);

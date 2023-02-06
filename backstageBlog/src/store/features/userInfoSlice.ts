@@ -4,19 +4,20 @@ import storage from '../../utils/storage'
 interface UserInfoState {
     username: string,
     token: string,
-    loginTime: number,
+    role: string,
     UPLOAD_TOKEN: string
 }
 
 interface SetInfo {
     username: string,
     token: string,
+	role:string,
 }
 
 const initialState: UserInfoState = {
 	username: '',
 	token: '',
-	loginTime: 0,
+	role: '',
 	UPLOAD_TOKEN: '',
 }
 
@@ -27,11 +28,8 @@ export const userInfoSlice = createSlice({
 		saveInfo(state, action: PayloadAction<SetInfo>) {
 			state.username = action.payload.username
 			state.token = action.payload.token
-			state.loginTime = 1
+			state.role = action.payload.role
 			storage.setItem('XTOKEN', action.payload.token)
-		},
-		incrementLoginInTime(state) {
-			state.loginTime && state.loginTime++
 		},
 		saveUploadToken(state, action: PayloadAction<string>) {
 			state.UPLOAD_TOKEN = action.payload

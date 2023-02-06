@@ -10,16 +10,17 @@ const WithAuth = ({ children }: any) => {
 
 	const dispatch = useAppDispatch()
 	const token = storage.getItem(TOKEN_KEY)
-	const loginTime = useAppSelector((state) => state.userInfo.loginTime)
+	const userInfo = useAppSelector((state) => state.userInfo.username)
 	if(token) {
-		if(!loginTime) {
+		if(!userInfo) {
 			verify(token).then((res) => {
-				console.log(res)
+				// console.log(res)
 				const { payload, token } = res
-				const { username } = payload
+				const { username, role } = payload
 				dispatch(saveInfo({
 					username,
 					token,
+					role,
 				}))
 				return children
 			}).catch((e) => {

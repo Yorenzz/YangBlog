@@ -10,20 +10,20 @@ import { getIP } from '../api/index.js'
 const route = useRoute()
 
 const data = reactive({
-  ip: '',
-  ipData: [],
+	ip: '',
+	ipData: [],
 })
 
 const getVisitorIP = () => {
-  fetch('https://extreme-ip-lookup.com/json/').then(res => {
-    res.json().then(res1 => {
-      data.ip = res1.query
-      console.log(data.ip)
-      getIP(data.ip).then(res => {
-        console.log('ip', res)
-      })
-    })
-  })
+	fetch('https://extreme-ip-lookup.com/json/').then(res => {
+		res.json().then(res1 => {
+			data.ip = res1.query
+			console.log(data.ip)
+			getIP(data.ip).then(res => {
+				console.log('ip', res)
+			})
+		})
+	})
 }
 getVisitorIP()
 </script>

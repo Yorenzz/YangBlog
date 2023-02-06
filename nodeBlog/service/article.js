@@ -5,7 +5,12 @@ const DynamicModel = require('../dbModel/DynamicModel')
 const insertArticle = (text) => {
   text.readtime = 0
   text.top = 0
-  return ArticleModel.create(text)
+  if (!text._id) {
+    return ArticleModel.create(text)
+  } else {
+    console.log(text)
+    return ArticleModel.updateOne({ _id: text._id }, text)
+  }
 }
 
 const getText = (pageSize, currentPage) => {
@@ -21,7 +26,7 @@ const getArticleByTag = (tag) => {
 }
 
 const getArticleByCategory = (category) => {
-  return ArticleModel.find({ category: category })
+  return ArticleModel.find({ category })
 }
 
 const getTotalBlogNum = () => {
@@ -34,28 +39,45 @@ const getAllTags = () => {
 
 const getTagsColor = (tagName) => {
   return LabelModel.findOne(
-      { value: tagName },
-      { color: 1, _id: 0 },
-    )
+    { value: tagName },
+    { color: 1, _id: 0 },
+  )
 }
 
 const setLabelColor = (value, color) => {
-    return LabelModel.findOneAndUpdate(
-      { value: value },
-      {
-        $setOnInsert: {
-          value: value,
-          color: color,
-        },
+  return LabelModel.findOneAndUpdate(
+    { value },
+    {
+      $setOnInsert: {
+        value,
+        color,
       },
-      {
-        upsert: true,
-      },
-    )
+    },
+    { upsert: true },
+  )
 }
 
 const getDynamic = () => {
   return DynamicModel.find()
+}
+
+const getArticleData = (category) => {
+  return ArticleModel.find({ }, {
+    text: 0,
+    describe: 0,
+    label: 0,
+    img: 0,
+    num: 0,
+    readtime: 0,
+  })
+}
+
+const getArticle = (id) => {
+  return ArticleModel.find({ _id: id })
+}
+
+const deleteArticle = (id) => {
+  return ArticleModel.deleteOne({ _id: id })
 }
 
 module.exports = {
@@ -69,4 +91,7 @@ module.exports = {
   getTagsColor,
   setLabelColor,
   getDynamic,
+  getArticleData,
+  getArticle,
+  deleteArticle,
 }

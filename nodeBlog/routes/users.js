@@ -1,48 +1,47 @@
-const jwt = require("jsonwebtoken");
-const SECRET='yangEzzz'
+const jwt = require('jsonwebtoken')
+const SECRET = 'yangEzzz'
 const router = require('koa-router')()
-const {userCheck} = require("../service/user");
+const { userCheck } = require('../service/user')
 const utils = require('../utils/util')
-const {verify} = require("jsonwebtoken");
-const util = require("../utils/util");
+const { verify } = require('jsonwebtoken')
+const util = require('../utils/util')
 
 router.prefix('/users')
 
 router.get('/verify', async (ctx, next) => {
   const token = ctx.header.authorization.split(' ')[1]
-  try{
+  try {
     // 解密token
     const payload = verify(token, SECRET)
     console.log(payload)
-    ctx.body = utils.success({payload, token})
-  }catch(e){
+    ctx.body = utils.success({ payload, token })
+  } catch (e) {
     console.error(e)
-    ctx.body = utils.fail('验证失败！',e)
+    ctx.body = utils.fail('验证失败！', e)
   }
 })
 
 router.post('/login', async (ctx) => {
   const { username, password: upassword } = ctx.request.body
-  //console.log(username,upassword)
+  // console.log(username,upassword)
   let userInfo = null
-  try{
-    let user=await userCheck(username,upassword)
-    if(user[0]===undefined){
+  try {
+    const user = await userCheck(username, upassword)
+    if (user[0] === undefined) {
       ctx.body = utils.fail('找不到该用户')
-    } else if(user[0].password===upassword){
-      console.log('user',user)
-      let {uname, _id}=user[0]
-      userInfo = { userid: _id, username: uname }
-      let token = jwt.sign(userInfo, SECRET, { expiresIn: '2h' })  // 加密 userInfo
-      ctx.body = utils.success({username: uname, token}, '登录成功')// 登陆成功给前端返回加密的token
-    } else{
+    } else if (user[0].password === upassword) {
+      console.log('user', user)
+      const { uname, _id, role } = user[0]
+      userInfo = { userid: _id, username: uname, role }
+      const token = jwt.sign(userInfo, SECRET, { expiresIn: '24h' }) // 加密 userInfo
+      ctx.body = utils.success({ username: uname, role, token }, '登录成功')// 登陆成功给前端返回加密的token
+    } else {
       ctx.body = utils.fail('密码错误')
     }
-  }catch(e){
-    ctx.body = utils.fail('',e)
+  } catch (e) {
+    ctx.body = utils.fail('', e)
   }
 })
-
 
 // router.post('/login', async function (ctx, next) {
 //   const { username, password } = ctx.request.body

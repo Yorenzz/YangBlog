@@ -16,88 +16,87 @@ router.prefix('/publictext')
 
 router.post('/getText', async (ctx) => {
   const { pageSize, currentPage } = ctx.request.body
-  try{
+  try {
     const res = await getText(pageSize, currentPage)
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
-}) //获取文章
+}) // 获取文章
 
 router.get('/getArticleById', async (ctx) => {
   const { ID } = ctx.request.query
-  try{
+  try {
     const res = await getArticleById(ID)
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
 router.get('/getArticleByCategory', async (ctx) => {
   const { category } = ctx.request.query
-  try{
+  try {
     const res = await getArticleByCategory(category)
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
 router.get('/getArticleByTag', async (ctx) => {
   const { tag } = ctx.request.query
-  try{
+  try {
     const res = await getArticleByTag(tag)
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
 router.get('/getTotalBlogNum', async (ctx) => {
-  try{
-    let res = await getTotalBlogNum()
+  try {
+    const res = await getTotalBlogNum()
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
 router.get('/getAllTags', async (ctx) => {
-  try{
+  try {
     const res = await getAllTags()
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
 router.get('/getTagsColor', async (ctx) => {
   const { tagName } = ctx.request.query
-  try{
+  try {
     const res = await getTagsColor(tagName)
     ctx.body = utils.success(res)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
 router.get('/getIP', async (ctx) => {
-  try{
+  try {
     const { ip } = ctx.request.query
-    let req = await request(`http://ip-api.com/json/${ip}?lang=zh-CN`)
+    const req = await request(`http://ip-api.com/json/${ip}?lang=zh-CN`)
     ctx.body = utils.success(req)
-  }catch(e){
-    ctx.body=utils.fail(e)
+  } catch (e) {
+    ctx.body = utils.fail(e)
   }
 })
 
-router.get('/getDynamic', async (ctx)=>{
-  try{
+router.get('/getDynamic', async (ctx) => {
+  try {
     const res = await getDynamic()
     ctx.body = utils.success(res)
-  }
-  catch(e){
+  } catch (e) {
     ctx.body = utils.fail(e)
   }
 })

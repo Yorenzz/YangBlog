@@ -8,7 +8,8 @@ module.exports = {
 		"at-rule-no-unknown": [
 			true,
 		],
-		"selector-class-pattern": "^[a-z][a-zA-Z0-9]+$"
+		"selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
+		'react/jsx-closing-bracket-location': 2
 	},
 };
 

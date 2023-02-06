@@ -73,7 +73,31 @@ export function sendContext(context: DynamicContextType) {
 	return request({
 		url: '/article/sendContext',
 		method: 'POST',
-		data: context,
+		data: { context },
+	})
+}
+
+export function getArticleData(category: String|undefined) {
+	return request({
+		url: '/article/getArticleData',
+		method: 'get',
+		data: { category },
+	})
+}
+
+export function getArticle(id: String) {
+	return request({
+		url: '/article/getArticle',
+		method: 'get',
+		data: { id },
+	})
+}
+
+export function deleteArticle(id: String) {
+	return request({
+		url: '/article/deleteArticle',
+		method: 'get',
+		data: { id },
 	})
 }
 

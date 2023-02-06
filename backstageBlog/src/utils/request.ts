@@ -3,18 +3,29 @@ import config, { TOKEN_KEY } from '../config/index.js'
 import { message } from 'antd'
 import { RequestInterface, Result } from '../typing/request.js'
 import storage from './storage.js'
-import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from './hooks'
 
+// const username = useAppSelector((state) => state.userInfo.username)
+// const role = useAppSelector((state) => state.userInfo.role)
 const service = axios.create({
 	baseURL: config.baseApi,
 	timeout: 8000,
 })
 // const navigate = useNavigate()
 service.interceptors.request.use(req => {
+	// if(username) {
+	// 	if(role !== 'admin') {
+	// 		message.error('演示模式禁止操作')
+	// 		return
+	// 	}
+	//
+	// }
 	if(req && req.headers) {
 		const headers = req.headers
 		const token = storage.getItem(TOKEN_KEY)
+		// @ts-ignore
 		if (!headers.Authorization) {
+			// @ts-ignore
 			headers.Authorization = `Bearer ${token}`
 		}
 	}

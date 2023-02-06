@@ -5,36 +5,41 @@ import { getTagsColor } from '../../api'
 
 const router = useRouter()
 const props = defineProps({
-  tagName: {
-    type: String,
-    default: '',
-  },
-  color: {
-    type: String,
-    default: '',
-  }
+	tagName: {
+		type: String,
+		default: '',
+	},
+	color: {
+		type: String,
+		default: '',
+	},
 })
 const requestColor = ref('')
-if(!props.color){
-  getTagsColor(props.tagName)
-    .then(res => {
-      requestColor.value = res.color
-    })
-    .catch(e => {
-      console.warn(e)
-    })
-
+if (!props.color) {
+	getTagsColor(props.tagName)
+		.then(res => {
+			requestColor.value = res.color
+		})
+		.catch(e => {
+			console.warn(e)
+		})
 }
 
 const findTag = () => {
-  router.push(`/tag/${props.tagName}`)
+	router.push(`/tag/${props.tagName}`)
 }
 </script>
 
 <template>
-  <div class="tag-content" @click="findTag">
-    <div class="tag" :style="{ backgroundColor: props?.color ? props.color: requestColor }">
-      <div class="tag-circle"></div>
+  <div
+    class="tag-content"
+    @click="findTag"
+  >
+    <div
+      class="tag"
+      :style="{ backgroundColor: props?.color ? props.color: requestColor }"
+    >
+      <div class="tag-circle" />
       {{ props.tagName }}
     </div>
   </div>

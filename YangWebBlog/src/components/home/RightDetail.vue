@@ -5,22 +5,30 @@ import { reactive } from 'vue'
 
 const tagList = reactive([])
 getAllTags()
-  .then(res => {
-    tagList.value = res
-  })
-  .catch(e => {
-    console.warn(e)
-  })
+	.then(res => {
+		tagList.value = res
+	})
+	.catch(e => {
+		console.warn(e)
+	})
 </script>
 
 <template>
   <div class="right-detail">
     <div class="tag-cloud">
-      <div class="cloud-title">标签云</div>
-      <el-divider></el-divider>
+      <div class="cloud-title">
+        标签云
+      </div>
+      <el-divider />
       <div class="tag-content">
-        <div class="tag-item" v-for="item in tagList.value">
-          <Tag :tag-name="item.value" :color="item.color" />
+        <div
+          class="tag-item"
+          v-for="item in tagList.value"
+        >
+          <Tag
+            :tag-name="item.value"
+            :color="item.color"
+          />
         </div>
       </div>
     </div>

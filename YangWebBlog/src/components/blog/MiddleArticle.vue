@@ -1,11 +1,9 @@
 <script setup>
 import { nextTick, onMounted, ref, watch, watchEffect } from 'vue'
-import {
-  getText,
-  getArticleByCategory,
-  getArticleByTag,
-  getTotalBlogNum,
-} from '../../api/index.js'
+import { getText,
+	getArticleByCategory,
+	getArticleByTag,
+	getTotalBlogNum } from '../../api/index.js'
 import { useRoute, useRouter } from 'vue-router'
 import { scrollToArticleInstant, scrollToTop } from '../../common/util.js'
 import Tag from '../common/Tag.vue'
@@ -18,163 +16,200 @@ const pageSize = ref(5)
 const totalRow = ref(0)
 
 const pageChange = page => {
-  currentPage.value = page
-  scrollToArticleInstant()
-  getArticle()
+	currentPage.value = page
+	scrollToArticleInstant()
+	getArticle()
 }
 const sizeChange = size => {
-  pageSize.value = size
-  currentPage.value = 1
-  scrollToArticleInstant()
-  getArticle()
+	pageSize.value = size
+	currentPage.value = 1
+	scrollToArticleInstant()
+	getArticle()
 }
 const blogDetail = ID => {
-  console.log('id', ID)
-  router.push({ path: '/blog', query: { ID: ID } })
+	console.log('id', ID)
+	router.push({
+		path: '/blog',
+		query: {
+			ID,
+		},
+	})
 }
 const getBlogNum = () => {
-  getTotalBlogNum().then(res => {
-    totalRow.value = res
-  })
+	getTotalBlogNum().then(res => {
+		totalRow.value = res
+	})
 }
 const getArticle = () => {
-  getText({
-    pageSize: pageSize.value,
-    currentPage: currentPage.value,
-  }).then(res => {
-    //后端传回总文章数
-    textArray.value = res.map(item => {
-      item.text = item.text.replaceAll(
-        '<pre>',
-        '<pre class="language-js line-numbers">',
-      )
-      item.describe = item.describe.replaceAll(
-        '<pre>',
-        '<pre class="language-js line-numbers">',
-      )
-      return item
-    })
-    nextTick(() => {
-      Prism.highlightAll()
-    })
-  })
+	getText({
+		pageSize: pageSize.value,
+		currentPage: currentPage.value,
+	}).then(res => {
+		// 后端传回总文章数
+		textArray.value = res.map(item => {
+			item.text = item.text.replaceAll(
+				'<pre>',
+				'<pre class="language-js line-numbers">',
+			)
+			item.describe = item.describe.replaceAll(
+				'<pre>',
+				'<pre class="language-js line-numbers">',
+			)
+			return item
+		})
+		nextTick(() => {
+			Prism.highlightAll()
+		})
+	})
 }
 
 const getArticleFromCategory = () => {
-  getArticleByCategory(route.params.category)
-    .then(res => {
-      console.log('res', res)
-      textArray.value = res.map(item => {
-        item.text = item.text.replaceAll(
-          '<pre>',
-          '<pre class="language-js line-numbers">',
-        )
-        item.describe = item.describe.replaceAll(
-          '<pre>',
-          '<pre class="language-js line-numbers">',
-        )
-        return item
-      })
-      scrollToTop()
-      nextTick(() => {
-        Prism.highlightAll()
-      })
-    })
-    .catch(e => {
-      console.warn(e)
-    })
+	getArticleByCategory(route.params.category)
+		.then(res => {
+			console.log('res', res)
+			textArray.value = res.map(item => {
+				item.text = item.text.replaceAll(
+					'<pre>',
+					'<pre class="language-js line-numbers">',
+				)
+				item.describe = item.describe.replaceAll(
+					'<pre>',
+					'<pre class="language-js line-numbers">',
+				)
+				return item
+			})
+			scrollToTop()
+			nextTick(() => {
+				Prism.highlightAll()
+			})
+		})
+		.catch(e => {
+			console.warn(e)
+		})
 }
 
 const getArticleFromTag = () => {
-  getArticleByTag(route.params.tag)
-    .then(res => {
-      console.log('res', res)
-      textArray.value = res.map(item => {
-        item.text = item.text.replaceAll(
-          '<pre>',
-          '<pre class="language-js line-numbers">',
-        )
-        item.describe = item.describe.replaceAll(
-          '<pre>',
-          '<pre class="language-js line-numbers">',
-        )
-        return item
-      })
-      scrollToTop()
-      nextTick(() => {
-        Prism.highlightAll()
-      })
-    })
-    .catch(e => {
-      console.warn(e)
-    })
+	getArticleByTag(route.params.tag)
+		.then(res => {
+			console.log('res', res)
+			textArray.value = res.map(item => {
+				item.text = item.text.replaceAll(
+					'<pre>',
+					'<pre class="language-js line-numbers">',
+				)
+				item.describe = item.describe.replaceAll(
+					'<pre>',
+					'<pre class="language-js line-numbers">',
+				)
+				return item
+			})
+			scrollToTop()
+			nextTick(() => {
+				Prism.highlightAll()
+			})
+		})
+		.catch(e => {
+			console.warn(e)
+		})
 }
 
 getBlogNum()
 
 watchEffect(() => {
-  if (route.path.indexOf('category') !== -1) {
-    console.log('val', route.params.category)
-    getArticleFromCategory()
-  } else if (route.path.indexOf('tag') !== -1) {
-    console.log('tag', route.params.tag)
-    getArticleFromTag()
-  } else {
-    getArticle()
-  }
+	if (route.path.indexOf('category') !== -1) {
+		console.log('val', route.params.category)
+		getArticleFromCategory()
+	} else if (route.path.indexOf('tag') !== -1) {
+		console.log('tag', route.params.tag)
+		getArticleFromTag()
+	} else {
+		getArticle()
+	}
 })
 </script>
 
 <template>
-  <div class="blog">
-    <div v-if="route.path.indexOf('tag') !== -1" class="tag-title">
+  <div
+    class="blog"
+  >
+    <div
+      v-if="route.path.indexOf('tag') !== -1"
+      class="tag-title"
+    >
       <h2>标签 {{ route.params.tag }} 下的文章</h2>
     </div>
-    <div v-else-if="route.path.indexOf('category') !== -1" class="tag-title">
+    <div
+      v-else-if="route.path.indexOf('category') !== -1"
+      class="tag-title"
+    >
       <h2>分类 {{ route.params.category }} 下的文章</h2>
     </div>
     <div
       class="blog-article typo"
-      v-for="(item, index) in textArray"
+      v-for="item in textArray"
       :key="item._id"
     >
-      <h5 class="typo">{{ item.title }}</h5>
+      <h5 class="typo">
+        {{ item.title }}
+      </h5>
       <div class="article-time">
         <div class="time-item blue-time">
-          <el-icon class="icon"><Calendar /></el-icon>
+          <el-icon class="icon">
+            <Calendar />
+          </el-icon>
           <span>{{ item.time }}</span>
         </div>
         <div class="time-item red-time">
-          <el-icon class="icon"><View /></el-icon>
+          <el-icon class="icon">
+            <View />
+          </el-icon>
           <span>{{ item.readtime }}</span>
         </div>
         <div class="time-item">
-          <el-icon class="icon"><EditPen /></el-icon>
+          <el-icon class="icon">
+            <EditPen />
+          </el-icon>
           <span>字数≈{{ item.num }}</span>
         </div>
       </div>
-      <div v-html="item.describe"></div>
-			<div class="preview-img" v-if="item.img">
-				<img
-					:src="item.img"
-					alt=""
-				>
-			</div>
+      <div
+        v-html="item.describe"
+        v-ellipsis
+      />
+      <div
+        class="preview-img"
+        v-if="item.img"
+      >
+        <img
+          :src="item.img"
+          alt=""
+        >
+      </div>
       <div class="article-button">
-        <el-button type="primary" @click="blogDetail(item['_id'])">
+        <el-button
+          type="primary"
+          @click="blogDetail(item['_id'])"
+        >
           阅读全文
         </el-button>
       </div>
       <el-divider />
       <div class="middle-tag">
-        <div v-for="tag in item.label" class="tag-item" :key="item.label">
+        <div
+          v-for="tag in item.label"
+          :key="tag.label"
+          class="tag-item"
+        >
           <Tag
             :tag-name="tag"
           />
         </div>
       </div>
     </div>
-    <div class="blog-pagination" v-if="route.path === '/home'">
+    <div
+      class="blog-pagination"
+      v-if="route.path === '/home'"
+    >
       <el-pagination
         background
         layout="prev, pager, next, sizes"

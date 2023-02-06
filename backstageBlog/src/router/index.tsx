@@ -5,7 +5,17 @@ import { Spin } from 'antd'
 import WithAuth from '../component/Auth'
 
 const Module = (children: ReactNode) :ReactNode => {
-	return <Suspense fallback={<Spin tip="Loading..."></Spin>}>
+	return <Suspense fallback={
+		<div style={{
+			width: '100%',
+			height: '100%',
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+		}}>
+			<Spin tip="Loading..."></Spin>
+		</div>
+	}>
 		{children}
 	</Suspense>
 }
@@ -28,7 +38,7 @@ const routes: Array<Router> = [
 	{
 		name: '主页',
 		path: '/',
-		element: <Home/>,
+		element: Module(<WithAuth>{<Home/>}</WithAuth>),
 		children: [
 			{
 				name: '主页',
@@ -51,6 +61,11 @@ const routes: Array<Router> = [
 				element: Module(<ArticleEdit/>),
 			},
 			{
+				name: '编辑文章',
+				path: '/edit/:id',
+				element: Module(<Article key={'/edit'}/>),
+			},
+			{
 				name: '动态管理',
 				path: '/edit-dynamic',
 				element: Module(<DynamicEdit/>),
@@ -58,12 +73,12 @@ const routes: Array<Router> = [
 			{
 				name: '分类管理',
 				path: '/edit-category',
-				element: Module(<WithAuth>{Module(<Category/>)}</WithAuth>),
+				element: Module(<Category/>),
 			},
 			{
 				name: '标签管理',
 				path: '/edit-label',
-				element: Module(<WithAuth>{Module(<Label/>)}</WithAuth>),
+				element: Module(<Label/>),
 			},
 		],
 	},

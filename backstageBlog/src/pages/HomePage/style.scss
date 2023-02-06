@@ -1,7 +1,9 @@
 .topNum {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 16px;
     .card {
         flex: 1;
@@ -21,7 +23,8 @@
 .charts {
     display: flex;
     align-items: center;
-    justify-content: center; flex-wrap: wrap;
+    justify-content: center;
+    flex-wrap: wrap;
     .chartsItem {
         flex: 1;
         margin-right: 10px;

@@ -2,7 +2,9 @@
 </script>
 
 <template>
-  <div class="about">About</div>
+  <div class="about">
+    About
+  </div>
 </template>
 
 <style scoped lang="scss">

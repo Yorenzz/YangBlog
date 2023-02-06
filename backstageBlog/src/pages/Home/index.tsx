@@ -91,8 +91,8 @@ const Home: React.FC = () => {
 		navigateTo('/login')
 	}
 	useEffect(() => {
-		const key = pathname.slice(0, pathname.indexOf('-'))
-		setOpenKey([key])
+		// const key = pathname.slice(0, pathname.indexOf('-'))
+		setOpenKey(['', '/write', '/edit'])
 	}, [])
 
 	useEffect(() => {
@@ -103,7 +103,16 @@ const Home: React.FC = () => {
 
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
-			<Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+			<Sider
+				style={{
+					overflow: 'auto',
+					height: '100vh',
+					position: 'fixed',
+					left: 0,
+					top: 0,
+					bottom: 0,
+				}}
+				collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
 				<div className="logo" />
 				<Menu
 					theme="dark"
@@ -116,7 +125,7 @@ const Home: React.FC = () => {
 					onClick={handleClick}
 				/>
 			</Sider>
-			<Layout className="site-layout">
+			<Layout className="site-layout" style={{ marginLeft: collapsed ? 80 : 200 }}>
 				<Header className="header">
 					<Button onClick={exit}>退出登录</Button>
 				</Header>

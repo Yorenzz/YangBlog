@@ -9,7 +9,8 @@ const dynamicLoading = ref(false)
 const getAllDynamic = () => {
 	dynamicLoading.value = true
 	getDynamic().then((res) => {
-		dynamicList.value = res
+		const arr=res.reverse()
+		dynamicList.value = arr
 	}).catch((e) => {
 		console.warn(e)
 	}).finally(() => {
@@ -25,7 +26,7 @@ getAllDynamic()
     <el-timeline>
       <el-timeline-item
         center
-        v-for="item in dynamicList.reverse()"
+        v-for="item in dynamicList"
         :key="item._id"
       >
         <DynamicCard

@@ -35,6 +35,8 @@ const LabelEditDialog:React.FC<middleProps> = (props) => {
 		props.setVisible(false)
 		updateLabel(props.edit?.key as string, form.getFieldValue('name'), color).then(r => {
 			props.refresh()
+		}).catch((err) => {
+			console.warn(err)
 		})
 	}
 
@@ -44,7 +46,7 @@ const LabelEditDialog:React.FC<middleProps> = (props) => {
 
 	return (
 		<>
-			<Modal title="编辑标签" open={props.visible} onOk={handleOk} onCancel={handleCancel}>
+			<Modal forceRender title="编辑标签" open={props.visible} onOk={handleOk} onCancel={handleCancel}>
 				<Form
 					form={form}
 				>

@@ -4,6 +4,9 @@ import { useRoute } from 'vue-router'
 import { scrollToArticleSmooth } from '../../common/util.js'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DirectionalLight } from 'three'
 
 const sizes = {
 	width: window.innerWidth,
@@ -92,14 +95,34 @@ onMounted(() => {
 	const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
 	camera.position.set(0, 0, 10)
 	scene.add(camera)
-
-	// 添加物体
-	const cubeGeometry = new THREE.BoxGeometry(1, 1, 1) // 形状
-	const cubeMaterial = new THREE.MeshBasicMaterial({
-		color: 0xffff00,
-	}) // 材质（颜色）
-	const cube = new THREE.Mesh(cubeGeometry, cubeMaterial) // 完整几何体
-	scene.add(cube)
+	
+	let earth=null
+	let group = new THREE.Object3D()
+	//添加地球
+	const loader = new GLTFLoader()
+	loader.load('/little_planet_earth/scene.gltf', mesh=>{
+		earth=mesh.scene
+		earth.material=new THREE.MeshLambertMaterial()
+		earth.scale.set(0.01, 0.01, 0.01);
+		// earth.position.z = -10;
+		group.position.set(0,0,0)
+		group.add(earth)
+		group.position.set(0,0,5)
+		scene.add(group);
+	})
+	const directionLight = new DirectionalLight(0x88ffee, 2);
+	directionLight.position.set(1000,1000, 1000);
+	scene.add(directionLight);
+	scene.add(directionLight.target)
+	directionLight.target=group
+	
+	// // 添加物体
+	// const cubeGeometry = new THREE.BoxGeometry(1, 1, 1) // 形状
+	// const cubeMaterial = new THREE.MeshBasicMaterial({
+	// 	color: 0xffff00,
+	// }) // 材质（颜色）
+	// const cube = new THREE.Mesh(cubeGeometry, cubeMaterial) // 完整几何体
+	// scene.add(cube)
 
 	// 初始化渲染器
 	const renderer = new THREE.WebGLRenderer({
@@ -115,9 +138,11 @@ onMounted(() => {
 	controls.enableZoom = false
 
 	const tick = () => {
+		let vector = camera.position.clone();
+		//console.log(vector.x);
+		directionLight.position.set(vector.x,vector.y,vector.z); //点光源位置
 		// 更新渲染器
 		renderer.render(scene, camera)
-
 		controls.update()
 		// 页面重绘时调用自身
 		window.requestAnimationFrame(tick)

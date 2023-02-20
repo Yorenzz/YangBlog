@@ -33,7 +33,7 @@ const routes: Array<Router> = [
 	{
 		name: '登录',
 		path: '/login',
-		element: <Login/>,
+		element: Module(<Login/>),
 	},
 	{
 		name: '主页',

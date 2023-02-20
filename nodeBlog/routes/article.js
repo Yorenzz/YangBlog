@@ -90,7 +90,8 @@ router.get('/getPerCategoryText', async (ctx) => {
 })
 
 router.post('/sendContext', async (ctx) => {
-  const { text, time, like, watch, isSelf } = ctx.request.body
+  const { text, time, like, watch, isSelf } = ctx.request.body.context
+  console.log(text, time, like, watch, isSelf)
   try {
     const res = await insertContext({
       text,

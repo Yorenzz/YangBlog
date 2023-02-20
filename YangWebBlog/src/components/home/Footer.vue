@@ -142,6 +142,7 @@ getASentence()
     grid-template-columns: 1fr 40px 1fr;
     justify-content: center;
     align-items: center;
+		margin: 0 144px;
     .history-today {
       //width: 400px;
       justify-self: center;

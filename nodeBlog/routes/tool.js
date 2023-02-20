@@ -2,6 +2,10 @@ const router = require('koa-router')()
 const request = require('request-promise')
 const utils = require('../utils/util')
 const { UPLOAD_TOKEN } = require('../config/qiniu')
+const { Configuration, OpenAIApi } = require("openai");
+const configuration = new Configuration({
+  apiKey: '',
+});
 router.prefix('/tool')
 
 router.get('/getBingPicture', async (ctx) => {
@@ -29,6 +33,21 @@ router.get('/getRandomImage', async (ctx) => {
 
 router.get('/uploadToken', async (ctx) => {
   ctx.body = utils.success(UPLOAD_TOKEN)
+})
+
+
+router.post('/chat', async (ctx, next) => {
+  const { question } = ctx.request.body
+  const openai = new OpenAIApi(configuration)
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: `${question}`,
+    max_tokens: 2048,
+    temperature: 0.7,
+    stop: [' Human:', ' AI:']
+  })
+  const res=response.data
+  ctx.body = res
 })
 
 module.exports = router

@@ -18,7 +18,7 @@ export function sendArticle(message: ArticleType) {
 		url: '/article/send',
 		method: 'POST',
 		data: message,
-	})
+	}, true)
 }
 
 export function updateLabel(id: string, value: string, color: string | undefined) {
@@ -30,7 +30,7 @@ export function updateLabel(id: string, value: string, color: string | undefined
 			value,
 			color,
 		},
-	})
+	}, true)
 }
 
 export function deleteLabel(id: string) {
@@ -38,7 +38,7 @@ export function deleteLabel(id: string) {
 		url: '/article/deleteLabel',
 		method: 'POST',
 		data: { id },
-	})
+	}, true)
 }
 
 export function getAllTags() {
@@ -74,7 +74,7 @@ export function sendContext(context: DynamicContextType) {
 		url: '/article/sendContext',
 		method: 'POST',
 		data: { context },
-	})
+	}, true)
 }
 
 export function getArticleData(category: String|undefined) {
@@ -98,7 +98,7 @@ export function deleteArticle(id: String) {
 		url: '/article/deleteArticle',
 		method: 'get',
 		data: { id },
-	})
+	}, true)
 }
 
 export function getRandomImage(type: String) {

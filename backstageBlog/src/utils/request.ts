@@ -13,13 +13,6 @@ const service = axios.create({
 })
 // const navigate = useNavigate()
 service.interceptors.request.use(req => {
-	// if(username) {
-	// 	if(role !== 'admin') {
-	// 		message.error('演示模式禁止操作')
-	// 		return
-	// 	}
-	//
-	// }
 	if(req && req.headers) {
 		const headers = req.headers
 		const token = storage.getItem(TOKEN_KEY)
@@ -48,10 +41,17 @@ service.interceptors.response.use((res: AxiosResponse<Result>) => {
 	}
 })
 
-const request = (options: AxiosRequestConfig): Promise<any> => {
+const request = (options: AxiosRequestConfig, operate?: boolean): Promise<any> => {
 	options.method = options.method || 'get'
 	if (options.method.toLowerCase() === 'get') {
 		options.params = options.data
+	}
+	// @ts-ignore
+	if(operate && window.role === 'visitor') {
+		message.error('演示模式禁止操作').then(r => {})
+		return new Promise((resolve, reject) => {
+			reject('演示模式禁止操作')
+		})
 	}
 	return service(options)
 }

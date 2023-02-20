@@ -11,12 +11,15 @@ const WithAuth = ({ children }: any) => {
 	const dispatch = useAppDispatch()
 	const token = storage.getItem(TOKEN_KEY)
 	const userInfo = useAppSelector((state) => state.userInfo.username)
+	const role = useAppSelector((state) => state.userInfo.role)
 	if(token) {
 		if(!userInfo) {
 			verify(token).then((res) => {
 				// console.log(res)
 				const { payload, token } = res
 				const { username, role } = payload
+				// @ts-ignore
+				window.role = role
 				dispatch(saveInfo({
 					username,
 					token,
@@ -28,6 +31,8 @@ const WithAuth = ({ children }: any) => {
 				return <Navigate to={'/login'}/>
 			})
 		} else {
+			// @ts-ignore
+			window.role = role
 			return children
 		}
 	} else {
